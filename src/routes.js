@@ -14,6 +14,8 @@ import Profile from '~/pages/App/Profile';
 import Design from '~/pages/App/Design';
 import Contact from '~/pages/App/Contact';
 
+import Account from '~/pages/Menu/Account/routes';
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -59,12 +61,12 @@ export default function createRouter(isSigned = false) {
           options={{
             title: 'Home',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'person-outline'),
+              createIcon({ color, size }, 'home'),
           }}
         />
         <Drawer.Screen
           name="Profile"
-          component={Profile}
+          component={Account}
           options={{
             title: 'Ver conta',
             drawerIcon: ({ color, size }) =>
@@ -77,7 +79,7 @@ export default function createRouter(isSigned = false) {
           options={{
             title: 'Pagamento',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'dashboard'),
+              createIcon({ color, size }, 'local-atm'),
           }}
         />
         <Drawer.Screen
@@ -86,7 +88,7 @@ export default function createRouter(isSigned = false) {
           options={{
             title: 'Cesta de compra',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'dashboard'),
+              createIcon({ color, size }, 'shopping-basket'),
           }}
         />
         <Drawer.Screen
@@ -95,7 +97,7 @@ export default function createRouter(isSigned = false) {
           options={{
             title: 'Minhas compras',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'dashboard'),
+              createIcon({ color, size }, 'shopping-cart'),
           }}
         />
         <Drawer.Screen
@@ -104,7 +106,7 @@ export default function createRouter(isSigned = false) {
           options={{
             title: 'Ajuda',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'shopping-basket'),
+              createIcon({ color, size }, 'help'),
           }}
         />
       </Drawer.Navigator>
