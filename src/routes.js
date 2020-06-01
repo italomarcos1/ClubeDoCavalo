@@ -10,11 +10,11 @@ import CustomDrawerContent from '~/components/CustomDrawerContent';
 import SignIn from '~/pages/Auth/SignIn';
 import SignUp from '~/pages/Auth/SignUp';
 
-import Profile from '~/pages/App/Profile';
 import Design from '~/pages/App/Design';
 import Contact from '~/pages/App/Contact';
 
 import Account from '~/pages/Menu/Account/routes';
+import Payment from '~/pages/Menu/Payment/routes';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -75,7 +75,7 @@ export default function createRouter(isSigned = false) {
         />
         <Drawer.Screen
           name="Payment"
-          component={Design}
+          component={Payment}
           options={{
             title: 'Pagamento',
             drawerIcon: ({ color, size }) =>

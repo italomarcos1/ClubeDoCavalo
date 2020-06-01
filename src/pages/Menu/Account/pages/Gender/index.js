@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import {
   Container,
+  OptionsContainer,
   Selected,
   RadioButtonBackground,
   RadioText,
@@ -20,31 +21,31 @@ export default function Gender({ navigation }) {
         flex: 1,
         backgroundColor: '#F2F3F4',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        paddingHorizontal: 10,
+        padding: 20,
       }}
     >
-      <Container onPress={() => setGender('Masculino')}>
-        <RadioButtonBackground>
-          <Selected selected={gender === 'Masculino'} />
-        </RadioButtonBackground>
-        <RadioText>Masculino</RadioText>
-      </Container>
+      <OptionsContainer>
+        <Container onPress={() => setGender('Masculino')}>
+          <RadioButtonBackground>
+            <Selected selected={gender === 'Masculino'} />
+          </RadioButtonBackground>
+          <RadioText>Masculino</RadioText>
+        </Container>
 
-      <Container onPress={() => setGender('Feminino')}>
-        <RadioButtonBackground>
-          <Selected selected={gender === 'Feminino'} />
-        </RadioButtonBackground>
-        <RadioText>Feminino</RadioText>
-      </Container>
+        <Container onPress={() => setGender('Feminino')}>
+          <RadioButtonBackground>
+            <Selected selected={gender === 'Feminino'} />
+          </RadioButtonBackground>
+          <RadioText>Feminino</RadioText>
+        </Container>
 
-      <Container onPress={() => setGender('Outro')}>
-        <RadioButtonBackground>
-          <Selected selected={gender === 'Outro'} />
-        </RadioButtonBackground>
-        <RadioText>Outro</RadioText>
-      </Container>
-
+        <Container onPress={() => setGender('Outro')}>
+          <RadioButtonBackground>
+            <Selected selected={gender === 'Outro'} />
+          </RadioButtonBackground>
+          <RadioText>Outro</RadioText>
+        </Container>
+      </OptionsContainer>
       <ButtonMenu
         onPress={() => navigation.goBack()}
         style={{ marginTop: 20, fontSize: 20 }}

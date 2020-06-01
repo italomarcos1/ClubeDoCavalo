@@ -11,6 +11,12 @@ export const Container = styled.TouchableOpacity`
   padding: 2px 10px;
 `;
 
+export const OptionsContainer = styled.TouchableOpacity`
+  width: 100%;
+  height: 180px;
+  justify-content: space-between;
+`;
+
 export const RadioButtonBackground = styled.View`
   width: 15px;
   height: 15px;
