@@ -38,6 +38,7 @@ export default function Phone({ navigation }) {
         </Text>
 
         <ButtonMenu
+          disabled={!(phone.length >= 10)}
           style={{ marginTop: 20 }}
           onPress={() => navigation.navigate('VerifyPhone')}
         >

@@ -27,7 +27,7 @@ export default function Account({ navigation }) {
           <Icon name="camera" color="#fff" size={22} />
         </View>
       </ImageContainer>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingBottom: 15 }}>
         <Item onPress={() => {}}>
           <Field>Nome</Field>
           <Value>Paulo</Value>
@@ -52,7 +52,10 @@ export default function Account({ navigation }) {
           <Field>Palavra-passe</Field>
           <Value>******</Value>
         </Item>
-        <Item onPress={() => navigation.navigate('Shipping')}>
+        <Item
+          onPress={() => navigation.navigate('Shipping')}
+          style={{ borderBottomColor: 'transparent', borderBottomWidth: 0 }}
+        >
           <Field>Endereços de entrega</Field>
           <Value>Casa</Value>
         </Item>

@@ -7,7 +7,7 @@ import { RadioButtonBackground, Selected } from '../Gender/styles';
 
 Icon.loadFont();
 
-export default function Shipping() {
+export default function Shipping({ navigation }) {
   return (
     <View
       style={{
@@ -17,7 +17,7 @@ export default function Shipping() {
         padding: 10,
       }}
     >
-      <Container>
+      <Container onPress={() => console.tron.log('lel')}>
         <View
           style={{
             height: 130,
@@ -60,6 +60,7 @@ export default function Shipping() {
         </View>
       </Container>
       <Container
+        onPress={() => navigation.navigate('AddNewAddress')}
         style={{
           marginTop: 10,
           justifyContent: 'center',

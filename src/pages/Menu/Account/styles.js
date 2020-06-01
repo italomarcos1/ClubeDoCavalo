@@ -23,17 +23,17 @@ export const Item = styled.TouchableOpacity`
   border-bottom-width: 0.5px;
   border-bottom-color: #d2d2d4;
   align-items: flex-start;
-  justify-content: center;
-  padding: 5px 0px 5px 20px;
+  justify-content: space-evenly;
+  padding: 2px 0px 2px 20px;
 `;
 
 export const Field = styled.Text`
   color: #818181;
-  font-size: 12px;
+  font-size: 11px;
 `;
 export const Value = styled.Text`
   color: #000;
-  font-size: 16px;
+  font-size: 15px;
 `;
 
 // export const Text;

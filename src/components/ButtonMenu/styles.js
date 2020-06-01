@@ -6,10 +6,12 @@ export const CustomButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   border-radius: 35px;
+  background-color: ${props => (props.disabled ? '#005b06' : '#3b8e39')};
   background-color: #3b8e39;
+  opacity: ${props => (props.disabled ? 0.6 : 1)};
 `;
 
 export const ButtonText = styled.Text`
   font-size: 14px;
-  color: #fff;
+  color: ${props => (props.disabled ? '#bbb' : '#fff')};
 `;

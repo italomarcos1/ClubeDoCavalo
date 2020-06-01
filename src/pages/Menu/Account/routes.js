@@ -11,10 +11,9 @@ import Mail from './pages/Mail';
 import Gender from './pages/Gender';
 import Pass from './pages/Pass';
 import Shipping from './pages/Shipping';
+// import AddNewAddress from './pages/Shipping/AddNewAddress';
 
 import Header from '~/components/HeaderMenu';
-
-// import { Container } from './styles';
 
 Icon.loadFont();
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Text, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -17,6 +17,8 @@ export default function AddCard({ navigation }) {
   const expireDateRef = useRef();
   const cvvRef = useRef();
   const nameRef = useRef();
+
+  console.tron.log(!!cardNumber && !!expireDate && !!cvv && !!name);
 
   return (
     <>
@@ -81,6 +83,8 @@ export default function AddCard({ navigation }) {
           <InputMenu
             autoCapitalize="characters"
             autoCorrect={false}
+            maxLength={45}
+            clear={() => setName('')}
             ref={nameRef}
             value={name}
             onChangeText={setName}
@@ -90,6 +94,7 @@ export default function AddCard({ navigation }) {
         </InputContainer>
 
         <ButtonMenu
+          disabled={!cardNumber || !expireDate || !cvv || !name}
           onPress={() => navigation.goBack()}
           style={{ marginTop: 20 }}
         >

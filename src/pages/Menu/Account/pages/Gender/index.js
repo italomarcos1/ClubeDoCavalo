@@ -13,7 +13,7 @@ import {
 import ButtonMenu from '~/components/ButtonMenu';
 
 export default function Gender({ navigation }) {
-  const [gender, setGender] = useState(''); // habilitar pro valor retornado no 'useSelector'
+  const [gender, setGender] = useState('Masculino'); // habilitar pro valor retornado no 'useSelector'
 
   return (
     <View
