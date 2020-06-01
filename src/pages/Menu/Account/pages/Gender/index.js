@@ -1,18 +1,62 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-// import { Container } from './styles';
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import PropTypes from 'prop-types';
 
-export default function Gender() {
+import {
+  Container,
+  Selected,
+  RadioButtonBackground,
+  RadioText,
+} from './styles';
+
+import ButtonMenu from '~/components/ButtonMenu';
+
+export default function Gender({ navigation }) {
+  const [gender, setGender] = useState(''); // habilitar pro valor retornado no 'useSelector'
+
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: '#7159c1',
+        backgroundColor: '#F2F3F4',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
+        paddingHorizontal: 10,
       }}
     >
-      <Text style={{ fontSize: 20, fontColor: '#fff' }}>Gender</Text>
+      <Container onPress={() => setGender('Masculino')}>
+        <RadioButtonBackground>
+          <Selected selected={gender === 'Masculino'} />
+        </RadioButtonBackground>
+        <RadioText>Masculino</RadioText>
+      </Container>
+
+      <Container onPress={() => setGender('Feminino')}>
+        <RadioButtonBackground>
+          <Selected selected={gender === 'Feminino'} />
+        </RadioButtonBackground>
+        <RadioText>Feminino</RadioText>
+      </Container>
+
+      <Container onPress={() => setGender('Outro')}>
+        <RadioButtonBackground>
+          <Selected selected={gender === 'Outro'} />
+        </RadioButtonBackground>
+        <RadioText>Outro</RadioText>
+      </Container>
+
+      <ButtonMenu
+        onPress={() => navigation.goBack()}
+        style={{ marginTop: 20, fontSize: 20 }}
+      >
+        Gravar
+      </ButtonMenu>
     </View>
   );
 }
+
+Gender.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+  }).isRequired,
+};

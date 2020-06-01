@@ -7,10 +7,11 @@ export const Container = styled.View`
   justify-content: flex-start;
   padding: 20px 0px 5px 10px;
   flex-direction: row;
-  background-color: #5bae59;
+  background-color: ${props => (props.custom ? '#fff' : '#5bae59')};
 `;
 
 export const Title = styled.Text`
   font-size: 20px;
-  color: #fff;
+  margin-top: 5px;
+  color: ${props => (props.custom ? '#000' : '#fff')};
 `;

@@ -9,7 +9,7 @@ import { ValidationContainer, ValidationCodeInput } from './styles';
 
 Icon.loadFont();
 
-export default function VerifyPhone({ navigation }) {
+export default function VerifyPhone() {
   const [code1, setCode1] = useState('');
   const [code2, setCode2] = useState('');
   const [code3, setCode3] = useState('');

@@ -19,7 +19,7 @@ import Header from '~/components/HeaderMenu';
 Icon.loadFont();
 
 export default function Routes() {
-  const Stack = createStackNavigator();
+  const Stack = createStackNavigator(); // abrir como um modal talvez, já retorna pro drawer
   return (
     <Stack.Navigator
       initialRouteName="Account"
@@ -83,6 +83,7 @@ export default function Routes() {
         options={({ navigation }) => ({
           header: () => (
             <Header
+              custom
               title="Endereço de entrega"
               close={() => navigation.goBack()}
             />

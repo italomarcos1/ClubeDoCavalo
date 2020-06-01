@@ -1,21 +1,33 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { Container, Title } from './styles';
 
 Icon.loadFont();
 
-export default function Header({ title, close }) {
+export default function Header({ title, close, custom }) {
   return (
-    <Container>
+    <Container custom={custom}>
       <TouchableOpacity
+        custom={custom}
         onPress={close}
         style={{ width: 30, height: 30, borderRadius: 15, marginRight: 15 }}
       >
-        <Icon name="chevron-left" color="#fff" size={30} />
+        <Icon name="chevron-left" color={custom ? '#000' : '#fff'} size={35} />
       </TouchableOpacity>
-      <Title>{title}</Title>
+      <Title custom={custom}>{title}</Title>
     </Container>
   );
 }
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+  close: PropTypes.func.isRequired,
+  custom: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  custom: false,
+};

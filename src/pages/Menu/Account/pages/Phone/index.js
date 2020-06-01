@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text } from 'react-native';
 // import { Container } from './styles';
 import PropTypes from 'prop-types';
 
@@ -47,3 +47,9 @@ export default function Phone({ navigation }) {
     </>
   );
 }
+
+Phone.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
