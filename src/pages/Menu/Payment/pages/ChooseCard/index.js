@@ -8,8 +8,6 @@ export default function ChooseCard({ navigation }) {
   return (
     <Container>
       <Item onPress={() => navigation.goBack()}>
-        {' '}
-        {/** criar um componente separado e fazer map */}
         <Icon name="credit-card" size={25} color="#2C71B2" />
         <View
           style={{ flex: 1, alignItems: 'flex-start', paddingHorizontal: 10 }}
