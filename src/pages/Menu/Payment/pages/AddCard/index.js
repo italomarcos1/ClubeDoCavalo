@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { Text, Keyboard } from 'react-native';
-import { Container, InputContainer, InputName, CustomView } from './styles';
+import PropTypes from 'prop-types';
 
 import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
+
+import { Container, InputContainer, InputName, CustomView } from './styles';
 
 export default function AddCard({ navigation }) {
   const [cardNumber, setCardNumber] = useState('');
@@ -97,3 +99,9 @@ export default function AddCard({ navigation }) {
     </>
   );
 }
+
+AddCard.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+  }).isRequired,
+};
