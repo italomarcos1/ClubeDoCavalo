@@ -15,6 +15,7 @@ import Contact from '~/pages/App/Contact';
 
 import Account from '~/pages/Menu/Account/routes';
 import Payment from '~/pages/Menu/Payment/routes';
+import Orders from '~/pages/Menu/Orders/routes';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -93,7 +94,7 @@ export default function createRouter(isSigned = false) {
         />
         <Drawer.Screen
           name="Purchases"
-          component={Design}
+          component={Orders}
           options={{
             title: 'Minhas compras',
             drawerIcon: ({ color, size }) =>
