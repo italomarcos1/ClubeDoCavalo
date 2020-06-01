@@ -383,7 +383,10 @@ export default function Design({ navigation }) {
     };
 
     ImagePicker.showImagePicker(options, response => {
-      if (response.error) Toast.show('Houve um erro ao selecionar a imagem. ');
+      if (response.didCancel) setSelected('none');
+      // não seleciona a imagem caso não selecione foto
+      else if (response.error)
+        Toast.show('Houve um erro ao selecionar a imagem. ');
       else {
         const source = { uri: `data:image/jpeg;base64,${response.data}` };
 
