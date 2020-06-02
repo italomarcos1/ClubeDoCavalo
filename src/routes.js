@@ -10,9 +10,12 @@ import CustomDrawerContent from '~/components/CustomDrawerContent';
 import SignIn from '~/pages/Auth/SignIn';
 import SignUp from '~/pages/Auth/SignUp';
 
-import Profile from '~/pages/App/Profile';
 import Design from '~/pages/App/Design';
 import Contact from '~/pages/App/Contact';
+
+import Account from '~/pages/Menu/Account/routes';
+import Payment from '~/pages/Menu/Payment/routes';
+import Orders from '~/pages/Menu/Orders/routes';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -59,12 +62,12 @@ export default function createRouter(isSigned = false) {
           options={{
             title: 'Home',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'person-outline'),
+              createIcon({ color, size }, 'home'),
           }}
         />
         <Drawer.Screen
           name="Profile"
-          component={Profile}
+          component={Account}
           options={{
             title: 'Ver conta',
             drawerIcon: ({ color, size }) =>
@@ -73,11 +76,11 @@ export default function createRouter(isSigned = false) {
         />
         <Drawer.Screen
           name="Payment"
-          component={Design}
+          component={Payment}
           options={{
             title: 'Pagamento',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'dashboard'),
+              createIcon({ color, size }, 'local-atm'),
           }}
         />
         <Drawer.Screen
@@ -86,16 +89,16 @@ export default function createRouter(isSigned = false) {
           options={{
             title: 'Cesta de compra',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'dashboard'),
+              createIcon({ color, size }, 'shopping-basket'),
           }}
         />
         <Drawer.Screen
           name="Purchases"
-          component={Design}
+          component={Orders}
           options={{
             title: 'Minhas compras',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'dashboard'),
+              createIcon({ color, size }, 'shopping-cart'),
           }}
         />
         <Drawer.Screen
@@ -104,7 +107,7 @@ export default function createRouter(isSigned = false) {
           options={{
             title: 'Ajuda',
             drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'shopping-basket'),
+              createIcon({ color, size }, 'help'),
           }}
         />
       </Drawer.Navigator>

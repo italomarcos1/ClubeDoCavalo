@@ -11,6 +11,8 @@ import '~/config/ReactotronConfig';
 import { store, persistor } from '~/store';
 import App from '~/App';
 
+console.disableYellowBox = true;
+
 function Index() {
   return (
     <NavigationContainer>

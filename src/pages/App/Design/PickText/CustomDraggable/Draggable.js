@@ -18,6 +18,8 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
+import { Container } from './styles';
+
 function clamp(number, min, max) {
   return Math.max(min, Math.min(number, max));
 }
@@ -224,23 +226,30 @@ function Draggable(props, ref) {
       return children;
     } else if (imageSource) {
       return (
-        <Image
-          ref={ref}
+        <Container
+          selected={selected}
           style={{
-            width: renderSize,
-            height: renderSize,
-            ...(selected ? styles.imageSelected : {}),
+            width: renderSize + 20,
+            height: renderSize + 20,
           }}
-          onLayout={() => loaded(true)}
-          source={imageSource}
-        />
+        >
+          <Image
+            ref={ref}
+            style={{
+              width: renderSize,
+              height: renderSize,
+            }}
+            onLayout={() => loaded(true)}
+            source={imageSource}
+          />
+        </Container>
       );
     } else {
       return (
         <View
           style={{
-            width: renderSize,
-            height: renderHeight,
+            width: renderSize + 6,
+            height: renderHeight + 6,
             alignItems: 'center',
             justifyContent: 'center',
             paddingRight: 3,
@@ -399,12 +408,15 @@ const styles = StyleSheet.create({
   },
   image: {
     borderColor: 'transparent',
+    borderStyle: 'solid',
     borderWidth: 0,
     opacity: 1,
   },
   imageSelected: {
     borderColor: '#ff0000',
-    borderWidth: 3,
+    borderStyle: 'dotted',
+    borderRadius: 1,
+    borderWidth: 4,
     opacity: 0.9,
   },
 });
