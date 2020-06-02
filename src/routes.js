@@ -9,6 +9,7 @@ import CustomDrawerContent from '~/components/CustomDrawerContent';
 
 import SignIn from '~/pages/Auth/SignIn';
 import SignUp from '~/pages/Auth/SignUp';
+import SignOut from '~/pages/Auth/SignOut';
 
 import Design from '~/pages/App/Design';
 import Contact from '~/pages/App/Contact';
@@ -16,6 +17,7 @@ import Contact from '~/pages/App/Contact';
 import Account from '~/pages/Menu/Account/routes';
 import Payment from '~/pages/Menu/Payment/routes';
 import Orders from '~/pages/Menu/Orders/routes';
+import ShoppingBag from '~/pages/Menu/ShoppingBag';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -54,6 +56,8 @@ export default function createRouter(isSigned = false) {
             fontSize: 18,
           },
         }}
+        unmountOnBlur={true}
+        backBehavior="initialRoute"
         initialRouteName="Design"
       >
         <Drawer.Screen
@@ -85,7 +89,7 @@ export default function createRouter(isSigned = false) {
         />
         <Drawer.Screen
           name="Bag"
-          component={Design}
+          component={ShoppingBag}
           options={{
             title: 'Cesta de compra',
             drawerIcon: ({ color, size }) =>
@@ -108,6 +112,15 @@ export default function createRouter(isSigned = false) {
             title: 'Ajuda',
             drawerIcon: ({ color, size }) =>
               createIcon({ color, size }, 'help'),
+          }}
+        />
+        <Drawer.Screen
+          name="Logout"
+          component={SignOut}
+          options={{
+            title: 'Sair',
+            drawerIcon: ({ color, size }) =>
+              createIcon({ color, size }, 'exit-to-app'),
           }}
         />
       </Drawer.Navigator>

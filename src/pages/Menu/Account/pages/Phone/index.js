@@ -25,6 +25,7 @@ export default function Phone({ navigation }) {
           autoFocus
           clear={() => setPhone('')}
           autoCorrect={false}
+          selected={!!phone}
           keyboardType="phone-pad"
           maxLength={15}
           autoCapitalize="none"

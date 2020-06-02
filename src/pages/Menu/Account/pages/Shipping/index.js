@@ -17,7 +17,7 @@ export default function Shipping({ navigation }) {
         padding: 10,
       }}
     >
-      <Container onPress={() => console.tron.log('lel')}>
+      <Container onPress={() => {}}>
         <View
           style={{
             height: 130,

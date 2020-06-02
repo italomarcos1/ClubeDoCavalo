@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { Avatar, ImageContainer, Item, Field, Value } from './styles';
 
+import { signOut } from '~/store/modules/auth/actions';
+
 export default function Account({ navigation }) {
+  const dispatch = useDispatch();
+
+  const handleSignOut = useCallback(() => {
+    dispatch(signOut());
+  }, []);
+
   return (
     <>
       <ImageContainer>
