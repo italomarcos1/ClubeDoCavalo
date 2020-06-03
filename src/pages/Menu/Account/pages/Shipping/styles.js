@@ -31,7 +31,7 @@ export const AddressInfoField = styled.Text`
   color: #9f9f9f;
 `;
 
-export const AddNewAddressButton = styled.View`
+export const AddNewAddressButton = styled.TouchableOpacity`
   align-items: center;
   background-color: #fff;
   border-color: #ddd;
