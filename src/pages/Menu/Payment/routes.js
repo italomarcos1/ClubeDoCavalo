@@ -22,7 +22,7 @@ export default function Routes({ navigation }) {
   return (
     <Stack.Navigator
       initialRouteName="Payment"
-      screenOptions={({ navigation }) => ({
+      screenOptions={() => ({
         header: () => <Header title="Pagamento" close={exit} />,
       })}
     >

@@ -17,7 +17,7 @@ import Contact from '~/pages/App/Contact';
 import Account from '~/pages/Menu/Account/routes';
 import Payment from '~/pages/Menu/Payment/routes';
 import Orders from '~/pages/Menu/Orders/routes';
-import ShoppingBag from '~/pages/Menu/ShoppingBag';
+import ShoppingBag from '~/pages/Menu/ShoppingBag/routes';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

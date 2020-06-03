@@ -9,6 +9,16 @@ export const ImageContainer = styled.View`
   background-color: #3b8e39;
 `;
 
+export const AvatarContainer = styled.View`
+  position: relative;
+  width: 90px;
+  align-items: center;
+  justify-content: center;
+  height: 90px;
+  border-radius: 45px;
+  border-color: #fff;
+  border-width: 2px;
+`;
 export const Avatar = styled.Image`
   position: relative;
   width: 90px;

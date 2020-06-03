@@ -10,16 +10,8 @@ import { Item, Shirt, ShirtInfo } from '../Orders/pages/Details/styles';
 // transformar o detail item em um compon
 
 export default function ShoppingBag({ navigation }) {
-  console.tron.log(navigation);
-
-  const exit = () => {
-    navigation.goBack();
-    navigation.openDrawer();
-  };
-
   return (
     <>
-      <Header custom title="Cesto de compras" close={exit} />
       <Container>
         <ShirtContainer>
           <Item style={{ height: 150 }}>
@@ -139,7 +131,7 @@ export default function ShoppingBag({ navigation }) {
             </View>
           </View>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => navigation.navigate('Success')}
             style={{
               width: 300,
               height: 60,
@@ -160,7 +152,6 @@ export default function ShoppingBag({ navigation }) {
 
 ShoppingBag.propTypes = {
   navigation: PropTypes.shape({
-    goBack: PropTypes.func,
-    openDrawer: PropTypes.func,
+    navigate: PropTypes.func,
   }).isRequired,
 };
