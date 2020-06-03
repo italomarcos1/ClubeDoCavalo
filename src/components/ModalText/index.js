@@ -17,7 +17,7 @@ import {
   List,
 } from './styles';
 
-export default function ColorModal({
+export default function ModalText({
   visible,
   onCancelPress,
   listData,
@@ -56,21 +56,6 @@ export default function ColorModal({
         <Header>
           <HeaderText>Escolha a cor abaixo</HeaderText>
         </Header>
-        <List
-          data={listData}
-          keyExtractor={item => String(item.uri)}
-          renderItem={({ item, index }) => (
-            <ContainerList>
-              <ItemList
-                selected={index === selectedIndex}
-                onPress={() => handleChangeSelected({ item, index })}
-              >
-                <Image source={{ uri: item.uri }} resizeMode="contain" />
-              </ItemList>
-            </ContainerList>
-          )}
-          numColumns={2}
-        />
       </Container>
       <Bottom>
         <CancelButton onPress={onCancelPress}>
@@ -84,7 +69,7 @@ export default function ColorModal({
   );
 }
 
-ColorModal.propTypes = {
+ModalText.propTypes = {
   visible: PropTypes.bool.isRequired,
   onCancelPress: PropTypes.func.isRequired,
 };

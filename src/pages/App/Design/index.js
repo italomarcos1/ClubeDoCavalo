@@ -28,7 +28,7 @@ import ConfirmationIcon from '~/assets/ico-confirm.svg';
 
 import Header from '~/components/Header';
 import Modal from '~/components/Modal';
-import ColorModal from '~/components/ColorModal';
+import ModalColor from '~/components/ModalColor';
 import CustomList from '~/components/List';
 import FontPicker from '~/components/FontPicker';
 
@@ -768,7 +768,7 @@ export default function Design({ navigation }) {
         </CustomView>
       </RNModal>
 
-      <ColorModal // modal de selecionar cores da camiseta
+      <ModalColor // modal de selecionar cores da camiseta
         visible={visibleModalColor}
         onCancelPress={() => setVisibleModalColor(false)}
         listData={models}
