@@ -1,5 +1,13 @@
 import styled from 'styled-components/native';
 
+export const Container = styled.View`
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
 export const ValidationCodeInput = styled.TextInput`
   width: 50px;
   height: 50px;
@@ -16,4 +24,23 @@ export const ValidationContainer = styled.View`
   align-items: center;
   flex-direction: row;
   justify-content: space-evenly;
+`;
+
+export const CodeSentText = styled.Text`
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 230px;
+  height: 60px;
+  font-size: 14px;
+  color: #596473;
+  align-self: center;
+  text-align: center;
+`;
+
+export const ResendCodeText = styled.Text`
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #d93150;
+  align-self: center;
 `;

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
-// import { Container } from './styles';
+import { Text } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Validation from '~/components/Validation';
 import InputMenu from '~/components/InputMenu';
 import ButtonMenu from '~/components/ButtonMenu';
+
+import { Container } from './styles';
 
 export default function Phone({ navigation }) {
   const [phone, setPhone] = useState('');
@@ -13,18 +14,13 @@ export default function Phone({ navigation }) {
   return (
     <>
       <Validation title="Atualização do celular" />
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#fff',
-          padding: 20,
-        }}
-      >
+      <Container>
         <Text style={{ fontSize: 14 }}>Número do celular</Text>
         <InputMenu
           autoFocus
           clear={() => setPhone('')}
           autoCorrect={false}
+          selected={!!phone}
           keyboardType="phone-pad"
           maxLength={15}
           autoCapitalize="none"
@@ -44,7 +40,7 @@ export default function Phone({ navigation }) {
         >
           Verificar Celular
         </ButtonMenu>
-      </View>
+      </Container>
     </>
   );
 }

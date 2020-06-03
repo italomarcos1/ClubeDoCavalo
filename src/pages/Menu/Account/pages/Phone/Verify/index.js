@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
-// import { Container } from './styles';
+import { Text, TouchableOpacity, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import Toast from 'react-native-tiny-toast';
 
 import Validation from '~/components/Validation';
 
-import { ValidationContainer, ValidationCodeInput } from './styles';
+import { Container, ValidationContainer, ValidationCodeInput } from './styles';
+import { CodeSentText, ResendCodeText } from '../../Mail/styles';
 
 Icon.loadFont();
 
@@ -27,35 +28,15 @@ export default function VerifyPhone() {
   return (
     <>
       <Validation title="Digite o número abaixo" />
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#fff',
-          padding: 20,
-          alignItems: 'center',
-          justifyContent: 'space-evenly',
-        }}
-      >
+      <Container>
         <Icon name="inbox" color="#333" size={80} />
         <Text style={{ fontSize: 20, color: '#3A3A3A', alignSelf: 'center' }}>
           Verificação por SMS
         </Text>
 
-        <Text
-          numberOfLines={2}
-          style={{
-            marginTop: 5,
-            marginBottom: 5,
-            width: 230,
-            height: 60,
-            fontSize: 14,
-            color: '#596473',
-            alignSelf: 'center',
-            textAlign: 'center',
-          }}
-        >
+        <CodeSentText numberOfLines={2}>
           SMS foi enviado para o seu celular. Por favor verifique.
-        </Text>
+        </CodeSentText>
         <ValidationContainer>
           <ValidationCodeInput
             autoFocus
@@ -91,20 +72,14 @@ export default function VerifyPhone() {
             onSubmitEditing={() => {}}
           />
         </ValidationContainer>
-        <TouchableOpacity onPress={() => {}}>
-          <Text
-            style={{
-              marginBottom: 5,
-              marginTop: 5,
-              fontSize: 16,
-              color: '#D93150',
-              alignSelf: 'center',
-            }}
-          >
-            Reenviar em 30 segundos
-          </Text>
+        <TouchableOpacity
+          onPress={() =>
+            Toast.showSuccess('Um código foi enviado para seu Email.')
+          }
+        >
+          <ResendCodeText>Reenviar em 30 segundos</ResendCodeText>
         </TouchableOpacity>
-      </View>
+      </Container>
     </>
   );
 }

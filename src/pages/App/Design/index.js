@@ -16,6 +16,8 @@ import {
 
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource'; // pega imagem e cria uma URI (caminho local da imagem)
 
+import ShirtDetails from './ShirtDetails';
+
 import ImageIcon from '~/assets/ico-image.svg';
 import ColorIcon from '~/assets/ico-colors.svg';
 import StickerIcon from '~/assets/ico-stickers.svg';
@@ -66,6 +68,8 @@ import api from '~/services/api';
 Icon.loadFont();
 
 export default function Design({ navigation }) {
+  const redirectToShoppingBag = () => navigation.navigate('Bag');
+
   const customT = useSelector(state => state.shirts.tshirt); // puxa camisetas do redux
   const customB = useSelector(state => state.shirts.bshirt); // puxa camisetas babylook do redux
   const customH = useSelector(state => state.shirts.hoodie);
@@ -78,6 +82,9 @@ export default function Design({ navigation }) {
   const imgRef = useRef(); // ref repassada ao draggable com 'forwardRef'
 
   const baseImg = resolveAssetSource(base); // imagem transparente para inicializar
+
+  const [shirtId, setShirtId] = useState(baseImg.uri); // camiseta para o componente shirt details, para pegar tamanho, etc
+  const [shirtPreview, setShirtPreview] = useState(baseImg.uri); // camiseta para o componente shirt details, para pegar tamanho, etc
 
   const [models, setModels] = useState([]); // array com as cores de camisetas
 
@@ -198,6 +205,7 @@ export default function Design({ navigation }) {
   const [visibleTextModal, setTextModalVisible] = useState(false);
   const [visibleUploadingModal, setUploadingModalVisible] = useState(false);
   const [visibleModalColor, setVisibleModalColor] = useState(false);
+  const [visibleShirtDetails, setVisibleShirtDetails] = useState(false);
 
   const [zindexImg, setZindexImg] = useState(0); // alterna a sobreposição de imagem e figura, quem fica por cima
   const [zindexSticker, setZindexSticker] = useState(1); // zindex do sticker
@@ -304,7 +312,13 @@ export default function Design({ navigation }) {
       upload.append('front_printable_image_id', id);
       upload.append('back_printable_image_id', id);
 
-      await api.post('design-shirt/purchase', upload); // envia pra api
+      const { front_printscreen, back_printscreen } = await api.post(
+        'design-shirt/purchase',
+        upload
+      ); // envia pra api
+
+      console.tron.log(`front: ${front_printscreen}`);
+      console.tron.log(`back: ${back_printscreen}`);
 
       setImage(baseImg.uri); // apaga a imagem - coloca imagem transparente
       setSticker(baseImg.uri); // apaga o sticker - coloca imagem transparente
@@ -328,6 +342,7 @@ export default function Design({ navigation }) {
         quality: 1,
       });
 
+      setShirtPreview(uri);
       await uploadShirt(id, uri);
     } catch (err) {
       Toast.show('Erro na captura da camiseta');
@@ -337,7 +352,7 @@ export default function Design({ navigation }) {
   async function uploadPrintable(photouri) {
     try {
       const upload = new FormData();
-
+      console.tron.log(photouri);
       upload.append('name', `${photouri}.jpeg`);
       upload.append('image', {
         uri: photouri,
@@ -349,6 +364,7 @@ export default function Design({ navigation }) {
 
       await captureShirt(id); // tira print da camiseta
     } catch (err) {
+      console.tron.log(err);
       Toast.show('Erro no envio da imagem'); // printe o err.status
     }
   }
@@ -364,6 +380,8 @@ export default function Design({ navigation }) {
           format: 'png',
           quality: 1,
         });
+
+        console.tron.log('must print');
 
         await uploadPrintable(uri);
       }
@@ -437,6 +455,13 @@ export default function Design({ navigation }) {
     }
   }
 
+  useEffect(() => {
+    if (shirtPreview && shirtPreview !== baseImg.uri) {
+      console.tron.log(`uri: ${shirtPreview}`);
+      setVisibleShirtDetails(true);
+    }
+  }, [shirtPreview]);
+
   return (
     <>
       <Header navigation={navigation} title="Design" />
@@ -452,7 +477,6 @@ export default function Design({ navigation }) {
             setPaddingX(layout.x);
             setPaddingY(layout.y);
           }}
-          ref={captureViewRef}
         >
           <TShirtImage
             onLayout={({ nativeEvent: { layout } }) => {
@@ -461,6 +485,7 @@ export default function Design({ navigation }) {
               setWidth(layout.width);
               setHeight(layout.height);
             }}
+            ref={captureViewRef}
             style={{ height: Dimensions.get('window').height - 174 }}
             source={{ uri: tShirtImage }}
             resizeMode="contain"
@@ -610,8 +635,11 @@ export default function Design({ navigation }) {
                 <AddToCart
                   onPress={() => {
                     if (canSend) {
-                      setUploadingModalVisible(true); // abre o modal de 'enviando camiseta...aguarde
+                      // setUploadingModalVisible(true); // abre o modal de 'enviando camiseta...aguarde
                       capturePic(); // função que tira o print da camiseta
+                      // setVisibleShirtDetails(true); // abre o modal de 'enviando camiseta...aguarde
+                      // após fechar o modal reseta para false, assim reaparece
+                      // uma função pra fazer o visible none e ela dispara o capturePic
                     } else {
                       Toast.show('Edite alguma camiseta antes de enviar.');
                     }
@@ -766,6 +794,19 @@ export default function Design({ navigation }) {
             <ActivityIndicator size="large" color="#fff" />
           </UploadShirtLoading>
         </CustomView>
+      </RNModal>
+
+      <RNModal
+        visible={visibleShirtDetails}
+        onRequestClose={() => setVisibleShirtDetails(false)}
+      >
+        <ShirtDetails
+          close={() => {
+            setVisibleShirtDetails(false);
+          }}
+          shirt={shirtPreview}
+          redirect={redirectToShoppingBag}
+        />
       </RNModal>
 
       <ColorModal // modal de selecionar cores da camiseta
