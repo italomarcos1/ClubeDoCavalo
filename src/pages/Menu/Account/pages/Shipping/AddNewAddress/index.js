@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Text, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
+import TextInputMask from 'react-native-text-input-mask';
 
 import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
@@ -109,7 +110,6 @@ export default function AddNewAddress({ navigation }) {
         <InputContainer style={{ marginTop: 0 }}>
           <InputName>Complemento</InputName>
           <InputMenu
-            autoCapitalize="characters"
             autoCorrect={false}
             maxLength={45}
             selected={!!complement}

@@ -36,7 +36,7 @@ export default function EditAddress({ navigation, route }) {
 
   return (
     <>
-      <Validation title="Digite o seu endereço" />
+      <Validation title="Altere os dados do seu endereço" />
 
       <Container
         contentContainerStyle={{
