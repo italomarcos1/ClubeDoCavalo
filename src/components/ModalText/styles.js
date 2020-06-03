@@ -1,11 +1,5 @@
 import styled from 'styled-components/native';
-import { RectButton } from 'react-native-gesture-handler';
-import {
-  TouchableHighlight,
-  TouchableOpacity,
-  Image as RNImage,
-  FlatList,
-} from 'react-native';
+import { TouchableHighlight } from 'react-native';
 
 export const Container = styled.View`
   background: #fff;
@@ -22,29 +16,6 @@ export const HeaderText = styled.Text`
   font-size: 16px;
   color: #000;
   text-align: center;
-`;
-
-export const List = styled(FlatList).attrs({
-  showsHorizontalScrollIndicator: false,
-})``;
-
-export const ContainerList = styled.View`
-  flex: 1;
-  flex-direction: column;
-`;
-
-export const ItemList = styled(TouchableOpacity)`
-  width: 90%;
-  margin: 0 auto 20px;
-  padding: 0 5px;
-  border: 3px dashed;
-  border-color: ${props => (props.selected ? '#e23333' : 'transparent')};
-  border-radius: 1px;
-`;
-
-export const Image = styled(RNImage)`
-  height: 220px;
-  width: 100%;
 `;
 
 export const Bottom = styled.View`
@@ -84,4 +55,69 @@ export const ConfirmButton = styled(TouchableHighlight)`
 export const ButtonText = styled.Text`
   font-size: 16px;
   color: #fff;
+`;
+
+export const TextContainer = styled.View`
+  flex: 1;
+  padding: 0 0 20px;
+`;
+
+export const Input = styled.TextInput.attrs({
+  placeholderTextColor: '#dcdcdc',
+})`
+  border: 1px solid #dcdcdc;
+  border-radius: 50px;
+  height: 40px;
+  padding: 0 10px;
+  text-align: center;
+  font-size: 16px;
+  margin: 0 20px 20px;
+`;
+
+export const ColorsContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  justify-content: space-evenly;
+`;
+
+export const Color = styled.TouchableOpacity`
+  height: 35px;
+  width: 35px;
+  border-radius: 50px;
+  background-color: ${props => props.color};
+  border: 3px dotted;
+  border-color: ${props => (props.selected ? '#FF1C1C' : '#efefef')};
+`;
+
+export const FontPickerContainer = styled.View`
+  flex: 1;
+`;
+
+export const FontPickerTitle = styled.Text`
+  font-family: 'Colibri';
+  align-self: center;
+  font-size: 16;
+  color: #111;
+`;
+
+export const FontPickerList = styled.FlatList`
+  margin-top: 10px;
+`;
+
+export const FontPickerItem = styled.TouchableOpacity`
+  background-color: #f6f6f6;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  height: 45px;
+  width: 100%;
+  border: 3px dashed;
+  border-color: ${props => (props.selected ? '#e23333' : 'transparent')};
+  border-radius: 1px;
+`;
+
+export const FontPickerText = styled.Text`
+  color: #111;
+  font-size: 20px;
 `;

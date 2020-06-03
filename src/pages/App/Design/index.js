@@ -31,6 +31,7 @@ import ConfirmationIcon from '~/assets/ico-confirm.svg';
 import Header from '~/components/Header';
 import Modal from '~/components/Modal';
 import ModalColor from '~/components/ModalColor';
+import ModalText from '~/components/ModalText';
 import CustomList from '~/components/List';
 import FontPicker from '~/components/FontPicker';
 
@@ -202,7 +203,8 @@ export default function Design({ navigation }) {
 
   // modais
   const [visibleStickerModal, setStickerModalVisible] = useState(false);
-  const [visibleTextModal, setTextModalVisible] = useState(false);
+  const [visibleModalText, setVisibleModalText] = useState(false);
+  const [visibleModalText2, setVisibleModalText2] = useState(false);
   const [visibleUploadingModal, setUploadingModalVisible] = useState(false);
   const [visibleModalColor, setVisibleModalColor] = useState(false);
   const [visibleShirtDetails, setVisibleShirtDetails] = useState(false);
@@ -670,7 +672,11 @@ export default function Design({ navigation }) {
           <StickerIcon height={40} width={40} />
         </BottomButton>
 
-        <BottomButton onPress={() => setTextModalVisible(true)}>
+        <BottomButton onPress={() => setVisibleModalText(true)}>
+          <TextIcon height={40} width={40} />
+        </BottomButton>
+
+        <BottomButton onPress={() => setVisibleModalText2(true)}>
           <TextIcon height={40} width={40} />
         </BottomButton>
       </Bottom>
@@ -699,10 +705,10 @@ export default function Design({ navigation }) {
       </Modal>
 
       <RNModal // selecionar texto
-        visible={visibleTextModal}
+        visible={visibleModalText}
         animationType="slide"
         transparent
-        onRequestClose={() => setTextModalVisible(false)}
+        onRequestClose={() => setVisibleModalText(false)}
       >
         <CustomView style={{ alignItems: 'center', justifyContent: 'center' }}>
           <FontMenu>
@@ -721,7 +727,7 @@ export default function Design({ navigation }) {
               onSubmitEditing={() => {
                 setSelected('frase');
                 setText(text);
-                setTextModalVisible(false);
+                setVisibleModalText(false);
               }}
               underlineColorAndroid="transparent"
             />
@@ -773,7 +779,7 @@ export default function Design({ navigation }) {
               <FontPicker // lista de fontes
                 example="A frase fica assim"
                 setFont={value => setFont(value)}
-                done={() => setTextModalVisible(false)}
+                done={() => setVisibleModalText(false)}
               />
             </FontList>
           </FontMenu>
@@ -808,6 +814,26 @@ export default function Design({ navigation }) {
           redirect={redirectToShoppingBag}
         />
       </RNModal>
+
+      <ModalText
+        visible={visibleModalText2}
+        onCancelPress={() => setVisibleModalText2(false)}
+        setColor={value => setColor(value)}
+        text={text}
+        done={(
+          currentTextColor,
+          currentTextFont,
+          currentTextSize,
+          currentText
+        ) => {
+          setColor(currentTextColor);
+          setFont(currentTextFont);
+          setSize(currentTextSize);
+          setText(currentText);
+          setSelected('frase');
+          setVisibleModalText2(false);
+        }}
+      />
 
       <ModalColor // modal de selecionar cores da camiseta
         visible={visibleModalColor}
