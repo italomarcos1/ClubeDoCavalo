@@ -11,6 +11,8 @@ export const ShirtContainer = styled.View`
   flex: 1;
   max-height: 70%;
   justify-content: space-evenly;
+  align-items: center;
+  padding: 0 20px;
 `;
 
 export const Item = styled.TouchableOpacity`
@@ -50,9 +52,9 @@ export const FareDetails = styled.View`
 `;
 
 export const CheckoutContainer = styled.View`
-  flex: 1;
   width: 100%;
-  max-height: 70px;
+  height: 130px;
+  background-color: #85d1f3;
   justify-content: flex-end;
 `;
 
@@ -67,8 +69,8 @@ export const Amount = styled.View`
 `;
 
 export const FinalPrice = styled.View`
-  width: 90px;
-  height: 40px;
+  width: 125px;
+  height: 30px;
   flex-direction: row;
   background-color: #85d193;
   justify-content: center;
@@ -83,7 +85,7 @@ export const Price = styled.Text`
 
 export const FinishButton = styled.TouchableOpacity`
   width: 100%;
-  height: 60px;
+  height: 70px;
   background-color: #12b118;
   justify-content: center;
   align-items: center;

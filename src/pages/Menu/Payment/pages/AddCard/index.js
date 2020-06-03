@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Text, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -18,6 +18,24 @@ export default function AddCard({ navigation }) {
   const cvvRef = useRef();
   const nameRef = useRef();
 
+  useEffect(() => {
+    if (cardNumber.length === 19) {
+      expireDateRef.current.focus();
+    }
+  }, [cardNumber]);
+
+  useEffect(() => {
+    if (expireDate.length === 5) {
+      cvvRef.current.focus();
+    }
+  }, [expireDate]);
+
+  useEffect(() => {
+    if (cvv.length === 3) {
+      nameRef.current.focus();
+    }
+  }, [cvv]);
+
   console.tron.log(!!cardNumber && !!expireDate && !!cvv && !!name);
 
   return (
@@ -33,7 +51,7 @@ export default function AddCard({ navigation }) {
             card
             autoFocus
             autoCorrect={false}
-            maxLength={20}
+            maxLength={19}
             keyboardType="numeric"
             placeholder="5555 5555 5555 5555"
             value={cardNumber}
@@ -49,8 +67,9 @@ export default function AddCard({ navigation }) {
             <InputMenu
               style={{ flex: 1, maxWidth: 300, maxHeight: 45 }}
               help
-              maxLength={4}
+              maxLength={5}
               autoCapitalize="characters"
+              keyboardType="phone-pad"
               autoCorrect={false}
               placeholder="MM/AA"
               ref={expireDateRef}

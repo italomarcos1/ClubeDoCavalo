@@ -16,6 +16,7 @@ export const ValidationCodeInput = styled.TextInput`
   text-align: left;
   color: #3a3a3a;
   font-size: 22px;
+  text-align: center;
 `;
 
 export const ValidationContainer = styled.View`

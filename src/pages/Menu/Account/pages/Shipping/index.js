@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Feather';
@@ -18,32 +18,46 @@ Icon.loadFont();
 export default function Shipping({ navigation }) {
   const [selectedAddress, setSelectedAddress] = useState('Casa');
 
-  const [addresses1, setAddresses1] = useState([]);
+  const [addresses, setAddresses] = useState([]);
 
-  const addresses = [
-    {
-      id: 1,
-      name: 'Casa',
-      cep: '95880-000',
-      number: '470',
-      street: 'Rua São Pedro',
-      complement: 'Apt. 104',
-      city: 'Estrela',
-      state: 'RS',
-      phone: '(34) 99580-7642',
+  const handleDeleteAddress = useCallback(
+    id => {
+      if (addresses.length === 1) {
+        setAddresses([]);
+      } else {
+        setAddresses(addresses.filter(address => address.id !== id));
+      }
     },
-    {
-      id: 2,
-      name: 'Trabalho',
-      cep: '71680-172',
-      number: '43',
-      street: 'Rua São Lucas',
-      complement: 'Casa 2',
-      city: 'Samambaia',
-      state: 'DF',
-      phone: '(77) 99580-7642',
-    },
-  ];
+    [addresses]
+  );
+
+  useEffect(() => {
+    setAddresses([
+      {
+        id: 1,
+        name: 'Casa',
+        cep: '95880-000',
+        number: '470',
+        street: 'Rua São Pedro',
+        complement: 'Apt. 104',
+        city: 'Estrela',
+        state: 'RS',
+        phone: '(34) 99580-7642',
+      },
+      {
+        id: 2,
+        name: 'Trabalho',
+        cep: '71680-172',
+        number: '43',
+        street: 'Rua São Lucas',
+        complement: 'Casa 2',
+        city: 'Samambaia',
+        state: 'DF',
+        phone: '(77) 99580-7642',
+      },
+    ]);
+  }, []);
+  console.tron.log(addresses);
   return (
     <Container>
       {addresses.map(address => (
@@ -66,7 +80,7 @@ export default function Shipping({ navigation }) {
             <AddressInfoField>{address.phone}</AddressInfoField>
           </AddressInfo>
           <SideContainer>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => handleDeleteAddress(address.id)}>
               <Icon
                 name="trash-2"
                 color="#404040"
@@ -83,7 +97,14 @@ export default function Shipping({ navigation }) {
         </Address>
       ))}
       <AddNewAddressButton onPress={() => navigation.navigate('AddNewAddress')}>
-        <Icon name="plus" color="#9F9F9F" size={60} />
+        {addresses !== [] ? (
+          <Icon name="plus" color="#9F9F9F" size={60} />
+        ) : (
+          <Text>
+            Você ainda não tem endereços adicionados. Clique aqui para
+            adicionar.
+          </Text>
+        )}
       </AddNewAddressButton>
     </Container>
   );
