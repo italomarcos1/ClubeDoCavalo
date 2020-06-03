@@ -5,7 +5,6 @@ export const Container = styled.View`
   background: #fff;
   flex: 1;
   padding-top: 20px;
-  padding-bottom: 20px;
   padding-left: 5px;
   padding-right: 5px;
   position: relative;
@@ -43,7 +42,6 @@ export const TopButtonsContainer = styled.View`
   width: 100%;
   margin: 0 5px;
   top: 20px;
-  display: flex;
   flex-direction: row;
   justify-content: center;
 `;
@@ -52,6 +50,7 @@ export const ActionButton = styled(TouchableOpacity)`
   background: ${props => (props.active ? '#E58230' : '#fff')};
   border: 1px solid ${props => (props.active ? '#E58230' : '#dcdcdc')};
   border-radius: 50px;
+  display: ${props => (props.visible ? 'none' : 'flex')};
   padding: 8px 20px;
   align-items: center;
   margin: 0 10px;
@@ -67,6 +66,7 @@ export const AddToCart = styled(TouchableOpacity)`
   background: #5bae59;
   border-radius: 50px;
   padding: 10px 20px;
+  display: ${props => (props.visible ? 'none' : 'flex')};
   width: 260px;
   align-items: center;
   margin: 10px 0;

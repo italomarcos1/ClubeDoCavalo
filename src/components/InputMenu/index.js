@@ -6,11 +6,11 @@ import { Container, CustomInput } from './styles';
 Icon.loadFont();
 
 function InputMenu(
-  { card = false, help = false, clear, style = {}, ...rest },
+  { card = false, help = false, clear, style = {}, selected, ...rest },
   ref
 ) {
   return (
-    <Container style={style}>
+    <Container selected={selected} style={style}>
       {card && (
         <Icon
           name="credit-card"

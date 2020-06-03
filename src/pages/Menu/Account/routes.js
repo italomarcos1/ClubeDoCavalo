@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
+import PropTypes from 'prop-types';
 import Account from './index';
 
 import Phone from './pages/Phone';
@@ -11,19 +12,26 @@ import Mail from './pages/Mail';
 import Gender from './pages/Gender';
 import Pass from './pages/Pass';
 import Shipping from './pages/Shipping';
-// import AddNewAddress from './pages/Shipping/AddNewAddress';
+import AddNewAddress from './pages/Shipping/AddNewAddress';
+import EditAddress from './pages/Shipping/EditAddress';
 
 import Header from '~/components/HeaderMenu';
 
 Icon.loadFont();
 
-export default function Routes() {
+export default function Routes({ navigation }) {
   const Stack = createStackNavigator(); // abrir como um modal talvez, já retorna pro drawer
+
+  const exit = () => {
+    navigation.goBack();
+    navigation.openDrawer();
+  };
+
   return (
     <Stack.Navigator
       initialRouteName="Account"
       screenOptions={({ navigation }) => ({
-        header: () => <Header title="Editar conta" close={() => {}} />,
+        header: () => <Header title="Editar conta" close={exit} />,
       })}
     >
       <Stack.Screen name="Account" component={Account} />
@@ -89,6 +97,34 @@ export default function Routes() {
           ),
         })}
       />
+      <Stack.Screen
+        name="AddNewAddress"
+        component={AddNewAddress}
+        options={({ navigation }) => ({
+          header: () => (
+            <Header
+              title="Adicionar endereço"
+              close={() => navigation.goBack()}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="EditAddress"
+        component={EditAddress}
+        options={({ navigation }) => ({
+          header: () => (
+            <Header title="Editar endereço" close={() => navigation.goBack()} />
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 }
+
+Routes.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+    openDrawer: PropTypes.func,
+  }).isRequired,
+};

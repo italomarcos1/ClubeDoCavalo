@@ -3,17 +3,17 @@ import { View, Text } from 'react-native';
 
 // import { Container } from './styles';
 
-export default function Help() {
+export default function Success() {
   return (
     <View
       style={{
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#333',
+        backgroundColor: '#7159c1',
       }}
     >
-      <Text style={{ fontSize: 28, color: '#eee' }}>Help</Text>
+      <Text style={{ fontSize: 28, color: '#eee' }}>Compra realizada!</Text>
     </View>
   );
 }

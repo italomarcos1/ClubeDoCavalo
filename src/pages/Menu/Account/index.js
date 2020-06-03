@@ -1,31 +1,62 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
+import PropTypes from 'prop-types';
+import ImagePicker from 'react-native-image-picker';
+import Toast from 'react-native-tiny-toast';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { Avatar, ImageContainer, Item, Field, Value } from './styles';
+import {
+  Avatar,
+  AvatarContainer,
+  ChoosePhotoButton,
+  ImageContainer,
+  Item,
+  Field,
+  Value,
+} from './styles';
 
 export default function Account({ navigation }) {
+  const [profilePhoto, setProfilePhoto] = useState(
+    'https://api.adorable.io/avatars/90/abott@adorable.png'
+  );
+
+  const handleChoosePhoto = useCallback(() => {
+    const options = {
+      title: 'Selecionar imagem',
+      cancelButtonTitle: 'Cancelar',
+      takePhotoButtonTitle: 'Tirar foto',
+      chooseFromLibraryButtonTitle: 'Selecionar imagem da galeria',
+      mediaType: 'photo',
+    };
+
+    ImagePicker.showImagePicker(options, image => {
+      if (image.error) Toast.show('Erro ao selecionar a imagem.');
+      else {
+        console.tron.log('lel');
+        const photo = `data:image/jpeg;base64,${image.data}`;
+        setProfilePhoto(photo);
+      }
+    });
+  }, []);
+
   return (
     <>
       <ImageContainer>
-        <Avatar
-          source={{
-            uri: 'https://api.adorable.io/avatars/50/abott@adorable.png',
-          }}
-        />
-        <View
-          style={{
-            top: -20,
-            width: 35,
-            height: 35,
-            borderRadius: 17.5,
-            backgroundColor: 'black',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <AvatarContainer>
+          <Avatar
+            style={{ width: 90, height: 90 }}
+            source={{
+              uri:
+                profilePhoto !== ''
+                  ? profilePhoto
+                  : 'https://api.adorable.io/avatars/50/profile@adorable.png',
+            }}
+          />
+        </AvatarContainer>
+
+        <ChoosePhotoButton onPress={handleChoosePhoto}>
           <Icon name="camera" color="#fff" size={22} />
-        </View>
+        </ChoosePhotoButton>
       </ImageContainer>
       <View style={{ flex: 1, paddingBottom: 15 }}>
         <Item onPress={() => {}}>
@@ -63,3 +94,9 @@ export default function Account({ navigation }) {
     </>
   );
 }
+
+Account.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

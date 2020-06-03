@@ -1,75 +1,97 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Feather';
-import { Container, Data } from './styles';
+import {
+  Container,
+  Address,
+  AddressInfo,
+  AddressInfoField,
+  AddNewAddressButton,
+  SideContainer,
+} from './styles';
 
 import { RadioButtonBackground, Selected } from '../Gender/styles';
 
 Icon.loadFont();
 
 export default function Shipping({ navigation }) {
+  const [selectedAddress, setSelectedAddress] = useState('Casa');
+
+  const [addresses1, setAddresses1] = useState([]);
+
+  const addresses = [
+    {
+      id: 1,
+      name: 'Casa',
+      cep: '95880-000',
+      number: '470',
+      street: 'Rua São Pedro',
+      complement: 'Apt. 104',
+      city: 'Estrela',
+      state: 'RS',
+      phone: '(34) 99580-7642',
+    },
+    {
+      id: 2,
+      name: 'Trabalho',
+      cep: '71680-172',
+      number: '43',
+      street: 'Rua São Lucas',
+      complement: 'Casa 2',
+      city: 'Samambaia',
+      state: 'DF',
+      phone: '(77) 99580-7642',
+    },
+  ];
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#F2F3F4',
-        alignItems: 'center',
-        padding: 10,
-      }}
-    >
-      <Container onPress={() => console.tron.log('lel')}>
-        <View
-          style={{
-            height: 130,
-            width: 19,
-            paddingVertical: 5,
-          }}
+    <Container>
+      {addresses.map(address => (
+        <Address
+          key={String(address.id)}
+          onPress={() => setSelectedAddress(address.name)}
         >
-          <RadioButtonBackground>
-            <Selected selected={true} />
-          </RadioButtonBackground>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            height: 120,
-            paddingHorizontal: 10,
-            alignSelf: 'flex-start',
-            justifyContent: 'space-around',
-          }}
-        >
-          <Text style={{ fontWeight: 'bold' }}>Casa</Text>
-          <Text style={{ color: '#9F9F9F' }}>Rua São Pedro 470</Text>
-          <Text style={{ color: '#9F9F9F' }}>95880-000 Estrela RS</Text>
-          <Text style={{ color: '#9F9F9F' }}>Mobile: (34) 99580-7642</Text>
-        </View>
-        <View
-          style={{
-            height: 130,
-            width: 19,
-            paddingVertical: 5,
-          }}
-        >
-          <Icon
-            name="trash-2"
-            color="#404040"
-            size={18}
-            style={{ marginBottom: 20 }}
-          />
-          <Icon name="edit-2" color="#404040" size={18} />
-        </View>
-      </Container>
-      <Container
-        onPress={() => navigation.navigate('AddNewAddress')}
-        style={{
-          marginTop: 10,
-          justifyContent: 'center',
-          borderWidth: 1,
-          borderColor: '#ddd',
-        }}
-      >
+          <SideContainer>
+            <RadioButtonBackground>
+              <Selected selected={selectedAddress === address.name} />
+            </RadioButtonBackground>
+          </SideContainer>
+          <AddressInfo>
+            <Text style={{ fontWeight: 'bold' }}>{address.name}</Text>
+            <AddressInfoField>{`${address.street} ${address.number}`}</AddressInfoField>
+            <AddressInfoField>
+              {`${address.cep} ${address.city} - ${address.state}`}
+            </AddressInfoField>
+            <AddressInfoField>{address.complement}</AddressInfoField>
+            <AddressInfoField>{address.phone}</AddressInfoField>
+          </AddressInfo>
+          <SideContainer>
+            <TouchableOpacity onPress={() => {}}>
+              <Icon
+                name="trash-2"
+                color="#404040"
+                size={18}
+                style={{ marginBottom: 20 }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('EditAddress', { address })}
+            >
+              <Icon name="edit-2" color="#404040" size={18} />
+            </TouchableOpacity>
+          </SideContainer>
+        </Address>
+      ))}
+      <AddNewAddressButton onPress={() => navigation.navigate('AddNewAddress')}>
         <Icon name="plus" color="#9F9F9F" size={60} />
-      </Container>
-    </View>
+      </AddNewAddressButton>
+    </Container>
   );
 }
+
+Shipping.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+    navigate: PropTypes.func,
+  }).isRequired,
+};

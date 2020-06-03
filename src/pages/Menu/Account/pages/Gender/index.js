@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
 import PropTypes from 'prop-types';
 
 import {
   Container,
+  Option,
   OptionsContainer,
   Selected,
   RadioButtonBackground,
@@ -13,38 +13,35 @@ import {
 import ButtonMenu from '~/components/ButtonMenu';
 
 export default function Gender({ navigation }) {
-  const [gender, setGender] = useState('Masculino'); // habilitar pro valor retornado no 'useSelector'
+  // habilitar pro valor retornado no 'useSelector'
+  // puxar valor do perfil no redux. com o hook 'useSelector'
+  // action para atualizar esse campo
+  // assim, a preferência das camisetas no design será baseado nisso
+  const [gender, setGender] = useState('Masculino');
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#F2F3F4',
-        alignItems: 'center',
-        padding: 20,
-      }}
-    >
+    <Container>
       <OptionsContainer>
-        <Container onPress={() => setGender('Masculino')}>
+        <Option onPress={() => setGender('Masculino')}>
           <RadioButtonBackground>
             <Selected selected={gender === 'Masculino'} />
           </RadioButtonBackground>
           <RadioText>Masculino</RadioText>
-        </Container>
+        </Option>
 
-        <Container onPress={() => setGender('Feminino')}>
+        <Option onPress={() => setGender('Feminino')}>
           <RadioButtonBackground>
             <Selected selected={gender === 'Feminino'} />
           </RadioButtonBackground>
           <RadioText>Feminino</RadioText>
-        </Container>
+        </Option>
 
-        <Container onPress={() => setGender('Outro')}>
+        <Option onPress={() => setGender('Outro')}>
           <RadioButtonBackground>
             <Selected selected={gender === 'Outro'} />
           </RadioButtonBackground>
           <RadioText>Outro</RadioText>
-        </Container>
+        </Option>
       </OptionsContainer>
       <ButtonMenu
         onPress={() => navigation.goBack()}
@@ -52,7 +49,7 @@ export default function Gender({ navigation }) {
       >
         Gravar
       </ButtonMenu>
-    </View>
+    </Container>
   );
 }
 

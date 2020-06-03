@@ -18,6 +18,12 @@ export const Item = styled.TouchableOpacity`
 `;
 
 export const Option = styled.Text`
+  flex: 1;
+  align-items: flex-start;
+  padding: 0 10px;
+`;
+
+export const OptionText = styled.Text`
   color: #000;
   font-size: 16px;
 `;

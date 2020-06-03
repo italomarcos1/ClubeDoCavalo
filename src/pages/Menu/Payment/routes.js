@@ -1,24 +1,29 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
-import Payment from './index';
+import PropTypes from 'prop-types';
 
+import Payment from './index';
 import AddCard from './pages/AddCard';
 import ChooseCard from './pages/ChooseCard';
 
 import Header from '~/components/HeaderMenu';
 
-// import { Container } from './styles';
-
 Icon.loadFont();
 
-export default function Routes() {
+export default function Routes({ navigation }) {
   const Stack = createStackNavigator(); // abrir como um modal talvez, já retorna pro drawer
+
+  const exit = () => {
+    navigation.goBack();
+    navigation.openDrawer();
+  };
+
   return (
     <Stack.Navigator
       initialRouteName="Payment"
-      screenOptions={({ navigation }) => ({
-        header: () => <Header title="Pagamento" close={() => {}} />,
+      screenOptions={() => ({
+        header: () => <Header title="Pagamento" close={exit} />,
       })}
     >
       <Stack.Screen name="Payment" component={Payment} />
@@ -46,3 +51,10 @@ export default function Routes() {
     </Stack.Navigator>
   );
 }
+
+Routes.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+    openDrawer: PropTypes.func,
+  }).isRequired,
+};

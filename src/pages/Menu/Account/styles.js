@@ -9,6 +9,16 @@ export const ImageContainer = styled.View`
   background-color: #3b8e39;
 `;
 
+export const AvatarContainer = styled.View`
+  position: relative;
+  width: 90px;
+  align-items: center;
+  justify-content: center;
+  height: 90px;
+  border-radius: 45px;
+  border-color: #fff;
+  border-width: 2px;
+`;
 export const Avatar = styled.Image`
   position: relative;
   width: 90px;
@@ -25,6 +35,16 @@ export const Item = styled.TouchableOpacity`
   align-items: flex-start;
   justify-content: space-evenly;
   padding: 2px 0px 2px 20px;
+`;
+
+export const ChoosePhotoButton = styled.TouchableOpacity`
+  top: -20px;
+  width: 35px;
+  height: 35px;
+  border-radius: 17.5px;
+  background-color: #000;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Field = styled.Text`

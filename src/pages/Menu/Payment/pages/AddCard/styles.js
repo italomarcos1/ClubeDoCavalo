@@ -1,10 +1,9 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
   background-color: #fff;
   padding: 10px 20px;
-  align-items: center;
 `;
 export const InputContainer = styled.View`
   flex-direction: column;
