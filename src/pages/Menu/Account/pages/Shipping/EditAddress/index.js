@@ -13,14 +13,19 @@ import {
   CustomView,
 } from '../../../../Payment/pages/AddCard/styles';
 
-export default function AddNewAddress({ navigation }) {
-  const [name, setName] = useState('');
-  const [cep, setCep] = useState('');
-  const [number, setNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [complement, setComplement] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+export default function EditAddress({ navigation, route }) {
+  const addressInfo = route.params.address;
+
+  // estático. deve puxar esse campo do redux e atualizar por action
+  // não será necessário mandar o dado do usuário na rota
+
+  const [name, setName] = useState(addressInfo.name);
+  const [cep, setCep] = useState(addressInfo.cep);
+  const [number, setNumber] = useState(addressInfo.number);
+  const [address, setAddress] = useState(addressInfo.street);
+  const [complement, setComplement] = useState(addressInfo.complement);
+  const [city, setCity] = useState(addressInfo.city);
+  const [state, setState] = useState(addressInfo.state);
 
   const cepRef = useRef();
   const numberRef = useRef();
@@ -47,7 +52,7 @@ export default function AddNewAddress({ navigation }) {
             autoFocus
             selected={!!name}
             autoCorrect={false}
-            maxLength={25}
+            maxLength={20}
             clear={() => setName('')}
             value={name}
             onChangeText={setName}
@@ -77,7 +82,7 @@ export default function AddNewAddress({ navigation }) {
           <InputContainer style={{ flex: 1, marginLeft: 20 }}>
             <InputName>Número</InputName>
             <InputMenu
-              maxLength={5}
+              maxLength={4}
               selected={!!number}
               autoCorrect={false}
               keyboardType="numeric"
@@ -171,14 +176,14 @@ export default function AddNewAddress({ navigation }) {
           onPress={() => navigation.goBack()}
           style={{ marginTop: 20 }}
         >
-          Adicionar Endereço
+          Salvar alterações
         </ButtonMenu>
       </Container>
     </>
   );
 }
 
-AddNewAddress.propTypes = {
+EditAddress.propTypes = {
   navigation: PropTypes.shape({
     goBack: PropTypes.func,
   }).isRequired,

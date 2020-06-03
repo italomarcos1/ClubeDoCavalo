@@ -33,7 +33,7 @@ export default function AddCard({ navigation }) {
             card
             autoFocus
             autoCorrect={false}
-            maxLength={16}
+            maxLength={20}
             keyboardType="numeric"
             placeholder="5555 5555 5555 5555"
             value={cardNumber}

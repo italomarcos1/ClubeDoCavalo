@@ -13,6 +13,7 @@ import Gender from './pages/Gender';
 import Pass from './pages/Pass';
 import Shipping from './pages/Shipping';
 import AddNewAddress from './pages/Shipping/AddNewAddress';
+import EditAddress from './pages/Shipping/EditAddress';
 
 import Header from '~/components/HeaderMenu';
 
@@ -105,6 +106,15 @@ export default function Routes({ navigation }) {
               title="Adicionar endereço"
               close={() => navigation.goBack()}
             />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="EditAddress"
+        component={EditAddress}
+        options={({ navigation }) => ({
+          header: () => (
+            <Header title="Editar endereço" close={() => navigation.goBack()} />
           ),
         })}
       />

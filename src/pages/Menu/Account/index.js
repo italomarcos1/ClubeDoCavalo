@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { Image, View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
+import PropTypes from 'prop-types';
 import ImagePicker from 'react-native-image-picker';
 import Toast from 'react-native-tiny-toast';
 import Icon from 'react-native-vector-icons/Feather';
@@ -7,6 +8,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import {
   Avatar,
   AvatarContainer,
+  ChoosePhotoButton,
   ImageContainer,
   Item,
   Field,
@@ -52,20 +54,9 @@ export default function Account({ navigation }) {
           />
         </AvatarContainer>
 
-        <TouchableOpacity
-          onPress={handleChoosePhoto}
-          style={{
-            top: -20,
-            width: 35,
-            height: 35,
-            borderRadius: 17.5,
-            backgroundColor: 'black',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <ChoosePhotoButton onPress={handleChoosePhoto}>
           <Icon name="camera" color="#fff" size={22} />
-        </TouchableOpacity>
+        </ChoosePhotoButton>
       </ImageContainer>
       <View style={{ flex: 1, paddingBottom: 15 }}>
         <Item onPress={() => {}}>
@@ -103,3 +94,9 @@ export default function Account({ navigation }) {
     </>
   );
 }
+
+Account.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

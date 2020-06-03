@@ -37,6 +37,16 @@ export const Item = styled.TouchableOpacity`
   padding: 2px 0px 2px 20px;
 `;
 
+export const ChoosePhotoButton = styled.TouchableOpacity`
+  top: -20px;
+  width: 35px;
+  height: 35px;
+  border-radius: 17.5px;
+  background-color: #000;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Field = styled.Text`
   color: #818181;
   font-size: 11px;

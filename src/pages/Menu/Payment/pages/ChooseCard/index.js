@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Feather';
@@ -7,16 +7,33 @@ import Toast from 'react-native-tiny-toast';
 import { Container, Item, Option } from '../../styles';
 
 export default function ChooseCard({ navigation }) {
-  const [cards, setCards] = useState([
-    { id: 1, number: '5412 5412 5412 5412' },
-    { id: 2, number: '4432 4432 4432 4432' },
-  ]);
+  const [cards, setCards] = useState([]);
 
-  const deleteCard = useCallback(id => {
-    if (cards.length === 1)
-      Toast.show('Você deve ter no mínimo um cartão de crédito adicionado.');
-    else setCards(cards.filter(card => card.id !== id));
+  useEffect(() => {
+    setCards([
+      { id: 1, number: '5412 1254 1412 5412' },
+      { id: 2, number: '4432 9321 1432 4436' },
+      { id: 3, number: '9432 1732 4432 3431' },
+      { id: 4, number: '2432 1432 9432 7439' },
+      { id: 5, number: '8432 6432 2432 4435' },
+    ]);
   }, []);
+
+  console.tron.log(cards);
+
+  const deleteCard = useCallback(
+    id => {
+      if (cards.length === 1) {
+        console.tron.log('lel');
+
+        setCards([]);
+      } else {
+        const filtered = cards.filter(card => card.id !== id);
+        setCards(filtered);
+      }
+    },
+    [cards]
+  );
 
   return (
     <Container>

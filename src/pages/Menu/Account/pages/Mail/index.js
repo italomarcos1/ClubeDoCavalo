@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
-// import { Container } from './styles';
+import { Text, TouchableOpacity, Keyboard } from 'react-native';
+import Toast from 'react-native-tiny-toast';
 import Icon from 'react-native-vector-icons/Feather';
 
 import Validation from '~/components/Validation';
 
-import { ValidationContainer, ValidationCodeInput } from './styles';
+import {
+  Container,
+  CodeSentText,
+  ValidationContainer,
+  ValidationCodeInput,
+  ResendCodeText,
+} from './styles';
 
 Icon.loadFont();
 
-export default function Mail({ navigation }) {
+export default function Mail() {
   const [code1, setCode1] = useState('');
   const [code2, setCode2] = useState('');
   const [code3, setCode3] = useState('');
@@ -27,35 +33,15 @@ export default function Mail({ navigation }) {
   return (
     <>
       <Validation title="Digite o número abaixo" />
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#fff',
-          padding: 20,
-          alignItems: 'center',
-          justifyContent: 'space-evenly',
-        }}
-      >
+      <Container>
         <Icon name="mail" color="#333" size={80} />
         <Text style={{ fontSize: 20, color: '#3A3A3A', alignSelf: 'center' }}>
           Verificação por email
         </Text>
 
-        <Text
-          numberOfLines={2}
-          style={{
-            marginTop: 5,
-            marginBottom: 5,
-            width: 230,
-            height: 60,
-            fontSize: 14,
-            color: '#596473',
-            alignSelf: 'center',
-            textAlign: 'center',
-          }}
-        >
+        <CodeSentText numberOfLines={2}>
           Código foi enviado para o seu email. Por favor verifique.
-        </Text>
+        </CodeSentText>
         <ValidationContainer>
           <ValidationCodeInput
             autoFocus
@@ -91,20 +77,14 @@ export default function Mail({ navigation }) {
             onSubmitEditing={() => {}}
           />
         </ValidationContainer>
-        <TouchableOpacity onPress={() => {}}>
-          <Text
-            style={{
-              marginBottom: 5,
-              marginTop: 5,
-              fontSize: 16,
-              color: '#D93150',
-              alignSelf: 'center',
-            }}
-          >
-            Reenviar em 30 segundos
-          </Text>
+        <TouchableOpacity
+          onPress={() =>
+            Toast.showSuccess('Um código foi enviado para seu Email.')
+          }
+        >
+          <ResendCodeText>Reenviar em 30 segundos</ResendCodeText>
         </TouchableOpacity>
-      </View>
+      </Container>
     </>
   );
 }

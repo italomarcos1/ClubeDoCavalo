@@ -1,6 +1,13 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled.View`
+  flex: 1;
+  background-color: #f2f3f4;
+  align-items: center;
+  padding: 20px;
+`;
+
+export const Option = styled.TouchableOpacity`
   width: 100%;
   height: 50px;
   align-items: center;
