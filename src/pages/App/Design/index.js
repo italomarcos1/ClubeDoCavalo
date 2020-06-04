@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { captureRef } from 'react-native-view-shot'; // tirar um screenshot
@@ -63,7 +63,7 @@ import {
   TypeInText,
 } from './styles';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
 
 Icon.loadFont();
 
@@ -343,6 +343,8 @@ export default function Design({ navigation }) {
       });
 
       setShirtPreview(uri);
+      console.tron.log(`uri preview: ${uri}`);
+
       await uploadShirt(id, uri);
     } catch (err) {
       Toast.show('Erro na captura da camiseta');
@@ -360,7 +362,11 @@ export default function Design({ navigation }) {
         name: `${photouri}.jpeg`,
       });
 
-      const { id } = await api.post('design-shirt/printables/sticker', upload); // envia pra api
+      const { id, url } = await api.post(
+        'design-shirt/printables/sticker',
+        upload
+      ); // envia pra api
+      console.tron.log(`url: ${url}`);
 
       await captureShirt(id); // tira print da camiseta
     } catch (err) {
@@ -372,7 +378,7 @@ export default function Design({ navigation }) {
   async function capturePic() {
     try {
       if (image === baseImg.uri) {
-        await captureShirt(33); // caso nao tenha adicionado imagem, printa com o sticker.
+        await captureShirt(31); // caso nao tenha adicionado imagem, printa com o sticker.
         // passa esse id pro campo 'id' do upload não ficar em branco
       } else {
         const uri = await captureRef(imgRef, {

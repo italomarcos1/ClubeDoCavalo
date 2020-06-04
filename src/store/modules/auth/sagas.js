@@ -1,7 +1,7 @@
 import { call, put, all, takeLatest } from 'redux-saga/effects';
 import Toast from 'react-native-tiny-toast';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
 
 import { signInSuccess, signFailure } from '~/store/modules/auth/actions';
 

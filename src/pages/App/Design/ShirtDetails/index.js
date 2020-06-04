@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import Icon from 'react-native-vector-icons/Feather';
+
 import Header from '~/components/HeaderMenu';
+
+import { addToShoppingBag } from '~/store/modules/shoppingbag/actions';
 
 import { Container, TShirtContainer, TShirtImage } from '../styles';
 import {
+  AddToShoppingBag,
+  AddToShoppingBagText,
   Details,
+  MainContainer,
+  CheckoutContainer,
   ShirtSize,
   ShirtSizeContainer,
   ShirtTypeContainer,
@@ -16,9 +25,28 @@ import {
 
 Icon.loadFont();
 
-export default function ShirtDetails({ close, shirt, redirect }) {
+export default function ShirtDetails({ close, shirt, color, redirect }) {
   const [size, setSize] = useState('M');
   const [type, setType] = useState('Masculino');
+  const [amount, setAmount] = useState(1);
+
+  const dispatch = useDispatch();
+
+  function addProduct() {
+    dispatch(
+      addToShoppingBag({
+        id: 2,
+        color: 'black',
+        size,
+        gender: type,
+        print: 'https://images.sportsdirect.com/images/products/37715018_l.jpg',
+        name: 'Manchester City',
+        amount,
+        price: '59,90',
+        currency: 'BRL',
+      })
+    );
+  }
 
   return (
     <>
@@ -26,114 +54,120 @@ export default function ShirtDetails({ close, shirt, redirect }) {
       <Container
         style={{
           flex: 1,
-          justifyContent: 'center',
+          paddingLeft: 0,
+          paddingTop: 0,
+          paddingRight: 0,
+          justifyContent: 'space-between',
         }}
       >
-        <TShirtContainer
-          style={{
-            marginTop: -20,
-            flex: 1,
-          }}
-        >
-          <TShirtImage
-            style={{ flex: 1 }}
-            source={{ uri: shirt }}
-            resizeMode="contain"
-          />
-        </TShirtContainer>
-        <Details>
-          <ShirtSizeContainer>
-            <ShirtSize onPress={() => setSize('P')} selected={size === 'P'}>
-              <Option selected={size === 'P'}>P</Option>
-            </ShirtSize>
-            <ShirtSize onPress={() => setSize('M')} selected={size === 'M'}>
-              <Option selected={size === 'M'}>M</Option>
-            </ShirtSize>
-            <ShirtSize onPress={() => setSize('G')} selected={size === 'G'}>
-              <Option selected={size === 'G'}>G</Option>
-            </ShirtSize>
-            <ShirtSize onPress={() => setSize('XL')} selected={size === 'XL'}>
-              <Option selected={size === 'XL'}>XL</Option>
-            </ShirtSize>
-            <ShirtSize onPress={() => setSize('XXL')} selected={size === 'XXL'}>
-              <Option selected={size === 'XXL'}>XXL</Option>
-            </ShirtSize>
-          </ShirtSizeContainer>
-          <ShirtTypeContainer>
-            <ShirtType
-              onPress={() => setType('Feminino')}
-              selected={type === 'Feminino'}
-            >
-              <Option selected={type === 'Feminino'}>Feminino</Option>
-            </ShirtType>
-            <ShirtType
-              onPress={() => setType('Masculino')}
-              selected={type === 'Masculino'}
-            >
-              <Option selected={type === 'Masculino'}>Masculino</Option>
-            </ShirtType>
-            <ShirtType
-              onPress={() => setType('Infantil')}
-              selected={type === 'Infantil'}
-            >
-              <Option selected={type === 'Infantil'}>Infantil</Option>
-            </ShirtType>
-          </ShirtTypeContainer>
-          <ShirtSizeContainer
+        <MainContainer>
+          <TShirtContainer
             style={{
-              height: 30,
-              justifyContent: 'space-around',
+              marginTop: -20,
+              flex: 1,
             }}
           >
-            <View
+            <TShirtImage
+              style={{ flex: 1 }}
+              source={{ uri: shirt }}
+              resizeMode="contain"
+            />
+          </TShirtContainer>
+          <Details>
+            <ShirtSizeContainer>
+              <ShirtSize onPress={() => setSize('P')} selected={size === 'P'}>
+                <Option selected={size === 'P'}>P</Option>
+              </ShirtSize>
+              <ShirtSize onPress={() => setSize('M')} selected={size === 'M'}>
+                <Option selected={size === 'M'}>M</Option>
+              </ShirtSize>
+              <ShirtSize onPress={() => setSize('G')} selected={size === 'G'}>
+                <Option selected={size === 'G'}>G</Option>
+              </ShirtSize>
+              <ShirtSize onPress={() => setSize('XL')} selected={size === 'XL'}>
+                <Option selected={size === 'XL'}>XL</Option>
+              </ShirtSize>
+              <ShirtSize
+                onPress={() => setSize('XXL')}
+                selected={size === 'XXL'}
+              >
+                <Option selected={size === 'XXL'}>XXL</Option>
+              </ShirtSize>
+            </ShirtSizeContainer>
+            <ShirtTypeContainer>
+              <ShirtType
+                onPress={() => setType('Feminino')}
+                selected={type === 'Feminino'}
+              >
+                <Option selected={type === 'Feminino'}>Feminino</Option>
+              </ShirtType>
+              <ShirtType
+                onPress={() => setType('Masculino')}
+                selected={type === 'Masculino'}
+              >
+                <Option selected={type === 'Masculino'}>Masculino</Option>
+              </ShirtType>
+              <ShirtType
+                onPress={() => setType('Infantil')}
+                selected={type === 'Infantil'}
+              >
+                <Option selected={type === 'Infantil'}>Infantil</Option>
+              </ShirtType>
+            </ShirtTypeContainer>
+            <ShirtSizeContainer
               style={{
-                width: 120,
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexDirection: 'row',
-                backgroundColor: '#FFF0F0',
+                height: 30,
+                justifyContent: 'space-around',
               }}
             >
-              <TouchableOpacity
-                onPress={() => {}}
-                style={{ paddingHorizontal: 5 }}
+              <View
+                style={{
+                  width: 120,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexDirection: 'row',
+                  backgroundColor: '#FFF0F0',
+                }}
               >
-                <Icon size={30} name="minus" color="#333" />
-              </TouchableOpacity>
-              <Text style={{ fontSize: 24, color: '#333' }}>1</Text>
-              <TouchableOpacity
-                onPress={() => {}}
-                style={{ paddingHorizontal: 5 }}
+                <TouchableOpacity
+                  disabled={amount === 1}
+                  onPress={() => {
+                    setAmount(amount - 1);
+                  }}
+                  style={{ paddingHorizontal: 5 }}
+                >
+                  <Icon size={30} name="minus" color="#333" />
+                </TouchableOpacity>
+                <Text style={{ fontSize: 24, color: '#333' }}>{amount}</Text>
+                <TouchableOpacity
+                  disabled={amount === 999}
+                  onPress={() => setAmount(amount + 1)}
+                  style={{ paddingHorizontal: 5 }}
+                >
+                  <Icon size={30} name="plus" color="#333" />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
               >
-                <Icon size={30} name="plus" color="#333" />
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text style={{ fontSize: 24, color: '#333' }}>R$ 49.99</Text>
-            </View>
-          </ShirtSizeContainer>
-        </Details>
-        <TouchableOpacity
-          onPress={redirect}
-          style={{
-            width: 300,
-            marginTop: 10,
-            height: 60,
-            backgroundColor: '#12b118',
-            alignItems: 'center',
-            alignSelf: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 20 }}>
-            Adicionar ao cesto
-          </Text>
-        </TouchableOpacity>
+                <Text style={{ fontSize: 24, color: '#333' }}>R$ 49.99</Text>
+              </View>
+            </ShirtSizeContainer>
+          </Details>
+        </MainContainer>
+        <CheckoutContainer>
+          <AddToShoppingBag
+            onPress={() => {
+              addProduct();
+              redirect();
+            }}
+          >
+            <AddToShoppingBagText>Adicionar ao cesto</AddToShoppingBagText>
+          </AddToShoppingBag>
+        </CheckoutContainer>
       </Container>
     </>
   );
