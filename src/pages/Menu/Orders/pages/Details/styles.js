@@ -5,13 +5,6 @@ export const Container = styled.ScrollView`
   background-color: #f2f3f4;
 `;
 
-export const ShirtInfo = styled.View`
-  flex: 1;
-  margin-left: 5px;
-  width: 100px;
-  justify-content: space-evenly;
-`;
-
 export const Content = styled.Text`
   font-weight: bold;
 `;
@@ -20,12 +13,43 @@ export const Value = styled.Text`
   color: #888888;
 `;
 
-export const Item = styled.View`
+export const Shirt = styled.View`
   width: 100%;
-  height: 200px;
+  height: 220px;
   background-color: #fff;
+  flex: 1;
   border-radius: 4px;
   padding: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ShirtImage = styled.Image.attrs({
+  resizeMode: 'contain',
+})`
+  width: 100px;
+  height: 100px;
+`;
+
+export const ShirtInfo = styled.View`
+  flex: 1;
+  margin-left: 5px;
+  height: 140px;
+  justify-content: space-evenly;
+`;
+export const Item = styled.View`
+  width: 100%;
+  height: 140px;
+  padding: 10px;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const Options = styled.View`
+  width: 300px;
+  height: 50px;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -54,13 +78,6 @@ export const ShippingDetails = styled.View`
   justify-content: flex-start;
   align-items: center;
   padding: 5px 10px;
-`;
-
-export const Shirt = styled.Image.attrs({
-  resizeMode: 'contain',
-})`
-  width: 100px;
-  height: 100px;
 `;
 
 export const AddItemToCart = styled.TouchableOpacity`

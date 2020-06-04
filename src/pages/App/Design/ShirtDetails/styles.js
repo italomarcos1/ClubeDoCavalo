@@ -15,6 +15,18 @@ export const ShirtSizeContainer = styled.View`
   justify-content: space-evenly;
 `;
 
+export const MainContainer = styled.View`
+  flex: 1;
+  padding: 10px 5px 0;
+`;
+
+export const CheckoutContainer = styled.View`
+  height: 60px;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
 export const ShirtSize = styled.TouchableOpacity`
   width: 45px;
   height: 45px;
@@ -41,6 +53,21 @@ export const ShirtType = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   padding: 2px 5px;
+`;
+
+export const AddToShoppingBag = styled.TouchableOpacity`
+  width: 100%;
+  height: 60px;
+  margin-top: 10px;
+  background-color: #12b118;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 5px;
+`;
+export const AddToShoppingBagText = styled.Text`
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
 `;
 
 export const Option = styled.Text`
