@@ -19,7 +19,7 @@ export function addAmount(id) {
   };
 }
 
-export function removeAmoun(id) {
+export function removeAmount(id) {
   return {
     type: '@shoppingbag/REMOVE_AMOUNT',
     payload: { id },
