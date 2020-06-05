@@ -14,17 +14,25 @@ export default function Success() {
       }}
     >
       <Icon name="check-circle" size={60} color="#3A3A3A" />
-      <Text style={{ fontSize: 28, marginVertical: 10, color: '#3A3A3A' }}>
+      <Text
+        style={{
+          fontSize: 28,
+          fontWeight: 'bold',
+          marginVertical: 10,
+          color: '#3A3A3A',
+        }}
+      >
         Parabéns!
       </Text>
       <Text
         numberOfLines={2}
         style={{
+          fontWeight: 'bold',
           marginTop: 10,
-          width: 250,
-          height: 60,
+          width: 260,
+          height: 70,
           fontSize: 16,
-          color: '#596473',
+          color: '#486473',
           textAlign: 'center',
         }}
       >

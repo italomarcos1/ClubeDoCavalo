@@ -14,6 +14,8 @@ export const ProductsList = styled.FlatList`
 export const NoProductsContainer = styled.View`
   flex: 1;
   align-items: center;
+  align-self: center;
+  margin-top: 100px;
   justify-content: center;
   text-align: center;
 `;
@@ -161,14 +163,14 @@ export const FareDetails = styled.View`
 
 export const CheckoutContainer = styled.View`
   width: 100%;
-  height: 130px;
+  height: 120px;
   background-color: #85d1f3;
   justify-content: flex-end;
 `;
 
 export const Amount = styled.View`
   width: 100%;
-  height: 60px;
+  height: 50px;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;

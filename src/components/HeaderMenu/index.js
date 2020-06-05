@@ -24,7 +24,6 @@ export default function Header({ title, close, custom }) {
         </TouchableOpacity>
         <Title custom={custom}>{title}</Title>
       </View>
-      {custom && <Icon name="shopping-bag" color="#000" size={25} />}
     </Container>
   );
 }
