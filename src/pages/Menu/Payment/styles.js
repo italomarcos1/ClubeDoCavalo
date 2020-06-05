@@ -28,6 +28,5 @@ export const Option = styled.View`
 
 export const OptionText = styled.Text`
   color: #000;
-  font-weight: bold;
   font-size: 16px;
 `;
