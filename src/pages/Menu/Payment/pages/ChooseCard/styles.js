@@ -8,26 +8,24 @@ export const Container = styled.View`
 
 export const Item = styled.TouchableOpacity`
   width: 100%;
-  height: 70px;
 
+  height: 70px;
   border-bottom-width: 0.5px;
   border-bottom-color: #d2d2d4;
-  padding: 0 5px 0 20px;
+  padding: 5px 5px 5px 20px;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
-export const Option = styled.View`
+export const Option = styled.Text`
   flex: 1;
   font-size: 18px;
-  padding: 10px;
-  justify-content: center;
-  align-items: flex-start;
+  font-weight: bold;
+  align-self: flex-start;
 `;
 
 export const OptionText = styled.Text`
   color: #000;
-  font-weight: bold;
   font-size: 16px;
 `;

@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import PropTypes from 'prop-types';
 import Header from '~/components/HeaderMenu';
-import HeaderDrawer from '~/components/Header';
 
 import ShoppingBag from './index';
 import Success from './pages/Success';

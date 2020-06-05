@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Feather';
 import Toast from 'react-native-tiny-toast';
 // import { Container } from './styles';
-import { Container, Item, Option } from '../../styles';
+import { Container, Item, Option } from './styles';
 
 export default function ChooseCard({ navigation }) {
   const [cards, setCards] = useState([]);

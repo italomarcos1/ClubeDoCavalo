@@ -27,9 +27,7 @@ export default function Payment({ navigation }) {
 
         <Item onPress={() => navigation.navigate('ChooseCard')}>
           <PayPal name="cc-paypal" color="#2C71B2" size={25} />
-          <Option
-            style={{ flex: 1, alignItems: 'flex-start', paddingHorizontal: 10 }}
-          >
+          <Option>
             <OptionText>Paypal</OptionText>
           </Option>
           <TouchableOpacity onPress={() => {}}>
