@@ -8,7 +8,7 @@ export const Container = styled.View`
 
 export const Item = styled.TouchableOpacity`
   width: 100%;
-  height: 50px;
+  height: 70px;
   border-bottom-width: 0.5px;
   border-bottom-color: #d2d2d4;
   padding: 5px 5px 5px 20px;
@@ -19,8 +19,9 @@ export const Item = styled.TouchableOpacity`
 
 export const Option = styled.Text`
   flex: 1;
-  align-items: flex-start;
-  padding: 0 10px;
+  font-size: 18px;
+  font-weight: bold;
+  align-self: flex-start;
 `;
 
 export const OptionText = styled.Text`

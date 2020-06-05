@@ -41,12 +41,17 @@ export default function ChooseCard({ navigation }) {
         <Item key={card.id} onPress={() => navigation.goBack()}>
           <Icon name="credit-card" size={25} color="#2C71B2" />
           <View
-            style={{ flex: 1, alignItems: 'flex-start', paddingHorizontal: 10 }}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 15,
+            }}
           >
             <Option>{card.number}</Option>
           </View>
           <TouchableOpacity onPress={() => deleteCard(card.id)}>
-            <Icon name="x-circle" size={25} color="#A4A4AC" />
+            <Icon name="x-circle" size={18} color="#A4A4AC" />
           </TouchableOpacity>
         </Item>
       ))}

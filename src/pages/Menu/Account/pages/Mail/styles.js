@@ -30,9 +30,11 @@ export const ValidationContainer = styled.View`
 export const CodeSentText = styled.Text`
   margin-top: 5px;
   margin-bottom: 5px;
-  width: 230px;
-  height: 60px;
-  font-size: 14px;
+  flex: 1;
+  max-height: 60px;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 20px;
   color: #596473;
   align-self: center;
   text-align: center;

@@ -4,8 +4,8 @@ export const Container = styled.View`
   width: 100%;
   height: 80px;
   align-items: center;
-  justify-content: flex-start;
-  padding: 20px 0px 5px 10px;
+  justify-content: space-between;
+  padding: 20px 10px 5px;
   flex-direction: row;
   background-color: ${props => (props.custom ? '#fff' : '#5bae59')};
 `;

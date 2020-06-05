@@ -45,7 +45,7 @@ export default function Header({ navigation, title = null }) {
           <Icon name="search" size={30} color="#000" />
         </HeaderButton>
 
-        <HeaderButton onPress={() => {}}>
+        <HeaderButton onPress={() => navigation.navigate('Bag')}>
           <Icon name="shopping-basket" size={30} color="#000" />
         </HeaderButton>
       </RightBlock>

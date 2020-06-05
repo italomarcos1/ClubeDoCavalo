@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -25,17 +25,32 @@ import {
 
 Icon.loadFont();
 
-export default function ShirtDetails({ close, shirt, color, redirect }) {
+export default function ShirtDetails({
+  close,
+  shirt,
+  color,
+  redirect,
+  navigation,
+}) {
   const [size, setSize] = useState('M');
   const [type, setType] = useState('Masculino');
   const [amount, setAmount] = useState(1);
 
   const dispatch = useDispatch();
 
-  function addProduct() {
+  // atua como o lifecycle method 'componentWillUnmount
+  // executa a ação antes do componente 'morrer'
+
+  useEffect(() => {
+    return () => {
+      close();
+    };
+  }, []);
+
+  const addProduct = useCallback(() => {
     dispatch(
       addToShoppingBag({
-        id: 2,
+        id: String(new Date().getTime() / 1000),
         color: 'black',
         size,
         gender: type,
@@ -46,11 +61,13 @@ export default function ShirtDetails({ close, shirt, color, redirect }) {
         currency: 'BRL',
       })
     );
-  }
+    redirect();
+  }, []);
 
   return (
     <>
       <Header title="Detalhes da camiseta" close={close} />
+
       <Container
         style={{
           flex: 1,
@@ -126,7 +143,7 @@ export default function ShirtDetails({ close, shirt, color, redirect }) {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   flexDirection: 'row',
-                  backgroundColor: '#FFF0F0',
+                  backgroundColor: '#F0F0F0',
                 }}
               >
                 <TouchableOpacity
@@ -136,24 +153,26 @@ export default function ShirtDetails({ close, shirt, color, redirect }) {
                   }}
                   style={{ paddingHorizontal: 5 }}
                 >
-                  <Icon size={30} name="minus" color="#333" />
+                  <Icon size={30} name="minus" color="#505050" />
                 </TouchableOpacity>
-                <Text style={{ fontSize: 24, color: '#333' }}>{amount}</Text>
+                <Text style={{ fontSize: 24, color: '#505050' }}>{amount}</Text>
                 <TouchableOpacity
                   disabled={amount === 999}
                   onPress={() => setAmount(amount + 1)}
                   style={{ paddingHorizontal: 5 }}
                 >
-                  <Icon size={30} name="plus" color="#333" />
+                  <Icon size={30} name="plus" color="#505050" />
                 </TouchableOpacity>
               </View>
+              <View />
+              {/* View propositalmente vazia pra cancelar o padding  */}
               <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <Text style={{ fontSize: 24, color: '#333' }}>R$ 49.99</Text>
+                <Text style={{ fontSize: 24, color: '#505050' }}>R$ 49.99</Text>
               </View>
             </ShirtSizeContainer>
           </Details>
@@ -162,7 +181,6 @@ export default function ShirtDetails({ close, shirt, color, redirect }) {
           <AddToShoppingBag
             onPress={() => {
               addProduct();
-              redirect();
             }}
           >
             <AddToShoppingBagText>Adicionar ao cesto</AddToShoppingBagText>

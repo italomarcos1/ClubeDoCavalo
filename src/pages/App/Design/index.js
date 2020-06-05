@@ -127,6 +127,8 @@ export default function Design({ navigation }) {
   const [topLimitReached, setTopLimitReached] = useState(false);
   const [downLimitReached, setDownLimitReached] = useState(false);
 
+  const [visibleShirtDetails, setVisibleShirtDetails] = useState(false);
+
   useEffect(() => {
     async function loadImages() {
       const [imgs, stk] = await Promise.all([
@@ -139,6 +141,11 @@ export default function Design({ navigation }) {
     }
 
     loadImages();
+
+    return () => {
+      setVisibleShirtDetails(false);
+      setShirtPreview('');
+    };
   }, []);
 
   useEffect(() => {
@@ -205,7 +212,6 @@ export default function Design({ navigation }) {
   const [visibleTextModal, setTextModalVisible] = useState(false);
   const [visibleUploadingModal, setUploadingModalVisible] = useState(false);
   const [visibleModalColor, setVisibleModalColor] = useState(false);
-  const [visibleShirtDetails, setVisibleShirtDetails] = useState(false);
 
   const [zindexImg, setZindexImg] = useState(0); // alterna a sobreposição de imagem e figura, quem fica por cima
   const [zindexSticker, setZindexSticker] = useState(1); // zindex do sticker
@@ -809,9 +815,15 @@ export default function Design({ navigation }) {
         <ShirtDetails
           close={() => {
             setVisibleShirtDetails(false);
+            setShirtPreview('');
           }}
           shirt={shirtPreview}
-          redirect={redirectToShoppingBag}
+          redirect={() => {
+            setVisibleShirtDetails(false);
+            redirectToShoppingBag();
+            setShirtPreview('');
+          }}
+          navigation={navigation}
         />
       </RNModal>
 
