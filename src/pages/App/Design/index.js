@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { captureRef } from 'react-native-view-shot'; // tirar um screenshot
@@ -9,7 +9,7 @@ import Toast from 'react-native-tiny-toast'; // toast de notificação após o e
 import {
   Modal as RNModal,
   Text,
-  ActivityIndicator, // loading no momento do envio
+  ActivityIndicator,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
@@ -33,7 +33,6 @@ import Modal from '~/components/Modal';
 import ModalColor from '~/components/ModalColor';
 import ModalText from '~/components/ModalText';
 import CustomList from '~/components/List';
-import FontPicker from '~/components/FontPicker';
 
 import Draggable from './PickText/CustomDraggable';
 import base from '~/assets/base.png';
@@ -50,18 +49,10 @@ import {
   AddToCart,
   AddToCartText,
   CannotSendAlert,
-  Input,
   CustomView,
   NoSlider,
   ContainerActions,
-  Color,
   UploadShirtLoading,
-  FontList,
-  ColorsContainer,
-  Separator,
-  ChooseColorText,
-  FontMenu,
-  TypeInText,
 } from './styles';
 
 import { api } from '~/services/api';
@@ -204,7 +195,6 @@ export default function Design({ navigation }) {
   // modais
   const [visibleStickerModal, setStickerModalVisible] = useState(false);
   const [visibleModalText, setVisibleModalText] = useState(false);
-  const [visibleModalText2, setVisibleModalText2] = useState(false);
   const [visibleUploadingModal, setUploadingModalVisible] = useState(false);
   const [visibleModalColor, setVisibleModalColor] = useState(false);
   const [visibleShirtDetails, setVisibleShirtDetails] = useState(false);
@@ -681,10 +671,6 @@ export default function Design({ navigation }) {
         <BottomButton onPress={() => setVisibleModalText(true)}>
           <TextIcon height={40} width={40} />
         </BottomButton>
-
-        <BottomButton onPress={() => setVisibleModalText2(true)}>
-          <TextIcon height={40} width={40} />
-        </BottomButton>
       </Bottom>
 
       <Modal // modal da galeria dos stickers
@@ -709,88 +695,6 @@ export default function Design({ navigation }) {
           }}
         />
       </Modal>
-
-      <RNModal // selecionar texto
-        visible={visibleModalText}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setVisibleModalText(false)}
-      >
-        <CustomView style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <FontMenu>
-            <TypeInText>Informe o texto abaixo:</TypeInText>
-            <Input
-              autoFocus
-              value={text}
-              onLayout={({ nativeEvent: { layout } }) => {
-                setTextSize(layout.width);
-                // setFinalSize(0); // alt1
-              }}
-              placeholderTextColor="rgba(0,0,0,0.8)"
-              onChangeText={txt => setText(txt)}
-              maxLength={15}
-              returnKeyType="send"
-              onSubmitEditing={() => {
-                setSelected('frase');
-                setText(text);
-                setVisibleModalText(false);
-              }}
-              underlineColorAndroid="transparent"
-            />
-            <Separator />
-            <ChooseColorText>Selecione a cor do texto:</ChooseColorText>
-            <Separator />
-            <ColorsContainer>
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#000"
-                onPress={() => setColor('#000')}
-              />
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#000ff0"
-                onPress={() => setColor('#000ff0')}
-              />
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#e6b32a"
-                onPress={() => setColor('#e6b32a')}
-              />
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#ff0000"
-                onPress={() => setColor('#ff0000')}
-              />
-
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#008800"
-                onPress={() => setColor('#008800')}
-              />
-
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#ff00f0"
-                onPress={() => setColor('#ff00f0')}
-              />
-
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#fff"
-                onPress={() => setColor('#fff')}
-              />
-            </ColorsContainer>
-
-            <FontList>
-              <FontPicker // lista de fontes
-                example="A frase fica assim"
-                setFont={value => setFont(value)}
-                done={() => setVisibleModalText(false)}
-              />
-            </FontList>
-          </FontMenu>
-        </CustomView>
-      </RNModal>
 
       <RNModal // modal de envio da camiseta aparece escrito 'enviando...aguarde'
         visible={visibleUploadingModal}
@@ -822,8 +726,8 @@ export default function Design({ navigation }) {
       </RNModal>
 
       <ModalText
-        visible={visibleModalText2}
-        onCancelPress={() => setVisibleModalText2(false)}
+        visible={visibleModalText}
+        onCancelPress={() => setVisibleModalText(false)}
         setColor={value => setColor(value)}
         text={text}
         done={(
@@ -837,11 +741,11 @@ export default function Design({ navigation }) {
           setSize(currentTextSize);
           setText(currentText);
           setSelected('frase');
-          setVisibleModalText2(false);
+          setVisibleModalText(false);
         }}
       />
 
-      <ModalColor // modal de selecionar cores da camiseta
+      <ModalColor
         visible={visibleModalColor}
         onCancelPress={() => setVisibleModalColor(false)}
         listData={models}
