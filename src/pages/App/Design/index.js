@@ -470,6 +470,34 @@ export default function Design({ navigation }) {
           setDistanceY(layout.y);
         }}
       >
+        <TopButtonsContainer>
+          <ActionButton
+            active={shirtType === 'tshirt'}
+            onPress={() => setShirtType('tshirt')}
+          >
+            <ActionButtonText active={shirtType === 'tshirt'}>
+              T-Shirt
+            </ActionButtonText>
+          </ActionButton>
+
+          <ActionButton
+            active={shirtType === 'babylook'}
+            onPress={() => setShirtType('babylook')}
+          >
+            <ActionButtonText active={shirtType === 'babylook'}>
+              Babylook
+            </ActionButtonText>
+          </ActionButton>
+
+          <ActionButton
+            active={shirtType === 'hoodie'}
+            onPress={() => setShirtType('hoodie')}
+          >
+            <ActionButtonText active={shirtType === 'hoodie'}>
+              Moletom
+            </ActionButtonText>
+          </ActionButton>
+        </TopButtonsContainer>
         <TShirtContainer
           onLayout={({ nativeEvent: { layout } }) => {
             setPaddingX(layout.x);
@@ -565,34 +593,6 @@ export default function Design({ navigation }) {
             onRelease={() => {}}
           />
         </TShirtContainer>
-        <TopButtonsContainer>
-          <ActionButton
-            active={shirtType === 'tshirt'}
-            onPress={() => setShirtType('tshirt')}
-          >
-            <ActionButtonText active={shirtType === 'tshirt'}>
-              T-Shirt
-            </ActionButtonText>
-          </ActionButton>
-
-          <ActionButton
-            active={shirtType === 'babylook'}
-            onPress={() => setShirtType('babylook')}
-          >
-            <ActionButtonText active={shirtType === 'babylook'}>
-              Babylook
-            </ActionButtonText>
-          </ActionButton>
-
-          <ActionButton
-            active={shirtType === 'hoodie'}
-            onPress={() => setShirtType('hoodie')}
-          >
-            <ActionButtonText active={shirtType === 'hoodie'}>
-              Moletom
-            </ActionButtonText>
-          </ActionButton>
-        </TopButtonsContainer>
         <NoSlider>
           {selected !== 'none' && (
             <>

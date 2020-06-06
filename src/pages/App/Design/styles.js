@@ -4,10 +4,6 @@ import { TouchableOpacity, Image } from 'react-native';
 export const Container = styled.View`
   background: #fff;
   flex: 1;
-  padding-top: 20px;
-  padding-left: 5px;
-  padding-right: 5px;
-  position: relative;
 `;
 
 export const Bottom = styled.View`
@@ -28,20 +24,13 @@ export const TShirtContainer = styled.View`
   flex: 1;
   display: flex;
   justify-content: center;
-  padding-top: 20px;
-  margin-top: 35px;
 `;
 
 export const TShirtImage = styled(Image)`
   width: 100%;
-  margin-top: 5px;
 `;
 
 export const TopButtonsContainer = styled.View`
-  position: absolute;
-  width: 100%;
-  margin: 0 5px;
-  top: 20px;
   flex-direction: row;
   justify-content: center;
 `;
@@ -58,7 +47,7 @@ export const ActionButton = styled(TouchableOpacity)`
 `;
 
 export const ActionButtonText = styled.Text`
-  font-size: 15px;
+  font-size: 16px;
   color: ${props => (props.active ? '#fff' : '#000')};
 `;
 
@@ -69,7 +58,6 @@ export const AddToCart = styled(TouchableOpacity)`
   display: ${props => (props.visible ? 'none' : 'flex')};
   width: 260px;
   align-items: center;
-  margin: 10px 0;
   align-self: center;
 `;
 
@@ -85,7 +73,6 @@ export const CannotSendAlert = styled.Text`
   padding: 10px 20px;
   width: 260px;
   align-items: center;
-  margin: 10px 0;
   align-self: center;
   text-align: center;
   color: #000;
@@ -99,10 +86,9 @@ export const CustomView = styled.KeyboardAvoidingView`
 `;
 
 export const NoSlider = styled.View`
-  background-color: transparent;
   width: 100%;
-  height: 50px;
-  margin-top: 30px;
+  height: 70px;
+  justify-content: center;
   align-self: center;
 `;
 
