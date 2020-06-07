@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 

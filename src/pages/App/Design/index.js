@@ -2,9 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { captureRef } from 'react-native-view-shot'; // tirar um screenshot
-import ImagePicker from 'react-native-image-picker'; // puxar imagem da galeria ou tirar foto
-import Toast from 'react-native-tiny-toast'; // toast de notificação após o envio da camisa, ou caso de erro
+import { captureRef } from 'react-native-view-shot';
+import ImagePicker from 'react-native-image-picker';
+import Toast from 'react-native-tiny-toast';
 
 import {
   Modal as RNModal,
@@ -29,10 +29,9 @@ import TrashIcon from '~/assets/ico-trash.svg';
 import ConfirmationIcon from '~/assets/ico-confirm.svg';
 
 import Header from '~/components/Header';
-import Modal from '~/components/Modal';
 import ModalColor from '~/components/ModalColor';
+import ModalPrintable from '~/components/ModalPrintable';
 import ModalText from '~/components/ModalText';
-import CustomList from '~/components/List';
 
 import Draggable from './PickText/CustomDraggable';
 import base from '~/assets/base.png';
@@ -75,7 +74,6 @@ export default function Design({ navigation }) {
 
   const baseImg = resolveAssetSource(base); // imagem transparente para inicializar
 
-  const [shirtId, setShirtId] = useState(baseImg.uri); // camiseta para o componente shirt details, para pegar tamanho, etc
   const [shirtPreview, setShirtPreview] = useState(baseImg.uri); // camiseta para o componente shirt details, para pegar tamanho, etc
 
   const [models, setModels] = useState([]); // array com as cores de camisetas
@@ -102,9 +100,6 @@ export default function Design({ navigation }) {
     maxY: 900,
   });
 
-  const [images, setImages] = useState([]); // array de imagens puxados da api
-  const [stickers, setStickers] = useState([]); // array de stickers que também puxa da api
-
   const [shirtType, setShirtType] = useState('tshirt');
 
   const [tFront, setTFront] = useState(customT.front); // caḿpo para salvar a camiseta t-hirt
@@ -118,20 +113,6 @@ export default function Design({ navigation }) {
 
   const [topLimitReached, setTopLimitReached] = useState(false);
   const [downLimitReached, setDownLimitReached] = useState(false);
-
-  useEffect(() => {
-    async function loadImages() {
-      const [imgs, stk] = await Promise.all([
-        api.get('design-shirt/image'), // puxar da rota de imagens
-        api.get('design-shirt/sticker'), // puxa da rota de stickers
-      ]);
-
-      setImages(imgs.data); // salva o que recebe da api, no estado
-      setStickers(stk.data);
-    }
-
-    loadImages();
-  }, []);
 
   useEffect(() => {
     if (selected === 'imagem' && size > 130) {
@@ -193,7 +174,7 @@ export default function Design({ navigation }) {
   }, [customH]);
 
   // modais
-  const [visibleStickerModal, setStickerModalVisible] = useState(false);
+  const [visibleModalPrintable, setVisibleModalPrintable] = useState(false);
   const [visibleModalText, setVisibleModalText] = useState(false);
   const [visibleUploadingModal, setUploadingModalVisible] = useState(false);
   const [visibleModalColor, setVisibleModalColor] = useState(false);
@@ -664,7 +645,7 @@ export default function Design({ navigation }) {
           <ColorIcon height={40} width={40} />
         </BottomButton>
 
-        <BottomButton onPress={() => setStickerModalVisible(true)}>
+        <BottomButton onPress={() => setVisibleModalPrintable(true)}>
           <StickerIcon height={40} width={40} />
         </BottomButton>
 
@@ -673,28 +654,16 @@ export default function Design({ navigation }) {
         </BottomButton>
       </Bottom>
 
-      <Modal // modal da galeria dos stickers
-        visible={visibleStickerModal}
-        disabled={true}
-        onRequestClose={() => {
-          setStickerModalVisible(false);
+      <ModalPrintable
+        visible={visibleModalPrintable}
+        onCancelPress={() => setVisibleModalPrintable(false)}
+        done={value => {
+          setSticker(value);
+          setSelected('figura');
+          setSizeSticker(80);
+          setVisibleModalPrintable(false);
         }}
-      >
-        <CustomList // galeria de stickers
-          images={images} // estampas
-          stickers={stickers} // stickers
-          side="front"
-          handle={value => {
-            setSticker(value);
-            setSelected('figura');
-            setSizeSticker(80);
-          }}
-          close={() => setStickerModalVisible(false)}
-          done={() => {
-            setStickerModalVisible(false);
-          }}
-        />
-      </Modal>
+      />
 
       <RNModal // modal de envio da camiseta aparece escrito 'enviando...aguarde'
         visible={visibleUploadingModal}
@@ -749,7 +718,7 @@ export default function Design({ navigation }) {
         visible={visibleModalColor}
         onCancelPress={() => setVisibleModalColor(false)}
         listData={models}
-        listDone={value => {
+        done={value => {
           setTShirtImage(value);
           setVisibleModalColor(false);
         }}

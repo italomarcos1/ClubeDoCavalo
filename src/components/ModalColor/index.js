@@ -17,12 +17,7 @@ import {
   List,
 } from './styles';
 
-export default function ModalColor({
-  visible,
-  onCancelPress,
-  listData,
-  listDone,
-}) {
+export default function ModalColor({ visible, onCancelPress, listData, done }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedItem, setSelectedItem] = useState(0);
 
@@ -47,7 +42,7 @@ export default function ModalColor({
         hf: hFronts[selectedIndex].uri,
       },
     });
-    listDone(selectedItem.uri);
+    done(selectedItem.uri);
   }
 
   return (
@@ -77,7 +72,7 @@ export default function ModalColor({
           <ButtonText>Cancelar</ButtonText>
         </CancelButton>
         <ConfirmButton onPress={handleDispath}>
-          <ButtonText>Adicionar</ButtonText>
+          <ButtonText>Selecionar</ButtonText>
         </ConfirmButton>
       </Bottom>
     </RNModal>
