@@ -48,6 +48,7 @@ export const ConfirmButton = styled(TouchableHighlight)`
   border-radius: 50px;
   align-items: center;
   justify-content: center;
+  opacity: ${props => (props.disabled ? 0.6 : 1)};
   padding: 0 10px;
   width: 40%;
 `;
