@@ -1,9 +1,8 @@
 import React from 'react';
-import { Image } from 'react-native';
 import { DrawerItemList } from '@react-navigation/drawer';
 
-import logoHeader from '~/assets/logo.png';
-import logoFooter from '~/assets/selo.png';
+import LogoImage from '~/assets/logo.svg';
+import SealImage from '~/assets/seal.svg';
 
 import { Container, Header, Footer, DrawerContent } from './styles';
 
@@ -12,13 +11,13 @@ export default function CustomDrawerContent(props) {
     <Container>
       <DrawerContent {...props}>
         <Header>
-          <Image source={logoHeader} />
+          <LogoImage width={230} height={50} />
         </Header>
 
         <DrawerItemList {...props} />
 
         <Footer>
-          <Image source={logoFooter} />
+          <SealImage height={200} />
         </Footer>
       </DrawerContent>
     </Container>

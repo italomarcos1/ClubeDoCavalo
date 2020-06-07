@@ -52,5 +52,5 @@ export const RightBlock = styled.View`
   flex-direction: row;
   height: 100%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;

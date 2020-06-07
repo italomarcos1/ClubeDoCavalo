@@ -1,3 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="57.436" height="57.45" viewBox="0 0 57.436 57.45">
-  <path id="ico_search" data-name="ico search" d="M61.262,57.785,45.288,41.661a22.765,22.765,0,1,0-3.455,3.5L57.7,61.18a2.458,2.458,0,0,0,3.47.09A2.474,2.474,0,0,0,61.262,57.785ZM27.4,45.356a17.975,17.975,0,1,1,12.713-5.265A17.865,17.865,0,0,1,27.4,45.356Z" transform="translate(-4.5 -4.493)" fill="#252424"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="107" height="123" viewBox="0 0 107 123">
+  <g id="search" transform="translate(-834.518 -146.494)">
+    <rect id="Retângulo_330" data-name="Retângulo 330" width="107" height="123" transform="translate(834.518 146.494)" fill="#fff"/>
+    <path id="ico_search" data-name="ico search" d="M61.262,57.785,45.288,41.661a22.765,22.765,0,1,0-3.455,3.5L57.7,61.18a2.458,2.458,0,0,0,3.47.09A2.474,2.474,0,0,0,61.262,57.785ZM27.4,45.356a17.975,17.975,0,1,1,12.713-5.265A17.865,17.865,0,0,1,27.4,45.356Z" transform="translate(856.271 177)" fill="#252424"/>
+  </g>
 </svg>

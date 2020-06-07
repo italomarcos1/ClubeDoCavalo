@@ -19,6 +19,12 @@ import Payment from '~/pages/Menu/Payment/routes';
 import Orders from '~/pages/Menu/Orders/routes';
 import ShoppingBag from '~/pages/Menu/ShoppingBag/routes';
 
+import AccountIcon from '~/assets/ico-menu-account.svg';
+import PaymentIcon from '~/assets/ico-menu-payment.svg';
+import BagIcon from '~/assets/ico-menu-bag.svg';
+import OrdersIcon from '~/assets/ico-menu-orders.svg';
+import HelpIcon from '~/assets/ico-menu-help.svg';
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -43,13 +49,12 @@ export default function createRouter(isSigned = false) {
         drawerType="front"
         drawerContentOptions={{
           inactiveTintColor: '#fff',
-          activeTintColor: '#000',
-          activeBackgroundColor: '#fff',
+          activeTintColor: '#fff',
+          activeBackgroundColor: 'transparent',
           itemStyle: {
             borderRadius: 0,
-            paddingHorizontal: 50,
-            left: -10,
-            width: '110%',
+            marginHorizontal: 30,
+            width: '100%',
           },
           labelStyle: {
             marginLeft: -20,
@@ -61,7 +66,7 @@ export default function createRouter(isSigned = false) {
         initialRouteName="Design"
       >
         <Drawer.Screen
-          name="Design"
+          name="Home"
           component={Design}
           options={{
             title: 'Home',
@@ -74,8 +79,7 @@ export default function createRouter(isSigned = false) {
           component={Account}
           options={{
             title: 'Ver conta',
-            drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'person-outline'),
+            drawerIcon: () => <AccountIcon height={35} width={35} />,
           }}
         />
         <Drawer.Screen
@@ -83,8 +87,7 @@ export default function createRouter(isSigned = false) {
           component={Payment}
           options={{
             title: 'Pagamento',
-            drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'local-atm'),
+            drawerIcon: () => <PaymentIcon height={35} width={35} />,
           }}
         />
         <Drawer.Screen
@@ -92,8 +95,7 @@ export default function createRouter(isSigned = false) {
           component={ShoppingBag}
           options={{
             title: 'Cesta de compra',
-            drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'shopping-basket'),
+            drawerIcon: () => <BagIcon height={35} width={35} />,
           }}
         />
         <Drawer.Screen
@@ -101,8 +103,7 @@ export default function createRouter(isSigned = false) {
           component={Orders}
           options={{
             title: 'Minhas compras',
-            drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'shopping-cart'),
+            drawerIcon: () => <OrdersIcon height={35} width={35} />,
           }}
         />
         <Drawer.Screen
@@ -110,8 +111,7 @@ export default function createRouter(isSigned = false) {
           component={Contact}
           options={{
             title: 'Ajuda',
-            drawerIcon: ({ color, size }) =>
-              createIcon({ color, size }, 'help'),
+            drawerIcon: () => <HelpIcon height={35} width={35} />,
           }}
         />
         <Drawer.Screen

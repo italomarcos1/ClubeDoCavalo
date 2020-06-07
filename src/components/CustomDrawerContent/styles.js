@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   flex: 1;
-  padding: 30px 0;
+  padding: 30px 0 20px;
   align-items: center;
   justify-content: center;
 `;
@@ -20,7 +20,6 @@ export const DrawerContent = styled(DrawerContentScrollView)`
 
 export const Footer = styled.View`
   flex: 2;
-  margin-top: 50px;
   padding: 20px 0;
   align-items: center;
   justify-content: center;

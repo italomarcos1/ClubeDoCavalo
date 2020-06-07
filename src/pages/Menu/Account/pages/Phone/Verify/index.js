@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, TouchableOpacity, Keyboard } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import Toast from 'react-native-tiny-toast';
 
 import Validation from '~/components/Validation';
 
+import SMSVerificationImage from '~/assets/sms-verification.svg';
+
 import { Container, ValidationContainer, ValidationCodeInput } from './styles';
 import { CodeSentText, ResendCodeText } from '../../Mail/styles';
-
-Icon.loadFont();
 
 export default function VerifyPhone() {
   const [code1, setCode1] = useState('');
@@ -29,7 +28,7 @@ export default function VerifyPhone() {
     <>
       <Validation title="Digite o número abaixo" />
       <Container>
-        <Icon name="inbox" color="#333" size={80} />
+        <SMSVerificationImage height={180} />
         <Text style={{ fontSize: 20, color: '#3A3A3A', alignSelf: 'center' }}>
           Verificação por SMS
         </Text>

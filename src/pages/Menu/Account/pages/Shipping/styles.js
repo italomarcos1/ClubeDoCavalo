@@ -47,6 +47,6 @@ export const AddNewAddressButton = styled.TouchableOpacity`
 
 export const SideContainer = styled.View`
   height: 130px;
-  width: 19px;
+  width: 25px;
   padding: 5px 0;
 `;
