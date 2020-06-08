@@ -1,5 +1,8 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import MenuIcon from '~/assets/ico-menu.svg';
+import SearchIcon from '~/assets/ico-search.svg';
+import BagIcon from '~/assets/ico-bag.svg';
 
 import {
   Container,
@@ -17,8 +20,11 @@ export default function Header({ navigation, title = null }) {
   return (
     <Container>
       <LeftBlock>
-        <HeaderButton onPress={() => navigation.openDrawer()}>
-          <Icon name="menu" size={32} color="#000" />
+        <HeaderButton
+          onPress={() => navigation.openDrawer()}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <MenuIcon height={40} width={40} />
         </HeaderButton>
       </LeftBlock>
 
@@ -41,16 +47,20 @@ export default function Header({ navigation, title = null }) {
       </MiddleBlock>
 
       <RightBlock>
-        <HeaderButton onPress={() => {}}>
-          <Icon name="search" size={30} color="#000" />
+        <HeaderButton
+          onPress={() => {}}
+          hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
+        >
+          <SearchIcon height={50} width={50} />
         </HeaderButton>
 
         <HeaderButton
           onPress={() => {
             navigation.navigate('Bag');
           }}
+          hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
         >
-          <Icon name="shopping-basket" size={30} color="#000" />
+          <BagIcon height={50} width={50} />
         </HeaderButton>
       </RightBlock>
     </Container>

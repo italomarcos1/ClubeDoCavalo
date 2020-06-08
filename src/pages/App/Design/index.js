@@ -1,15 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { captureRef } from 'react-native-view-shot'; // tirar um screenshot
-import ImagePicker from 'react-native-image-picker'; // puxar imagem da galeria ou tirar foto
-import Toast from 'react-native-tiny-toast'; // toast de notificação após o envio da camisa, ou caso de erro
+import { captureRef } from 'react-native-view-shot';
+import ImagePicker from 'react-native-image-picker';
+import Toast from 'react-native-tiny-toast';
 
 import {
   Modal as RNModal,
   Text,
-  ActivityIndicator, // loading no momento do envio
+  ActivityIndicator,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
@@ -29,11 +29,9 @@ import TrashIcon from '~/assets/ico-trash.svg';
 import ConfirmationIcon from '~/assets/ico-confirm.svg';
 
 import Header from '~/components/Header';
-import Modal from '~/components/Modal';
 import ModalColor from '~/components/ModalColor';
+import ModalPrintable from '~/components/ModalPrintable';
 import ModalText from '~/components/ModalText';
-import CustomList from '~/components/List';
-import FontPicker from '~/components/FontPicker';
 
 import Draggable from './PickText/CustomDraggable';
 import base from '~/assets/base.png';
@@ -50,18 +48,10 @@ import {
   AddToCart,
   AddToCartText,
   CannotSendAlert,
-  Input,
   CustomView,
   NoSlider,
   ContainerActions,
-  Color,
   UploadShirtLoading,
-  FontList,
-  ColorsContainer,
-  Separator,
-  ChooseColorText,
-  FontMenu,
-  TypeInText,
 } from './styles';
 
 import { api } from '~/services/api';
@@ -84,7 +74,6 @@ export default function Design({ navigation }) {
 
   const baseImg = resolveAssetSource(base); // imagem transparente para inicializar
 
-  const [shirtId, setShirtId] = useState(baseImg.uri); // camiseta para o componente shirt details, para pegar tamanho, etc
   const [shirtPreview, setShirtPreview] = useState(''); // camiseta para o componente shirt details, para pegar tamanho, etc
 
   const [canScreenshot, setCanScreenshot] = useState(false); // camiseta para o componente shirt details, para pegar tamanho, etc
@@ -113,9 +102,6 @@ export default function Design({ navigation }) {
     maxY: 900,
   });
 
-  const [images, setImages] = useState([]); // array de imagens puxados da api
-  const [stickers, setStickers] = useState([]); // array de stickers que também puxa da api
-
   const [shirtType, setShirtType] = useState('tshirt');
 
   const [tFront, setTFront] = useState(customT.front); // caḿpo para salvar a camiseta t-hirt
@@ -131,24 +117,6 @@ export default function Design({ navigation }) {
   const [downLimitReached, setDownLimitReached] = useState(false);
 
   const [visibleShirtDetails, setVisibleShirtDetails] = useState(false);
-
-  useEffect(() => {
-    async function loadImages() {
-      const [imgs, stk] = await Promise.all([
-        api.get('design-shirt/image'), // puxar da rota de imagens
-        api.get('design-shirt/sticker'), // puxa da rota de stickers
-      ]);
-
-      setImages(imgs.data); // salva o que recebe da api, no estado
-      setStickers(stk.data);
-    }
-
-    setVisibleShirtDetails(false);
-    setCanScreenshot(false);
-    setShirtPreview('');
-
-    loadImages();
-  }, []);
 
   useEffect(() => {
     if (selected === 'imagem' && size > 130) {
@@ -210,9 +178,8 @@ export default function Design({ navigation }) {
   }, [customH]);
 
   // modais
-  const [visibleStickerModal, setStickerModalVisible] = useState(false);
+  const [visibleModalPrintable, setVisibleModalPrintable] = useState(false);
   const [visibleModalText, setVisibleModalText] = useState(false);
-  const [visibleModalText2, setVisibleModalText2] = useState(false);
   const [visibleUploadingModal, setUploadingModalVisible] = useState(false);
   const [visibleModalColor, setVisibleModalColor] = useState(false);
 
@@ -496,6 +463,34 @@ export default function Design({ navigation }) {
         }}
         ref={captureViewRef}
       >
+        <TopButtonsContainer>
+          <ActionButton
+            active={shirtType === 'tshirt'}
+            onPress={() => setShirtType('tshirt')}
+          >
+            <ActionButtonText active={shirtType === 'tshirt'}>
+              T-Shirt
+            </ActionButtonText>
+          </ActionButton>
+
+          <ActionButton
+            active={shirtType === 'babylook'}
+            onPress={() => setShirtType('babylook')}
+          >
+            <ActionButtonText active={shirtType === 'babylook'}>
+              Babylook
+            </ActionButtonText>
+          </ActionButton>
+
+          <ActionButton
+            active={shirtType === 'hoodie'}
+            onPress={() => setShirtType('hoodie')}
+          >
+            <ActionButtonText active={shirtType === 'hoodie'}>
+              Moletom
+            </ActionButtonText>
+          </ActionButton>
+        </TopButtonsContainer>
         <TShirtContainer
           onLayout={({ nativeEvent: { layout } }) => {
             setPaddingX(layout.x);
@@ -593,40 +588,6 @@ export default function Design({ navigation }) {
             onRelease={() => {}}
           />
         </TShirtContainer>
-        <TopButtonsContainer>
-          <ActionButton
-            visible={!canScreenshot}
-            active={shirtType === 'tshirt'}
-            onPress={() => setShirtType('tshirt')}
-            onLayout={() => {
-              if (canScreenshot) capturePic();
-            }}
-          >
-            <ActionButtonText active={shirtType === 'tshirt'}>
-              T-Shirt
-            </ActionButtonText>
-          </ActionButton>
-
-          <ActionButton
-            visible={!canScreenshot}
-            active={shirtType === 'babylook'}
-            onPress={() => setShirtType('babylook')}
-          >
-            <ActionButtonText active={shirtType === 'babylook'}>
-              Babylook
-            </ActionButtonText>
-          </ActionButton>
-
-          <ActionButton
-            visible={!canScreenshot}
-            active={shirtType === 'hoodie'}
-            onPress={() => setShirtType('hoodie')}
-          >
-            <ActionButtonText active={shirtType === 'hoodie'}>
-              Moletom
-            </ActionButtonText>
-          </ActionButton>
-        </TopButtonsContainer>
         <NoSlider>
           {selected !== 'none' && (
             <>
@@ -701,123 +662,25 @@ export default function Design({ navigation }) {
           <ColorIcon height={40} width={40} />
         </BottomButton>
 
-        <BottomButton onPress={() => setStickerModalVisible(true)}>
+        <BottomButton onPress={() => setVisibleModalPrintable(true)}>
           <StickerIcon height={40} width={40} />
         </BottomButton>
 
         <BottomButton onPress={() => setVisibleModalText(true)}>
           <TextIcon height={40} width={40} />
         </BottomButton>
-
-        <BottomButton onPress={() => setVisibleModalText2(true)}>
-          <TextIcon height={40} width={40} />
-        </BottomButton>
       </Bottom>
 
-      <Modal // modal da galeria dos stickers
-        visible={visibleStickerModal}
-        disabled={true}
-        onRequestClose={() => {
-          setStickerModalVisible(false);
+      <ModalPrintable
+        visible={visibleModalPrintable}
+        onCancelPress={() => setVisibleModalPrintable(false)}
+        done={value => {
+          setSticker(value);
+          setSelected('figura');
+          setSizeSticker(80);
+          setVisibleModalPrintable(false);
         }}
-      >
-        <CustomList // galeria de stickers
-          images={images} // estampas
-          stickers={stickers} // stickers
-          side="front"
-          handle={value => {
-            setSticker(value);
-            setSelected('figura');
-            setSizeSticker(80);
-          }}
-          close={() => setStickerModalVisible(false)}
-          done={() => {
-            setStickerModalVisible(false);
-          }}
-        />
-      </Modal>
-
-      <RNModal // selecionar texto
-        visible={visibleModalText}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setVisibleModalText(false)}
-      >
-        <CustomView style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <FontMenu>
-            <TypeInText>Informe o texto abaixo:</TypeInText>
-            <Input
-              autoFocus
-              value={text}
-              onLayout={({ nativeEvent: { layout } }) => {
-                setTextSize(layout.width);
-                // setFinalSize(0); // alt1
-              }}
-              placeholderTextColor="rgba(0,0,0,0.8)"
-              onChangeText={txt => setText(txt)}
-              maxLength={15}
-              returnKeyType="send"
-              onSubmitEditing={() => {
-                setSelected('frase');
-                setText(text);
-                setVisibleModalText(false);
-              }}
-              underlineColorAndroid="transparent"
-            />
-            <Separator />
-            <ChooseColorText>Selecione a cor do texto:</ChooseColorText>
-            <Separator />
-            <ColorsContainer>
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#000"
-                onPress={() => setColor('#000')}
-              />
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#000ff0"
-                onPress={() => setColor('#000ff0')}
-              />
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#e6b32a"
-                onPress={() => setColor('#e6b32a')}
-              />
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#ff0000"
-                onPress={() => setColor('#ff0000')}
-              />
-
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#008800"
-                onPress={() => setColor('#008800')}
-              />
-
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#ff00f0"
-                onPress={() => setColor('#ff00f0')}
-              />
-
-              <Color
-                hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-                color="#fff"
-                onPress={() => setColor('#fff')}
-              />
-            </ColorsContainer>
-
-            <FontList>
-              <FontPicker // lista de fontes
-                example="A frase fica assim"
-                setFont={value => setFont(value)}
-                done={() => setVisibleModalText(false)}
-              />
-            </FontList>
-          </FontMenu>
-        </CustomView>
-      </RNModal>
+      />
 
       <RNModal // modal de envio da camiseta aparece escrito 'enviando...aguarde'
         visible={visibleUploadingModal}
@@ -861,8 +724,8 @@ export default function Design({ navigation }) {
       </RNModal>
 
       <ModalText
-        visible={visibleModalText2}
-        onCancelPress={() => setVisibleModalText2(false)}
+        visible={visibleModalText}
+        onCancelPress={() => setVisibleModalText(false)}
         setColor={value => setColor(value)}
         text={text}
         done={(
@@ -876,15 +739,15 @@ export default function Design({ navigation }) {
           setSize(currentTextSize);
           setText(currentText);
           setSelected('frase');
-          setVisibleModalText2(false);
+          setVisibleModalText(false);
         }}
       />
 
-      <ModalColor // modal de selecionar cores da camiseta
+      <ModalColor
         visible={visibleModalColor}
         onCancelPress={() => setVisibleModalColor(false)}
         listData={models}
-        listDone={value => {
+        done={value => {
           setTShirtImage(value);
           setVisibleModalColor(false);
         }}

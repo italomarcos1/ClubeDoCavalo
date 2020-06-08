@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, TouchableOpacity, Keyboard } from 'react-native';
 import Toast from 'react-native-tiny-toast';
-import Icon from 'react-native-vector-icons/Feather';
 
 import Validation from '~/components/Validation';
+
+import EmailVerificationImage from '~/assets/email-verification.svg';
 
 import {
   Container,
@@ -12,8 +13,6 @@ import {
   ValidationCodeInput,
   ResendCodeText,
 } from './styles';
-
-Icon.loadFont();
 
 export default function Mail() {
   const [code1, setCode1] = useState('');
@@ -34,12 +33,11 @@ export default function Mail() {
     <>
       <Validation title="Digite o número abaixo" />
       <Container>
-        <Icon name="mail" color="#333" size={80} />
+        <EmailVerificationImage height={180} />
         <Text
           style={{
             fontSize: 26,
             fontWeight: 'bold',
-
             color: '#3A3A3A',
             alignSelf: 'center',
           }}

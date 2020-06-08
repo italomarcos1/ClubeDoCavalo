@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { Image, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
 import Background from '~/components/Background';
 
-import logo from '~/assets/selo.png';
+import SealImage from '~/assets/seal.svg';
 
 import {
   Container,
@@ -39,7 +39,7 @@ export default function SignIn({ navigation }) {
   return (
     <Background>
       <Container>
-        <Image source={logo} />
+        <SealImage height={200} />
 
         <TitleText>Bem-vindo</TitleText>
         <SubtitleText>Cadastre-se gratuitamente em 15 segundos</SubtitleText>

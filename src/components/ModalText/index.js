@@ -163,6 +163,7 @@ export default function ModalText({ visible, onCancelPress, done, text }) {
           <ButtonText>Cancelar</ButtonText>
         </CancelButton>
         <ConfirmButton
+          disabled={currentText === ''}
           onPress={() =>
             done(
               currentTextColor,

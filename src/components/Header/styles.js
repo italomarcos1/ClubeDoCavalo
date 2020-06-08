@@ -6,9 +6,8 @@ export const Container = styled.View`
   display: flex;
   flex-direction: row;
   padding: 0 10px;
-  position: relative;
   align-items: center;
-  height: 55px;
+  height: 60px;
 `;
 
 export const LeftBlock = styled.View`
@@ -53,5 +52,5 @@ export const RightBlock = styled.View`
   flex-direction: row;
   height: 100%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;

@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/Feather';
+
+import AddIcon from '~/assets/ico-add-address.svg';
+import EditAddressIcon from '~/assets/ico-edit-address.svg';
+import RemoveAddressIcon from '~/assets/ico-remove-address.svg';
+
 import {
   Container,
   Address,
@@ -12,8 +16,6 @@ import {
 } from './styles';
 
 import { RadioButtonBackground, Selected } from '../Gender/styles';
-
-Icon.loadFont();
 
 export default function Shipping({ navigation }) {
   const [selectedAddress, setSelectedAddress] = useState('Casa');
@@ -70,6 +72,7 @@ export default function Shipping({ navigation }) {
               <Selected selected={selectedAddress === address.name} />
             </RadioButtonBackground>
           </SideContainer>
+
           <AddressInfo>
             <Text style={{ fontWeight: 'bold' }}>{address.name}</Text>
             <AddressInfoField>{`${address.street} ${address.number}`}</AddressInfoField>
@@ -79,26 +82,26 @@ export default function Shipping({ navigation }) {
             <AddressInfoField>{address.complement}</AddressInfoField>
             <AddressInfoField>{address.phone}</AddressInfoField>
           </AddressInfo>
+
           <SideContainer>
             <TouchableOpacity onPress={() => handleDeleteAddress(address.id)}>
-              <Icon
-                name="trash-2"
-                color="#404040"
-                size={18}
-                style={{ marginBottom: 20 }}
+              <RemoveAddressIcon
+                height={20}
+                width={25}
+                style={{ marginBottom: 30 }}
               />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('EditAddress', { address })}
             >
-              <Icon name="edit-2" color="#404040" size={18} />
+              <EditAddressIcon height={20} width={25} />
             </TouchableOpacity>
           </SideContainer>
         </Address>
       ))}
       <AddNewAddressButton onPress={() => navigation.navigate('AddNewAddress')}>
         {addresses !== [] ? (
-          <Icon name="plus" color="#9F9F9F" size={60} />
+          <AddIcon height={60} width={60} />
         ) : (
           <Text>
             Você ainda não tem endereços adicionados. Clique aqui para
