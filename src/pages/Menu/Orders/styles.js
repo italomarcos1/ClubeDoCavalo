@@ -2,32 +2,35 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #f2f3f4;
+  padding: 10px 10px 40px 10px;
+`;
+
+export const Info = styled.View`
+  flex: 1;
   align-items: center;
-  padding: 10px 10px 30px 10px;
 `;
 
 export const Item = styled.TouchableOpacity`
   width: 100%;
-  height: 200px;
+  height: 250px;
+
   border-width: 1px;
   border-color: #ebeced;
-  background-color: #fff;
-  border-radius: 3px;
+  justify-content: flex-start;
   padding: 15px;
 `;
 
 export const Order = styled.View`
-  flex: 1;
+  height: 120px;
   align-items: flex-start;
-  justify-content: space-around;
+  justify-content: flex-start;
   border-bottom-color: #ccc;
   border-bottom-width: 1px;
-  padding: 0 10px 20px 10px;
+  padding: 0 10px 10px;
 `;
 
 export const OrderNumberContainer = styled.View`
-  height: 40px;
+  height: 50px;
   align-items: flex-start;
   justify-content: center;
   border-bottom-color: #ccc;
@@ -38,11 +41,10 @@ export const OrderNumberContainer = styled.View`
 export const ContentContainer = styled.View`
   width: 100%;
   height: 30px;
-  background-color: #fff;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 0;
+  padding: 5px 0;
 `;
 
 export const Content = styled.Text`
@@ -57,13 +59,14 @@ export const Details = styled.TouchableOpacity`
   height: 40px;
   align-items: center;
   justify-content: center;
-  border-radius: 3px;
 `;
 
 export const ShippingDetails = styled.View`
-  height: 65px;
+  height: 60px;
   padding: 10px 0 0 0;
+
   flex-direction: row;
+
   align-items: flex-start;
   justify-content: center;
 `;

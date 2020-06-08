@@ -10,6 +10,7 @@ export const Details = styled.View`
 export const ShirtSizeContainer = styled.View`
   width: 100%;
   height: 70px;
+
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
@@ -59,7 +60,7 @@ export const AddToShoppingBag = styled.TouchableOpacity`
   width: 100%;
   height: 60px;
   margin-top: 10px;
-  background-color: #12b118;
+  background-color: #5bae59;
   align-items: center;
   justify-content: center;
   padding: 2px 5px;

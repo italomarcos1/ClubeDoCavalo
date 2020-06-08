@@ -85,7 +85,9 @@ export default function Design({ navigation }) {
   const baseImg = resolveAssetSource(base); // imagem transparente para inicializar
 
   const [shirtId, setShirtId] = useState(baseImg.uri); // camiseta para o componente shirt details, para pegar tamanho, etc
-  const [shirtPreview, setShirtPreview] = useState(baseImg.uri); // camiseta para o componente shirt details, para pegar tamanho, etc
+  const [shirtPreview, setShirtPreview] = useState(''); // camiseta para o componente shirt details, para pegar tamanho, etc
+
+  const [canScreenshot, setCanScreenshot] = useState(false); // camiseta para o componente shirt details, para pegar tamanho, etc
 
   const [models, setModels] = useState([]); // array com as cores de camisetas
 
@@ -128,6 +130,8 @@ export default function Design({ navigation }) {
   const [topLimitReached, setTopLimitReached] = useState(false);
   const [downLimitReached, setDownLimitReached] = useState(false);
 
+  const [visibleShirtDetails, setVisibleShirtDetails] = useState(false);
+
   useEffect(() => {
     async function loadImages() {
       const [imgs, stk] = await Promise.all([
@@ -138,6 +142,10 @@ export default function Design({ navigation }) {
       setImages(imgs.data); // salva o que recebe da api, no estado
       setStickers(stk.data);
     }
+
+    setVisibleShirtDetails(false);
+    setCanScreenshot(false);
+    setShirtPreview('');
 
     loadImages();
   }, []);
@@ -207,7 +215,6 @@ export default function Design({ navigation }) {
   const [visibleModalText2, setVisibleModalText2] = useState(false);
   const [visibleUploadingModal, setUploadingModalVisible] = useState(false);
   const [visibleModalColor, setVisibleModalColor] = useState(false);
-  const [visibleShirtDetails, setVisibleShirtDetails] = useState(false);
 
   const [zindexImg, setZindexImg] = useState(0); // alterna a sobreposição de imagem e figura, quem fica por cima
   const [zindexSticker, setZindexSticker] = useState(1); // zindex do sticker
@@ -470,6 +477,14 @@ export default function Design({ navigation }) {
     }
   }, [shirtPreview]);
 
+  useEffect(() => {
+    if (canScreenshot) {
+      setTimeout(() => {
+        capturePic();
+      }, 100);
+    }
+  }, [canScreenshot]);
+
   return (
     <>
       <Header navigation={navigation} title="Design" />
@@ -479,10 +494,12 @@ export default function Design({ navigation }) {
           setDistanceX(layout.x);
           setDistanceY(layout.y);
         }}
+        ref={captureViewRef}
       >
         <TShirtContainer
           onLayout={({ nativeEvent: { layout } }) => {
             setPaddingX(layout.x);
+            console.tron.log(`container: ${layout.height}`);
             setPaddingY(layout.y);
           }}
         >
@@ -490,10 +507,11 @@ export default function Design({ navigation }) {
             onLayout={({ nativeEvent: { layout } }) => {
               setInternalX(layout.x);
               setInternalY(layout.y);
+              console.tron.log(`imagem: ${layout.height}`);
+
               setWidth(layout.width);
               setHeight(layout.height);
             }}
-            ref={captureViewRef}
             style={{ height: Dimensions.get('window').height - 174 }}
             source={{ uri: tShirtImage }}
             resizeMode="contain"
@@ -577,8 +595,12 @@ export default function Design({ navigation }) {
         </TShirtContainer>
         <TopButtonsContainer>
           <ActionButton
+            visible={!canScreenshot}
             active={shirtType === 'tshirt'}
             onPress={() => setShirtType('tshirt')}
+            onLayout={() => {
+              if (canScreenshot) capturePic();
+            }}
           >
             <ActionButtonText active={shirtType === 'tshirt'}>
               T-Shirt
@@ -586,6 +608,7 @@ export default function Design({ navigation }) {
           </ActionButton>
 
           <ActionButton
+            visible={!canScreenshot}
             active={shirtType === 'babylook'}
             onPress={() => setShirtType('babylook')}
           >
@@ -595,6 +618,7 @@ export default function Design({ navigation }) {
           </ActionButton>
 
           <ActionButton
+            visible={!canScreenshot}
             active={shirtType === 'hoodie'}
             onPress={() => setShirtType('hoodie')}
           >
@@ -641,10 +665,13 @@ export default function Design({ navigation }) {
             <>
               {canSend ? (
                 <AddToCart
+                  visible={!canScreenshot}
                   onPress={() => {
                     if (canSend) {
+                      setCanScreenshot(true);
+
                       // setUploadingModalVisible(true); // abre o modal de 'enviando camiseta...aguarde
-                      capturePic(); // função que tira o print da camiseta
+                      // capturePic(); // função que tira o print da camiseta
                       // setVisibleShirtDetails(true); // abre o modal de 'enviando camiseta...aguarde
                       // após fechar o modal reseta para false, assim reaparece
                       // uma função pra fazer o visible none e ela dispara o capturePic
@@ -810,14 +837,26 @@ export default function Design({ navigation }) {
 
       <RNModal
         visible={visibleShirtDetails}
-        onRequestClose={() => setVisibleShirtDetails(false)}
+        onRequestClose={() => {
+          setCanScreenshot(false);
+          setVisibleShirtDetails(false);
+          setShirtPreview('');
+        }}
       >
         <ShirtDetails
           close={() => {
+            setCanScreenshot(false);
             setVisibleShirtDetails(false);
+            setShirtPreview('');
           }}
           shirt={shirtPreview}
-          redirect={redirectToShoppingBag}
+          redirect={() => {
+            setCanScreenshot(false);
+            setVisibleShirtDetails(false);
+            redirectToShoppingBag();
+            setShirtPreview('');
+          }}
+          navigation={navigation}
         />
       </RNModal>
 

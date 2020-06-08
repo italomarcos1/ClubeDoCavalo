@@ -23,19 +23,20 @@ export default function Routes({ navigation }) {
   };
 
   return (
-    <Stack.Navigator
-      initialRouteName="ShoppingBag"
-      screenOptions={() => ({
-        header: () => <Header custom title="Cesto de compras" close={exit} />,
-      })}
-    >
-      <Stack.Screen name="ShoppingBag" component={ShoppingBag} />
+    <Stack.Navigator initialRouteName="ShoppingBag">
+      <Stack.Screen
+        name="ShoppingBag"
+        component={ShoppingBag}
+        options={() => ({
+          header: () => <Header custom title="Cesto de compras" close={exit} />,
+        })}
+      />
       <Stack.Screen
         name="Success"
         component={Success}
-        options={({ navigation, route }) => ({
+        options={() => ({
           header: () => (
-            <Header custom title="Compra realizada!" close={success} />
+            <Header custom title="Voltar para página inicial" close={success} />
           ),
         })}
       />

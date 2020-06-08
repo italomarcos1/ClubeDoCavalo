@@ -169,7 +169,7 @@ export default function AddNewAddress({ navigation }) {
             !state
           }
           onPress={() => navigation.goBack()}
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 60 }}
         >
           Adicionar Endereço
         </ButtonMenu>

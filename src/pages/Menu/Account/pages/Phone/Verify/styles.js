@@ -3,9 +3,9 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   flex: 1;
   background-color: #fff;
-  padding: 20px;
+  padding: 80px 20px 80px;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 `;
 
 export const ValidationCodeInput = styled.TextInput`

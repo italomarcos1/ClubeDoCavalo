@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, TouchableOpacity, Keyboard } from 'react-native';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Feather';
 import Toast from 'react-native-tiny-toast';
 
@@ -10,7 +11,7 @@ import { CodeSentText, ResendCodeText } from '../../Mail/styles';
 
 Icon.loadFont();
 
-export default function VerifyPhone() {
+export default function VerifyPhone({ route }) {
   const [code1, setCode1] = useState('');
   const [code2, setCode2] = useState('');
   const [code3, setCode3] = useState('');
@@ -19,6 +20,32 @@ export default function VerifyPhone() {
   const inputRef2 = useRef();
   const inputRef3 = useRef();
   const inputRef4 = useRef();
+
+  const { phone } = route.params;
+
+  const [formattedPhone, setFormattedPhone] = useState(() => {
+    return [
+      '(',
+      phone.slice(0, 2),
+      ') ',
+      phone.slice(2, 7),
+      '-',
+      phone.slice(7, 11),
+    ].join('');
+  });
+
+  console.tron.log(`phone:${phone}`);
+
+  console.tron.log(
+    [
+      '(',
+      phone.slice(0, 2),
+      ') ',
+      phone.slice(2, 7),
+      '-',
+      phone.slice(7, 11),
+    ].join('')
+  );
 
   useEffect(() => inputRef2.current.focus(), [code1]);
   useEffect(() => inputRef3.current.focus(), [code2]);
@@ -30,12 +57,19 @@ export default function VerifyPhone() {
       <Validation title="Digite o número abaixo" />
       <Container>
         <Icon name="inbox" color="#333" size={80} />
-        <Text style={{ fontSize: 20, color: '#3A3A3A', alignSelf: 'center' }}>
+        <Text
+          style={{
+            fontSize: 26,
+            fontWeight: 'bold',
+            color: '#3A3A3A',
+            alignSelf: 'center',
+          }}
+        >
           Verificação por SMS
         </Text>
 
         <CodeSentText numberOfLines={2}>
-          SMS foi enviado para o seu celular. Por favor verifique.
+          {`Um SMS foi enviado para o número ${formattedPhone}. Por favor verifique.`}
         </CodeSentText>
         <ValidationContainer>
           <ValidationCodeInput
@@ -83,3 +117,11 @@ export default function VerifyPhone() {
     </>
   );
 }
+
+VerifyPhone.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      phone: PropTypes.string,
+    }),
+  }).isRequired,
+};

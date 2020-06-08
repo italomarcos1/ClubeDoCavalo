@@ -35,7 +35,15 @@ export default function Mail() {
       <Validation title="Digite o número abaixo" />
       <Container>
         <Icon name="mail" color="#333" size={80} />
-        <Text style={{ fontSize: 20, color: '#3A3A3A', alignSelf: 'center' }}>
+        <Text
+          style={{
+            fontSize: 26,
+            fontWeight: 'bold',
+
+            color: '#3A3A3A',
+            alignSelf: 'center',
+          }}
+        >
           Verificação por email
         </Text>
 
