@@ -24,6 +24,7 @@ export const TShirtContainer = styled.View`
   flex: 1;
   display: flex;
   justify-content: center;
+  padding-top: 40px;
 `;
 
 export const TShirtImage = styled(Image)`

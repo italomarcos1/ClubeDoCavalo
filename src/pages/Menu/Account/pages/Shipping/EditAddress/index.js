@@ -174,7 +174,7 @@ export default function EditAddress({ navigation, route }) {
             !state
           }
           onPress={() => navigation.goBack()}
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 60 }}
         >
           Salvar alterações
         </ButtonMenu>
