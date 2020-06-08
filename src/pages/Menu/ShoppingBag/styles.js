@@ -1,18 +1,29 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
   padding: 10px 20px 0;
   background-color: #f2f3f4;
-  align-items: center;
-  justify-content: space-between;
 `;
 
 export const ProductsList = styled.FlatList`
+  width: 300px;
+  flex: 1;
+  background-color: #e6b32a;
+  border-color: #4f4;
+  border-width: 1px;
+`;
+
+export const Product = styled.View`
   flex: 1;
   width: 100%;
-  height: 400px;
+  height: 200px;
   background-color: #e6b32a;
+  border-color: #4f4;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  border-width: 1px;
 `;
 
 export const NoProductsContainer = styled.View`
@@ -73,18 +84,16 @@ export const NoProductsSubtitle = styled.Text`
 
 export const ShirtContainer = styled.View`
   flex: 1;
-  background-color: #7159c1;
-  border-color: #f0f;
-  border-width: 2px;
   justify-content: space-evenly;
   align-items: center;
   padding: 5px 0;
+  margin-bottom: 5px;
 `;
 
 export const DeleteProduct = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   padding: 0 10px;
   border-right-color: #808080;
   border-right-width: 1px;
@@ -151,7 +160,7 @@ export const Options = styled.View`
   height: 40px;
   align-items: center;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
 `;
 
 export const Detail = styled.TouchableOpacity`

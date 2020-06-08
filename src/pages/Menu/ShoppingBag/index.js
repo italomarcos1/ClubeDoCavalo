@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
 
 import {
   Container,
-  ProductsList,
+  // ProductsList,
+  Product,
   Amount,
   CheckoutContainer,
   FinalPrice,
@@ -29,13 +30,24 @@ Icon.loadFont();
 
 export default function ShoppingBag({ navigation }) {
   const products = useSelector(state => state.shoppingbag.products);
+  const [product, setProduct] = useState(() => {
+    if (products) return products[0];
+    return {};
+  });
+  const [position, setPosition] = useState(0);
 
   console.tron.log(`array: ${products}`);
   console.tron.log(`array a: ${products.length}`);
 
   return (
     <>
-      <Container>
+      <Container
+        contentContainerStyle={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         {products.length === 0 ? (
           <NoProductsContainer>
             <Icon name="shopping-bag" color="#333" size={80} />
@@ -45,12 +57,35 @@ export default function ShoppingBag({ navigation }) {
             </NoProductsSubtitle>
           </NoProductsContainer>
         ) : (
-          <ProductsList
-            data={products}
-            extraData={products}
-            keyExtractor={product => String(product.id)}
-            renderItem={({ item }) => <ShirtItem product={item} />}
-          />
+          <Product>
+            <TouchableOpacity
+              disabled={position === 0}
+              onPress={() => setPosition(position - 1)}
+              style={{
+                width: 15,
+                height: 100,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Icon name="chevron-left" size={30} color="#f0f" />
+            </TouchableOpacity>
+            {products.length !== 0 && (
+              <ShirtItem product={products[position]} />
+            )}
+            <TouchableOpacity
+              disabled={position === products.length - 1}
+              onPress={() => setPosition(position + 1)}
+              style={{
+                width: 15,
+                height: 100,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Icon name="chevron-right" size={30} color="#f0f" />
+            </TouchableOpacity>
+          </Product>
         )}
 
         {products.length === 0 ? (

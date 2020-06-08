@@ -41,16 +41,10 @@ export default function ShirtDetails({
   // atua como o lifecycle method 'componentWillUnmount
   // executa a ação antes do componente 'morrer'
 
-  useEffect(() => {
-    return () => {
-      close();
-    };
-  }, []);
-
   const addProduct = useCallback(() => {
     dispatch(
       addToShoppingBag({
-        id: String(new Date().getTime() / 1000),
+        id: Number(String(new Date().getTime() / 1000).slice(7, 10)),
         color: 'black',
         size,
         gender: type,
@@ -62,7 +56,7 @@ export default function ShirtDetails({
       })
     );
     redirect();
-  }, []);
+  }, [amount, dispatch, redirect, size, type]);
 
   return (
     <>
