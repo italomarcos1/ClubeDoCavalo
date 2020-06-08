@@ -13,6 +13,8 @@ import {
   ImageContainer,
   Item,
   NameInput,
+  VerifiedField,
+  VerifiedFieldContainer,
   Field,
   Value,
 } from './styles';
@@ -66,6 +68,7 @@ export default function Account({ navigation }) {
         <Content>
           <Item onPress={() => {}}>
             <Field>Nome</Field>
+
             <NameInput autoCorrect={false} value={name} onChangeText={setName}>
               Paulo
             </NameInput>
@@ -87,7 +90,10 @@ export default function Account({ navigation }) {
 
         <Content>
           <Item onPress={() => navigation.navigate('Phone')}>
-            <Field>Número de celular</Field>
+            <VerifiedFieldContainer>
+              <Field>Número de celular</Field>
+              <VerifiedField verified>Verificado</VerifiedField>
+            </VerifiedFieldContainer>
             <Value>927 609 440</Value>
           </Item>
           <Icon name="chevron-right" size={15} color="#808080" />
@@ -103,7 +109,11 @@ export default function Account({ navigation }) {
 
         <Content>
           <Item onPress={() => navigation.navigate('Mail')}>
-            <Field>E-mail</Field>
+            <VerifiedFieldContainer>
+              <Field>E-mail</Field>
+              <VerifiedField verified={false}>Não-verificado</VerifiedField>
+            </VerifiedFieldContainer>
+
             <Value>pauloandrade@gmail.com</Value>
           </Item>
           <Icon name="chevron-right" size={15} color="#808080" />

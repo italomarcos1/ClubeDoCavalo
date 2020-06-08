@@ -62,13 +62,26 @@ export const NameInput = styled.TextInput`
   color: #000;
 `;
 
+export const VerifiedFieldContainer = styled.View`
+  height: 5px;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+`;
+
 export const Field = styled.Text`
   color: #818181;
   font-size: 13px;
 `;
+
+export const VerifiedField = styled.Text`
+  color: ${props => (props.verified ? '#5bae59' : '#F5811F')}
+  font-size: 13px;
+  margin-left: 15px;
+`;
+
 export const Value = styled.Text`
   color: #000;
   font-size: 17px;
 `;
-
-// export const Text;

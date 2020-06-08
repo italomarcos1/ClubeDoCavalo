@@ -84,7 +84,7 @@ export default function Design({ navigation }) {
   const baseImg = resolveAssetSource(base); // imagem transparente para inicializar
 
   const [shirtId, setShirtId] = useState(baseImg.uri); // camiseta para o componente shirt details, para pegar tamanho, etc
-  const [shirtPreview, setShirtPreview] = useState(baseImg.uri); // camiseta para o componente shirt details, para pegar tamanho, etc
+  const [shirtPreview, setShirtPreview] = useState(''); // camiseta para o componente shirt details, para pegar tamanho, etc
 
   const [canScreenshot, setCanScreenshot] = useState(false); // camiseta para o componente shirt details, para pegar tamanho, etc
 
@@ -142,13 +142,11 @@ export default function Design({ navigation }) {
       setStickers(stk.data);
     }
 
-    loadImages();
+    setVisibleShirtDetails(false);
+    setCanScreenshot(false);
+    setShirtPreview('');
 
-    return () => {
-      setCanScreenshot(false);
-      setVisibleShirtDetails(false);
-      setShirtPreview('');
-    };
+    loadImages();
   }, []);
 
   useEffect(() => {
@@ -599,7 +597,7 @@ export default function Design({ navigation }) {
             active={shirtType === 'tshirt'}
             onPress={() => setShirtType('tshirt')}
             onLayout={() => {
-              capturePic();
+              if (canScreenshot) capturePic();
             }}
           >
             <ActionButtonText active={shirtType === 'tshirt'}>
@@ -836,6 +834,7 @@ export default function Design({ navigation }) {
         onRequestClose={() => {
           setCanScreenshot(false);
           setVisibleShirtDetails(false);
+          setShirtPreview('');
         }}
       >
         <ShirtDetails

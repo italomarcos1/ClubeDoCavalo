@@ -1,14 +1,18 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
   flex: 1;
   padding: 10px 20px 0;
   background-color: #f2f3f4;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const ProductsList = styled.FlatList`
   flex: 1;
   width: 100%;
+  height: 400px;
+  background-color: #e6b32a;
 `;
 
 export const NoProductsContainer = styled.View`
@@ -29,6 +33,20 @@ export const ProductAmountText = styled.Text`
   font-size: 16px;
   font-weight: bold;
   color: #333;
+`;
+
+export const ProductPrice = styled.Text`
+  font-weight: bold;
+`;
+
+export const ProductBeforeDiscount = styled.Text`
+  color: #9f9f9f;
+  text-decoration-line: line-through;
+`;
+
+export const ProductDiscount = styled.Text`
+  color: #f06d85;
+  font-weight: bold;
 `;
 
 export const PriceContainer = styled.View`
@@ -55,7 +73,9 @@ export const NoProductsSubtitle = styled.Text`
 
 export const ShirtContainer = styled.View`
   flex: 1;
-  background-color: transparent;
+  background-color: #7159c1;
+  border-color: #f0f;
+  border-width: 2px;
   justify-content: space-evenly;
   align-items: center;
   padding: 5px 0;

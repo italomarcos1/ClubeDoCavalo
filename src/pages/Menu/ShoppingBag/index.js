@@ -35,12 +35,7 @@ export default function ShoppingBag({ navigation }) {
 
   return (
     <>
-      <Container
-        contentContainerStyle={{
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
+      <Container>
         {products.length === 0 ? (
           <NoProductsContainer>
             <Icon name="shopping-bag" color="#333" size={80} />
@@ -52,6 +47,7 @@ export default function ShoppingBag({ navigation }) {
         ) : (
           <ProductsList
             data={products}
+            extraData={products}
             keyExtractor={product => String(product.id)}
             renderItem={({ item }) => <ShirtItem product={item} />}
           />

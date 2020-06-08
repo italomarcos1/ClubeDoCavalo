@@ -18,6 +18,9 @@ import {
   Options,
   ProductAmountContainer,
   ProductAmountText,
+  ProductPrice,
+  ProductDiscount,
+  ProductBeforeDiscount,
 } from '../styles';
 
 import {
@@ -54,20 +57,9 @@ function ShirtItem({ product }) {
                   justifyContent: 'space-between',
                 }}
               >
-                <Text
-                  style={{
-                    color: '#9F9F9F',
-                    textDecorationLine: 'line-through',
-                  }}
-                >{`R$ ${product.price}`}</Text>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                  }}
-                >{`R$ ${product.price}`}</Text>
-                <Text style={{ color: '#F06D85', fontWeight: 'bold' }}>
-                  -15%
-                </Text>
+                <ProductBeforeDiscount>{`R$ ${product.price}`}</ProductBeforeDiscount>
+                <ProductPrice>{`R$ ${product.price}`}</ProductPrice>
+                <ProductDiscount>-15%</ProductDiscount>
               </View>
             </View>
           </ShirtInfo>
