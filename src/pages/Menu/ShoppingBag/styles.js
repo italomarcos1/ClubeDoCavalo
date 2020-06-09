@@ -21,9 +21,8 @@ export const Product = styled.View`
   background-color: #e6b32a;
   border-color: #4f4;
   align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
   border-width: 1px;
+  padding: 5px;
 `;
 
 export const NoProductsContainer = styled.View`

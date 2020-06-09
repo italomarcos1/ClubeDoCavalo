@@ -1,10 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Text, Keyboard } from 'react-native';
+import Toast from 'react-native-tiny-toast';
 import PropTypes from 'prop-types';
 
 import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
+
+import { api } from '~/services/api';
 
 import {
   Container,
@@ -15,19 +18,58 @@ import {
 
 export default function AddNewAddress({ navigation }) {
   const [name, setName] = useState('');
-  const [cep, setCep] = useState('');
-  const [number, setNumber] = useState('');
+  const [zipcode, setZipcode] = useState('');
   const [address, setAddress] = useState('');
-  const [complement, setComplement] = useState('');
+  const [number, setNumber] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
+  const [district, setDistrict] = useState('');
+  const [complement, setComplement] = useState('');
 
-  const cepRef = useRef();
-  const numberRef = useRef();
+  const zipcodeRef = useRef();
   const addressRef = useRef();
-  const complementRef = useRef();
+  const numberRef = useRef();
   const cityRef = useRef();
   const stateRef = useRef();
+  const districtRef = useRef();
+  const complementRef = useRef();
+
+  const [loading, setLoading] = useState(false);
+
+  const handleAddAddress = useCallback(async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.post('addresses', {
+        name,
+        zipcode,
+        address,
+        number,
+        city,
+        state,
+        district,
+        complement,
+      });
+
+      setLoading(false);
+
+      Toast.show(`${data.meta.message}`);
+      navigation.goBack();
+    } catch (err) {
+      setLoading(false);
+
+      Toast.show('Houve um erro ao cadastrar o endereço.');
+    }
+  }, [
+    name,
+    number,
+    address,
+    city,
+    state,
+    district,
+    complement,
+    zipcode,
+    navigation,
+  ]);
 
   return (
     <>
@@ -50,9 +92,9 @@ export default function AddNewAddress({ navigation }) {
             maxLength={25}
             clear={() => setName('')}
             value={name}
-            onChangeText={setName}
+            onChangeText={value => setName(value)}
             returnKeyType="next"
-            onSubmitEditing={() => cepRef.current.focus()}
+            onSubmitEditing={() => zipcodeRef.current.focus()}
           />
         </InputContainer>
 
@@ -62,13 +104,13 @@ export default function AddNewAddress({ navigation }) {
             <InputMenu
               style={{ flex: 1, maxWidth: 300, maxHeight: 45 }}
               maxLength={9}
-              selected={!!cep}
+              selected={!!zipcode}
               autoCorrect={false}
               placeholder="95880-000"
-              clear={() => setCep('')}
-              ref={cepRef}
-              value={cep}
-              onChangeText={setCep}
+              clear={() => setZipcode('')}
+              ref={zipcodeRef}
+              value={zipcode}
+              onChangeText={setZipcode}
               returnKeyType="next"
               onSubmitEditing={() => numberRef.current.focus()}
             />
@@ -117,6 +159,20 @@ export default function AddNewAddress({ navigation }) {
             value={complement}
             onChangeText={setComplement}
             returnKeyType="next"
+            onSubmitEditing={() => districtRef.current.focus()}
+          />
+        </InputContainer>
+        <InputContainer style={{ marginTop: 0 }}>
+          <InputName>Distrito</InputName>
+          <InputMenu
+            autoCorrect={false}
+            maxLength={45}
+            selected={!!district}
+            clear={() => setDistrict('')}
+            ref={districtRef}
+            value={district}
+            onChangeText={setDistrict}
+            returnKeyType="next"
             onSubmitEditing={() => cityRef.current.focus()}
           />
         </InputContainer>
@@ -158,16 +214,18 @@ export default function AddNewAddress({ navigation }) {
         </CustomView>
 
         <ButtonMenu
+          loading={loading}
           disabled={
             !name ||
-            !cep ||
-            !number ||
+            !zipcode ||
             !address ||
-            !complement ||
+            !number ||
             !city ||
-            !state
+            !state ||
+            !district ||
+            !complement
           }
-          onPress={() => navigation.goBack()}
+          onPress={handleAddAddress}
           style={{ marginTop: 60 }}
         >
           Adicionar Endereço

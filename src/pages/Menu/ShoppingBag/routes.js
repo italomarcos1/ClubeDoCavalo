@@ -18,7 +18,7 @@ export default function Routes({ navigation }) {
     navigation.reset({
       index: 0,
       key: null,
-      routes: [{ name: 'Design' }],
+      routes: [{ name: 'Home' }],
     });
   };
 

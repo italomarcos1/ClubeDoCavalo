@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Text, TouchableOpacity, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-tiny-toast';
@@ -33,19 +33,6 @@ export default function VerifyPhone({ route }) {
     ].join('');
   });
 
-  console.tron.log(`phone:${phone}`);
-
-  console.tron.log(
-    [
-      '(',
-      phone.slice(0, 2),
-      ') ',
-      phone.slice(2, 7),
-      '-',
-      phone.slice(7, 11),
-    ].join('')
-  );
-
   useEffect(() => inputRef2.current.focus(), [code1]);
   useEffect(() => inputRef3.current.focus(), [code2]);
   useEffect(() => inputRef4.current.focus(), [code3]);
@@ -55,7 +42,7 @@ export default function VerifyPhone({ route }) {
     <>
       <Validation title="Digite o número abaixo" />
       <Container>
-        <SMSVerificationImage height={180} />
+        <SMSVerificationImage height={160} />
         <Text
           style={{
             fontSize: 26,
@@ -72,7 +59,6 @@ export default function VerifyPhone({ route }) {
         </CodeSentText>
         <ValidationContainer>
           <ValidationCodeInput
-            autoFocus
             maxLength={1}
             keyboardType="numeric"
             placeholder="0"

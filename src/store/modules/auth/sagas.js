@@ -11,7 +11,8 @@ export function* signIn({ payload }) {
   try {
     const response = yield call(api.post, 'auth/login', { email, password });
 
-    const { token, user } = response.data;
+    const { token, user } = response.data.data;
+    console.tron.log(response.data.data);
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, TouchableOpacity, Keyboard } from 'react-native';
+import { Text, TouchableOpacity, Keyboard, Platform } from 'react-native';
 import Toast from 'react-native-tiny-toast';
 
 import Validation from '~/components/Validation';
@@ -32,7 +32,10 @@ export default function Mail() {
   return (
     <>
       <Validation title="Digite o número abaixo" />
-      <Container>
+      <Container
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled
+      >
         <EmailVerificationImage height={180} />
         <Text
           style={{

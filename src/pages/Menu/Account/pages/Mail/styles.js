@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.KeyboardAvoidingView`
   flex: 1;
   background-color: #fff;
   padding: 20px;
@@ -31,7 +31,7 @@ export const CodeSentText = styled.Text`
   margin-top: 5px;
   margin-bottom: 5px;
   flex: 1;
-  max-height: 60px;
+  max-height: 100px;
   font-size: 18px;
   font-weight: bold;
   line-height: 20px;

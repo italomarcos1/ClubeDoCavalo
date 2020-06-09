@@ -24,8 +24,6 @@ export default function ChooseCard({ navigation }) {
   const deleteCard = useCallback(
     id => {
       if (cards.length === 1) {
-        console.tron.log('lel');
-
         setCards([]);
       } else {
         const filtered = cards.filter(card => card.id !== id);

@@ -12,11 +12,9 @@ export const Address = styled.TouchableOpacity`
   margin-bottom: 10px;
 `;
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
   background-color: #f2f3f4;
-  padding: 10px 10px 20px 10px;
-  align-items: center;
 `;
 
 export const AddressInfo = styled.View`

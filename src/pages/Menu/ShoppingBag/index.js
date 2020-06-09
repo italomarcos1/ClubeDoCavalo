@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
@@ -30,10 +30,7 @@ Icon.loadFont();
 
 export default function ShoppingBag({ navigation }) {
   const products = useSelector(state => state.shoppingbag.products);
-  const [product, setProduct] = useState(() => {
-    if (products) return products[0];
-    return {};
-  });
+  // verificar para ser apenas caso tenha algum produto
   const [position, setPosition] = useState(0);
 
   console.tron.log(`array: ${products}`);
@@ -58,33 +55,43 @@ export default function ShoppingBag({ navigation }) {
           </NoProductsContainer>
         ) : (
           <Product>
-            <TouchableOpacity
-              disabled={position === 0}
-              onPress={() => setPosition(position - 1)}
-              style={{
-                width: 15,
-                height: 100,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Icon name="chevron-left" size={30} color="#f0f" />
-            </TouchableOpacity>
             {products.length !== 0 && (
               <ShirtItem product={products[position]} />
             )}
-            <TouchableOpacity
-              disabled={position === products.length - 1}
-              onPress={() => setPosition(position + 1)}
+            <View
               style={{
-                width: 15,
-                height: 100,
-                justifyContent: 'center',
+                flexDirection: 'row',
                 alignItems: 'center',
+                height: 20,
+                backgroundColor: '#456',
               }}
             >
-              <Icon name="chevron-right" size={30} color="#f0f" />
-            </TouchableOpacity>
+              <TouchableOpacity
+                disabled={position === 0}
+                onPress={() => setPosition(position - 1)}
+                style={{
+                  width: 30,
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Icon name="chevron-left" size={35} color="#00f" />
+              </TouchableOpacity>
+              <Text>{`${position} de ${products.length}`}</Text>
+              <TouchableOpacity
+                disabled={position === products.length - 1}
+                onPress={() => setPosition(position + 1)}
+                style={{
+                  width: 30,
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Icon name="chevron-right" size={35} color="#f0f" />
+              </TouchableOpacity>
+            </View>
           </Product>
         )}
 

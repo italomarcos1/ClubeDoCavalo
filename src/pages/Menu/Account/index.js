@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import ImagePicker from 'react-native-image-picker';
@@ -20,6 +21,12 @@ import {
 } from './styles';
 
 export default function Account({ navigation }) {
+  const user = useSelector(state => state.user.profile);
+  const [name, setName] = useState(user.name);
+  const [lastName, setLastName] = useState(user.last_name);
+
+  // campo address e gender no usuário
+
   const [profilePhoto, setProfilePhoto] = useState(
     'https://api.adorable.io/avatars/90/abott@adorable.png'
   );
@@ -41,9 +48,6 @@ export default function Account({ navigation }) {
       }
     });
   }, []);
-
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
 
   return (
     <>
@@ -69,9 +73,11 @@ export default function Account({ navigation }) {
           <Item onPress={() => {}}>
             <Field>Nome</Field>
 
-            <NameInput autoCorrect={false} value={name} onChangeText={setName}>
-              Paulo
-            </NameInput>
+            <NameInput
+              autoCorrect={false}
+              value={name}
+              onChangeText={setName}
+            />
           </Item>
         </Content>
 
@@ -80,11 +86,9 @@ export default function Account({ navigation }) {
             <Field>Sobrenome</Field>
             <NameInput
               autoCorrect={false}
-              value={surname}
-              onChangeText={setSurname}
-            >
-              Andrade
-            </NameInput>
+              value={lastName}
+              onChangeText={setLastName}
+            />
           </Item>
         </Content>
 
@@ -94,7 +98,7 @@ export default function Account({ navigation }) {
               <Field>Número de celular</Field>
               <VerifiedField verified>Verificado</VerifiedField>
             </VerifiedFieldContainer>
-            <Value>927 609 440</Value>
+            <Value>{user.cellphone}</Value>
           </Item>
           <Icon name="chevron-right" size={15} color="#808080" />
         </Content>
@@ -114,7 +118,7 @@ export default function Account({ navigation }) {
               <VerifiedField verified={false}>Não-verificado</VerifiedField>
             </VerifiedFieldContainer>
 
-            <Value>pauloandrade@gmail.com</Value>
+            <Value>{user.email}</Value>
           </Item>
           <Icon name="chevron-right" size={15} color="#808080" />
         </Content>

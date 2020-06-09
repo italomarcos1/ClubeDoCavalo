@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'https://clubedocavalo.shop/api/',
+  baseURL: 'https://clubedocavalo.shop/api-v2',
 });
 
 export const fakeapi = axios.create({

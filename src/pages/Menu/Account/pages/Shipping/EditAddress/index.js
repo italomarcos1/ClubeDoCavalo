@@ -1,10 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Text, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
+import Toast from 'react-native-tiny-toast';
 
 import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
+
+import { api } from '~/services/api';
 
 import {
   Container,
@@ -15,24 +18,64 @@ import {
 
 export default function EditAddress({ navigation, route }) {
   const addressInfo = route.params.address;
-
-  // estático. deve puxar esse campo do redux e atualizar por action
-  // não será necessário mandar o dado do usuário na rota
+  const { id } = route.params.address;
+  console.tron.log(`address id: ${id}`);
 
   const [name, setName] = useState(addressInfo.name);
-  const [cep, setCep] = useState(addressInfo.cep);
+  const [zipcode, setZipcode] = useState(addressInfo.zipcode);
+  const [address, setAddress] = useState(addressInfo.address);
   const [number, setNumber] = useState(addressInfo.number);
-  const [address, setAddress] = useState(addressInfo.street);
-  const [complement, setComplement] = useState(addressInfo.complement);
   const [city, setCity] = useState(addressInfo.city);
   const [state, setState] = useState(addressInfo.state);
+  const [district, setDistrict] = useState(addressInfo.district);
+  const [complement, setComplement] = useState(addressInfo.complement);
 
-  const cepRef = useRef();
-  const numberRef = useRef();
+  const zipcodeRef = useRef();
   const addressRef = useRef();
-  const complementRef = useRef();
+  const numberRef = useRef();
   const cityRef = useRef();
   const stateRef = useRef();
+  const districtRef = useRef();
+  const complementRef = useRef();
+
+  const [loading, setLoading] = useState(false);
+
+  const handleEditAddress = useCallback(async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.put(`addresses/${id}`, {
+        name,
+        zipcode,
+        address,
+        number,
+        city,
+        state,
+        district,
+        complement,
+      });
+
+      setLoading(false);
+      console.tron.log(data.data);
+
+      Toast.show(`${data.meta.message}`);
+      navigation.goBack();
+    } catch (err) {
+      setLoading(false);
+
+      Toast.show('Houve um erro ao alterar o endereço.');
+    }
+  }, [
+    id,
+    name,
+    zipcode,
+    address,
+    number,
+    city,
+    state,
+    district,
+    complement,
+    navigation,
+  ]);
 
   return (
     <>
@@ -57,7 +100,7 @@ export default function EditAddress({ navigation, route }) {
             value={name}
             onChangeText={setName}
             returnKeyType="next"
-            onSubmitEditing={() => cepRef.current.focus()}
+            onSubmitEditing={() => zipcodeRef.current.focus()}
           />
         </InputContainer>
 
@@ -67,13 +110,13 @@ export default function EditAddress({ navigation, route }) {
             <InputMenu
               style={{ flex: 1, maxWidth: 300, maxHeight: 45 }}
               maxLength={9}
-              selected={!!cep}
+              selected={!!zipcode}
               autoCorrect={false}
               placeholder="95880-000"
-              clear={() => setCep('')}
-              ref={cepRef}
-              value={cep}
-              onChangeText={setCep}
+              clear={() => setZipcode('')}
+              ref={zipcodeRef}
+              value={zipcode}
+              onChangeText={setZipcode}
               returnKeyType="next"
               onSubmitEditing={() => numberRef.current.focus()}
             />
@@ -86,6 +129,7 @@ export default function EditAddress({ navigation, route }) {
               selected={!!number}
               autoCorrect={false}
               keyboardType="numeric"
+              clear={() => setNumber('')}
               ref={numberRef}
               value={number}
               onChangeText={setNumber}
@@ -123,10 +167,24 @@ export default function EditAddress({ navigation, route }) {
             value={complement}
             onChangeText={setComplement}
             returnKeyType="next"
-            onSubmitEditing={() => cityRef.current.focus()}
+            onSubmitEditing={() => districtRef.current.focus()}
           />
         </InputContainer>
 
+        <InputContainer style={{ marginTop: 0 }}>
+          <InputName>Distrito</InputName>
+          <InputMenu
+            autoCorrect={false}
+            maxLength={45}
+            selected={!!district}
+            clear={() => setDistrict('')}
+            ref={districtRef}
+            value={district}
+            onChangeText={setDistrict}
+            returnKeyType="next"
+            onSubmitEditing={() => cityRef.current.focus()}
+          />
+        </InputContainer>
         <CustomView>
           <InputContainer style={{ flex: 1, marginRight: 20 }}>
             <InputName>Cidade</InputName>
@@ -164,16 +222,18 @@ export default function EditAddress({ navigation, route }) {
         </CustomView>
 
         <ButtonMenu
+          loading={loading}
           disabled={
             !name ||
-            !cep ||
-            !number ||
+            !zipcode ||
             !address ||
-            !complement ||
+            !number ||
             !city ||
-            !state
+            !state ||
+            !district ||
+            !complement
           }
-          onPress={() => navigation.goBack()}
+          onPress={handleEditAddress}
           style={{ marginTop: 60 }}
         >
           Salvar alterações
@@ -186,5 +246,20 @@ export default function EditAddress({ navigation, route }) {
 EditAddress.propTypes = {
   navigation: PropTypes.shape({
     goBack: PropTypes.func,
+  }).isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      address: PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        zipcode: PropTypes.string,
+        address: PropTypes.string,
+        number: PropTypes.string,
+        city: PropTypes.string,
+        state: PropTypes.string,
+        district: PropTypes.string,
+        complement: PropTypes.string,
+      }),
+    }),
   }).isRequired,
 };
