@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Modal as RNModal } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -17,10 +17,16 @@ import {
   List,
 } from './styles';
 
-export default function ModalColor({ visible, onCancelPress, listData, done }) {
+export default function ModalColor({
+  visible,
+  onCancelPress,
+  listData,
+  done,
+  color,
+}) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedItem, setSelectedItem] = useState(0);
-
+  const [selectedColor, setSelectedColor] = useState('Branca');
   // baseado no type filtra os indices do array, extrai usando o slice ou sla oq
   const dispatch = useDispatch();
 
@@ -43,7 +49,32 @@ export default function ModalColor({ visible, onCancelPress, listData, done }) {
       },
     });
     done(selectedItem.uri);
+    color(selectedColor);
   }
+
+  const handleColor = useCallback(index => {
+    switch (index) {
+      case 0:
+        setSelectedColor('Branca');
+        break;
+      case 1:
+        setSelectedColor('Preta');
+        break;
+      case 2:
+        setSelectedColor('Cinza');
+        break;
+      case 3:
+        setSelectedColor('Azul');
+        break;
+      case 4:
+        setSelectedColor('Verde');
+        break;
+      case 5:
+        setSelectedColor('Vermelha');
+        break;
+      default:
+    }
+  }, []);
 
   return (
     <RNModal visible={visible} animated={true}>
@@ -58,7 +89,10 @@ export default function ModalColor({ visible, onCancelPress, listData, done }) {
             <ContainerList>
               <ItemList
                 selected={index === selectedIndex}
-                onPress={() => handleChangeSelected({ item, index })}
+                onPress={() => {
+                  handleChangeSelected({ item, index });
+                  handleColor(index);
+                }}
               >
                 <Image source={{ uri: item.uri }} resizeMode="contain" />
               </ItemList>

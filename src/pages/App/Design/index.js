@@ -83,6 +83,8 @@ export default function Design({ navigation }) {
   const [text, setText] = useState(''); // estado pra salvar o texto da camiseta
 
   const [font, setFont] = useState(''); // guardar a fonte
+  const [shirtColor, setShirtColor] = useState('Branca'); // guardar a fonte
+  const [stickerName, setStickerName] = useState(''); // guardar a fonte
 
   const [finalSize, setFinalSize] = useState(0); // valor unitário pra somar à fonte.
   const [textHeight, setTextHeight] = useState(0); // altura do texto após o render
@@ -630,12 +632,6 @@ export default function Design({ navigation }) {
                   onPress={() => {
                     if (canSend) {
                       setCanScreenshot(true);
-
-                      // setUploadingModalVisible(true); // abre o modal de 'enviando camiseta...aguarde
-                      // capturePic(); // função que tira o print da camiseta
-                      // setVisibleShirtDetails(true); // abre o modal de 'enviando camiseta...aguarde
-                      // após fechar o modal reseta para false, assim reaparece
-                      // uma função pra fazer o visible none e ela dispara o capturePic
                     } else {
                       Toast.show('Edite alguma camiseta antes de enviar.');
                     }
@@ -680,6 +676,7 @@ export default function Design({ navigation }) {
           setSizeSticker(80);
           setVisibleModalPrintable(false);
         }}
+        printable={stickername => setStickerName(stickername)}
       />
 
       <RNModal // modal de envio da camiseta aparece escrito 'enviando...aguarde'
@@ -713,6 +710,8 @@ export default function Design({ navigation }) {
             setShirtPreview('');
           }}
           shirt={shirtPreview}
+          stickername={stickerName}
+          color={shirtColor}
           redirect={() => {
             setCanScreenshot(false);
             setVisibleShirtDetails(false);
@@ -748,9 +747,11 @@ export default function Design({ navigation }) {
         onCancelPress={() => setVisibleModalColor(false)}
         listData={models}
         done={value => {
+          // set shirt color
           setTShirtImage(value);
           setVisibleModalColor(false);
         }}
+        color={shirtcolor => setShirtColor(shirtcolor)}
       />
     </>
   );

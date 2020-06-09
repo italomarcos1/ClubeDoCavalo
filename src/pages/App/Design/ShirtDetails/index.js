@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -28,6 +28,7 @@ Icon.loadFont();
 export default function ShirtDetails({
   close,
   shirt,
+  stickername,
   color,
   redirect,
   navigation,
@@ -45,11 +46,11 @@ export default function ShirtDetails({
     dispatch(
       addToShoppingBag({
         id: Number(String(new Date().getTime() / 1000).slice(7, 10)),
-        color: 'black',
+        color,
         size,
         gender: type,
-        print: 'https://images.sportsdirect.com/images/products/37715018_l.jpg',
-        name: 'Manchester City',
+        print: shirt,
+        name: stickername,
         amount,
         price: '59,90',
         currency: 'BRL',
@@ -187,6 +188,8 @@ export default function ShirtDetails({
 
 ShirtDetails.propTypes = {
   close: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
   shirt: PropTypes.string.isRequired,
+  stickername: PropTypes.string.isRequired,
   redirect: PropTypes.func.isRequired,
 };

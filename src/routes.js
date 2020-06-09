@@ -63,7 +63,7 @@ export default function createRouter(isSigned = false) {
         }}
         unmountOnBlur={true}
         backBehavior="initialRoute"
-        initialRouteName="Design"
+        initialRouteName="Home"
       >
         <Drawer.Screen
           name="Home"

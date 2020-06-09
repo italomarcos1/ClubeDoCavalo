@@ -20,7 +20,12 @@ import {
   ChangeListButtonText,
 } from './styles';
 
-export default function ModalPrintable({ visible, onCancelPress, done }) {
+export default function ModalPrintable({
+  visible,
+  onCancelPress,
+  done,
+  printable,
+}) {
   const [activedList, setActivedList] = useState('print');
   const [selectedItem, setSelectedItem] = useState('');
 
@@ -29,6 +34,7 @@ export default function ModalPrintable({ visible, onCancelPress, done }) {
   const [listData, setListData] = useState([]);
 
   function handleDone() {
+    printable(selectedItem.name);
     done(selectedItem.url);
   }
 
@@ -114,4 +120,5 @@ ModalPrintable.propTypes = {
   visible: PropTypes.bool.isRequired,
   onCancelPress: PropTypes.func.isRequired,
   done: PropTypes.func.isRequired,
+  printable: PropTypes.func.isRequired,
 };
