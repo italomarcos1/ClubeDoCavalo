@@ -34,12 +34,12 @@ export default function ModalPrintable({ visible, onCancelPress, done }) {
 
   async function populateLists() {
     const [imgs, stk] = await Promise.all([
-      api.get('design-shirt/image'),
-      api.get('design-shirt/sticker'),
+      api.get('printables/image'),
+      api.get('printables'),
     ]);
 
-    setListImages(imgs.data);
-    setListStickers(stk.data);
+    setListImages(imgs.data.data);
+    setListStickers(stk.data.data);
   }
 
   useEffect(() => {
