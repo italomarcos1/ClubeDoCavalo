@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
+import { View, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
 
 import {
   Container,
-  // ProductsList,
   Product,
+  SelectProduct,
+  SelectProductContainer,
   Amount,
   CheckoutContainer,
   FinalPrice,
@@ -31,10 +32,8 @@ Icon.loadFont();
 export default function ShoppingBag({ navigation }) {
   const products = useSelector(state => state.shoppingbag.products);
   // verificar para ser apenas caso tenha algum produto
+  const dispatch = useDispatch();
   const [position, setPosition] = useState(0);
-
-  console.tron.log(`array: ${products}`);
-  console.tron.log(`array a: ${products.length}`);
 
   return (
     <>
@@ -58,40 +57,21 @@ export default function ShoppingBag({ navigation }) {
             {products.length !== 0 && (
               <ShirtItem product={products[position]} />
             )}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                height: 20,
-                backgroundColor: '#456',
-              }}
-            >
-              <TouchableOpacity
+            <SelectProductContainer>
+              <SelectProduct
                 disabled={position === 0}
                 onPress={() => setPosition(position - 1)}
-                style={{
-                  width: 30,
-                  height: 30,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
               >
-                <Icon name="chevron-left" size={35} color="#00f" />
-              </TouchableOpacity>
-              <Text>{`${position} de ${products.length}`}</Text>
-              <TouchableOpacity
+                <Icon name="chevron-left" size={30} color="#222" />
+              </SelectProduct>
+              <Text>{`${position + 1} de ${products.length}`}</Text>
+              <SelectProduct
                 disabled={position === products.length - 1}
                 onPress={() => setPosition(position + 1)}
-                style={{
-                  width: 30,
-                  height: 30,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
               >
-                <Icon name="chevron-right" size={35} color="#f0f" />
-              </TouchableOpacity>
-            </View>
+                <Icon name="chevron-right" size={30} color="#222" />
+              </SelectProduct>
+            </SelectProductContainer>
           </Product>
         )}
 
@@ -147,7 +127,12 @@ export default function ShoppingBag({ navigation }) {
               <Text style={{ color: '#fff', fontSize: 20 }}>R$ 58.10</Text>
             </FinalPrice>
           </Amount>
-          <FinishButton onPress={() => navigation.navigate('Success')}>
+          <FinishButton
+            onPress={() => {
+              navigation.navigate('Success');
+              dispatch({ type: `@shoppingbag/AFTER_PURCHASE` });
+            }}
+          >
             <FinishButtonText>Finalizar a compra</FinishButtonText>
           </FinishButton>
         </CheckoutContainer>

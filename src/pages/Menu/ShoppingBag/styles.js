@@ -3,26 +3,15 @@ import styled from 'styled-components/native';
 export const Container = styled.ScrollView`
   flex: 1;
   padding: 10px 20px 0;
-  background-color: #f2f3f4;
-`;
-
-export const ProductsList = styled.FlatList`
-  width: 300px;
-  flex: 1;
-  background-color: #e6b32a;
-  border-color: #4f4;
-  border-width: 1px;
+  background-color: #fff3f4;
 `;
 
 export const Product = styled.View`
   flex: 1;
   width: 100%;
-  height: 200px;
-  background-color: #e6b32a;
-  border-color: #4f4;
+  height: 220px;
   align-items: center;
-  border-width: 1px;
-  padding: 5px;
+  padding: 3px;
 `;
 
 export const NoProductsContainer = styled.View`
@@ -170,6 +159,23 @@ export const Detail = styled.TouchableOpacity`
   border-radius: 4px;
   padding-right: 20px;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const SelectProductContainer = styled.View`
+  width: 100%;
+  text-align: center;
+  height: 20px;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+`;
+
+export const SelectProduct = styled.TouchableOpacity`
+  width: 30px;
+  height: 30px;
   align-items: center;
   justify-content: space-between;
 `;
