@@ -104,9 +104,6 @@ export default function Design({ navigation }) {
 
   const [shirtType, setShirtType] = useState('tshirt');
 
-  const [images, setImages] = useState([]); // array de imagens puxados da api
-  const [stickers, setStickers] = useState([]); // array de stickers que também puxa da api
-
   const [tFront, setTFront] = useState(customT.front); // caḿpo para salvar a camiseta t-hirt
   const [bFront, setBFront] = useState(customB.front); // campo para salvar a camiseta babylook
   const [hFront, setHFront] = useState(customH.front); // campo para salvar o moletom
@@ -120,24 +117,6 @@ export default function Design({ navigation }) {
   const [downLimitReached, setDownLimitReached] = useState(false);
 
   const [visibleShirtDetails, setVisibleShirtDetails] = useState(false);
-
-  useEffect(() => {
-    async function loadImages() {
-      const [imgs, stk] = await Promise.all([
-        api.get('/printables/image'), // puxar da rota de imagens
-        api.get('printables'), // puxa da rota de stickers
-      ]);
-
-      setImages(imgs.data); // salva o que recebe da api, no estado
-      setStickers(stk.data);
-    }
-
-    setVisibleShirtDetails(false);
-    setCanScreenshot(false);
-    setShirtPreview('');
-
-    loadImages();
-  }, []);
 
   useEffect(() => {
     if (selected === 'imagem' && size > 130) {
