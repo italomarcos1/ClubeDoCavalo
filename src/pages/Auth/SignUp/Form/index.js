@@ -31,14 +31,6 @@ export default function AddCard({ navigation }) {
   const dispatch = useDispatch();
 
   const handleFinishRegister = useCallback(() => {
-    // dispatch(
-    //   updateProfileRequest({
-    //     name,
-    //     last_name,
-    //     cell_phone,
-    //     ...user,
-    //   })
-    // );
     console.tron.log(`name: ${name}`);
     console.tron.log(`last: ${last_name}`);
     console.tron.log(`cell: ${cell_phone}`);
