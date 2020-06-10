@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { AccessToken } from 'react-native-fbsdk';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
@@ -39,7 +40,7 @@ export default function SignIn({ navigation }) {
   return (
     <Background>
       <Container>
-        <SealImage height={200} />
+        <SealImage height={150} />
 
         <TitleText>Bem-vindo</TitleText>
         <SubtitleText>Cadastre-se gratuitamente em 15 segundos</SubtitleText>
@@ -81,16 +82,26 @@ export default function SignIn({ navigation }) {
               <SubmitButtonText>Entrar ou Cadastrar</SubmitButtonText>
             )}
           </SubmitButton>
-          <FacebookButton onPress={() => {}}>
-            {loading ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              <>
-                <FacebookButtonIcon name="facebook-f" />
-                <FacebookButtonText>Entrar com Facebook</FacebookButtonText>
-              </>
-            )}
-          </FacebookButton>
+          <FacebookButton
+            style={{
+              borderRadius: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onLoginFinished={(error, result) => {
+              if (error) {
+                console.tron.log(`login has error: ${result.error}`);
+              } else if (result.isCancelled) {
+                console.tron.log('login is cancelled.');
+              } else {
+                AccessToken.getCurrentAccessToken().then(data => {
+                  console.tron.log(data);
+                });
+              }
+              console.tron.log(result.grantedPermissions[0]);
+            }}
+            onLogoutFinished={data => console.tron.log('logout')}
+          />
         </Form>
       </Container>
     </Background>
