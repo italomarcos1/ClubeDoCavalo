@@ -93,7 +93,9 @@ export default function VerifyPhone({ route }) {
         </ValidationContainer>
         <TouchableOpacity
           onPress={() =>
-            Toast.showSuccess('Um código foi enviado para seu Email.')
+            Toast.showSuccess(
+              'Um código foi enviado para seu número de Telefone.'
+            )
           }
         >
           <ResendCodeText>Reenviar em 30 segundos</ResendCodeText>

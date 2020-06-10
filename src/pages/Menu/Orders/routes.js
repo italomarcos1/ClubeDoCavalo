@@ -54,5 +54,6 @@ Routes.propTypes = {
   navigation: PropTypes.shape({
     goBack: PropTypes.func,
     openDrawer: PropTypes.func,
+    navigate: PropTypes.func,
   }).isRequired,
 };

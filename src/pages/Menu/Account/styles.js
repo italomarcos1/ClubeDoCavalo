@@ -56,9 +56,11 @@ export const ChoosePhotoButton = styled.TouchableOpacity`
 
 export const NameInput = styled.TextInput`
   border: 0;
-  background-color: transparent;
-  padding: 0;
-  font-size: 17px;
+  width: 100%;
+  background-color: #f2f3f4;
+  border-radius: 1px;
+  padding: 1px 5px;
+  font-size: 16px;
   color: #000;
 `;
 

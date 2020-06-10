@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import {
-  AddItemToCart,
   Container,
   Content,
   CheckoutContainer,
@@ -9,15 +8,17 @@ import {
   Detail,
   CustomerInfo,
   DetailsContainer,
-  Item,
   Separator,
-  Shirt,
-  ShirtImage,
-  ShirtInfo,
   Value,
 } from './styles';
 
-export default function Details() {
+import OrderItem from './components/OrderItem';
+
+export default function Details({ navigation }) {
+  const goBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <>
       <Container
@@ -27,46 +28,7 @@ export default function Details() {
         }}
       >
         <DetailsContainer>
-          <Item>
-            <Shirt>
-              <ShirtImage
-                source={{
-                  uri:
-                    'https://2.bp.blogspot.com/-dZNDyYvV0u4/VPuntd8jloI/AAAAAAAAAM8/GR056RmQ7so/s1600/Manchester%2BUnited%2B-%2BHome%2B-%2B2008-2009.png',
-                }}
-              />
-
-              <ShirtInfo>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <Text style={{ fontWeight: 'bold' }}>
-                    T-shirt Masculina M Vermelha
-                  </Text>
-                  <Text style={{ fontSize: 15 }}>
-                    Estampa: Manchester United
-                  </Text>
-                  <Text style={{ fontSize: 15 }}>Quantidade: 01</Text>
-                  <Text style={{ fontSize: 15 }}>R$ 39,90</Text>
-                </View>
-                <View
-                  style={{
-                    marginTop: 20,
-                    justifyContent: 'flex-end',
-                  }}
-                >
-                  <AddItemToCart>
-                    <Text style={{ fontSize: 14, color: '#fff' }}>
-                      Adicionar este item ao cesto
-                    </Text>
-                  </AddItemToCart>
-                </View>
-              </ShirtInfo>
-            </Shirt>
-          </Item>
+          <OrderItem close={goBack} />
           <Separator />
           <View>
             <Detail>

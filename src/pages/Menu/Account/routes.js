@@ -10,7 +10,7 @@ import VerifyPhone from './pages/Phone/Verify';
 import Mail from './pages/Mail';
 
 import Gender from './pages/Gender';
-import Pass from './pages/Pass';
+import Pass from './pages/Pass/ChangePassword';
 import Shipping from './pages/Shipping';
 import AddNewAddress from './pages/Shipping/AddNewAddress';
 import EditAddress from './pages/Shipping/EditAddress';

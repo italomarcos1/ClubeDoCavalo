@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { View } from 'react-native';
+import { View, Modal, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import ImagePicker from 'react-native-image-picker';
 import Toast from 'react-native-tiny-toast';
@@ -24,6 +24,8 @@ export default function Account({ navigation }) {
   const user = useSelector(state => state.user.profile);
   const [name, setName] = useState(user.name);
   const [lastName, setLastName] = useState(user.last_name);
+
+  const [nameModal, setNameModalVisible] = useState(false);
 
   // campo address e gender no usuário
 
@@ -70,25 +72,16 @@ export default function Account({ navigation }) {
       </ImageContainer>
       <View style={{ flex: 1, paddingBottom: 15 }}>
         <Content>
-          <Item onPress={() => {}}>
+          <Item onPress={() => setNameModalVisible(true)}>
             <Field>Nome</Field>
-
-            <NameInput
-              autoCorrect={false}
-              value={name}
-              onChangeText={setName}
-            />
+            <Value>{user.name}</Value>
           </Item>
         </Content>
 
         <Content>
           <Item onPress={() => {}}>
             <Field>Sobrenome</Field>
-            <NameInput
-              autoCorrect={false}
-              value={lastName}
-              onChangeText={setLastName}
-            />
+            <Value>{user.last_name}</Value>
           </Item>
         </Content>
 
