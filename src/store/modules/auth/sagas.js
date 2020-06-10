@@ -3,7 +3,11 @@ import Toast from 'react-native-tiny-toast';
 
 import { api } from '~/services/api';
 
-import { signInSuccess, signFailure } from '~/store/modules/auth/actions';
+import {
+  signInSuccess,
+  signFailure,
+  completingRegistering,
+} from '~/store/modules/auth/actions';
 
 export function* signIn({ payload }) {
   const { email, password } = payload;
@@ -16,7 +20,9 @@ export function* signIn({ payload }) {
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess(token, user));
+    if (user.name === '' && user.last_name === '') {
+      yield put(completingRegistering(token, user)); // completar cadastro
+    } else yield put(signInSuccess(token, user));
   } catch (error) {
     Toast.show('Houve um erro no login, verifique seus dados.');
     yield put(signFailure());

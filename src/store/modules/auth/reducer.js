@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   token: null,
   signed: false,
   loading: false,
+  newUser: false,
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {
@@ -13,10 +14,17 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         draft.loading = true;
         break;
       }
+      case '@auth/COMPLETING_REGISTERING': {
+        draft.token = payload.token;
+        draft.loading = false;
+        draft.newUser = true;
+        break;
+      }
       case '@auth/SIGN_IN_SUCCESS': {
         draft.token = payload.token;
         draft.signed = true;
         draft.loading = false;
+        draft.newUser = false;
         break;
       }
       case '@auth/SIGN_FAILURE': {

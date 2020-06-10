@@ -69,7 +69,7 @@ export default function SignIn({ navigation }) {
           />
           <RecoveryButton
             onPress={() => {
-              navigation.navigate('SignUp');
+              navigation.navigate('ForgotPassword');
             }}
           >
             <RecoveryText>Recuperar Senha?</RecoveryText>

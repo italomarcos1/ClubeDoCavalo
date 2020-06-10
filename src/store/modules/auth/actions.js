@@ -15,6 +15,16 @@ export function signInSuccess(token, user) {
   };
 }
 
+export function completingRegistering(token, user) {
+  return {
+    type: '@auth/COMPLETING_REGISTERING',
+    payload: {
+      token,
+      user,
+    },
+  };
+}
+
 export function signUpRequest(name, email, password) {
   return {
     type: '@auth/SIGN_UP_REQUEST',

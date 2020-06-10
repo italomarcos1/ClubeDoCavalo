@@ -12,7 +12,10 @@ export default function user(state = INITIAL_STATE, { type, payload }) {
 
         break;
       }
-
+      case '@auth/COMPLETING_REGISTERING': {
+        draft.profile = payload.user;
+        break;
+      }
       case '@user/UPDATE_PROFILE_SUCCESS': {
         draft.profile = payload.profile;
         break;
