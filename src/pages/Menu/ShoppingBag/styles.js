@@ -14,6 +14,44 @@ export const Product = styled.View`
   padding: 3px;
 `;
 
+export const PickAddress = styled.View`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+`;
+
+export const AddressList = styled.FlatList`
+  background-color: #fff;
+  border-width: 3px;
+  border-radius: 4px;
+  padding: 5px 0;
+`;
+
+export const Address = styled.TouchableOpacity`
+  flex: 1;
+  margin-bottom: 5px;
+  height: 40px;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 5px;
+  background-color: #f2f3f4;
+`;
+
+export const AddressName = styled.Text`
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 20px;
+`;
+
+export const AddressInfo = styled.Text`
+  color: #777;
+  font-size: 14px;
+`;
+
 export const NoProductsContainer = styled.View`
   flex: 1;
   align-items: center;

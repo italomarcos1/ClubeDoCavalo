@@ -9,6 +9,7 @@ import VerifyPhone from './pages/Phone/Verify';
 
 import Mail from './pages/Mail';
 
+import Name from './pages/Name';
 import Gender from './pages/Gender';
 import Pass from './pages/Pass/ChangePassword';
 import Shipping from './pages/Shipping';
@@ -35,6 +36,15 @@ export default function Routes({ navigation }) {
       })}
     >
       <Stack.Screen name="Account" component={Account} />
+      <Stack.Screen
+        name="EditName"
+        component={Name}
+        options={({ navigation }) => ({
+          header: () => (
+            <Header title="Nome do perfil" close={() => navigation.goBack()} />
+          ),
+        })}
+      />
       <Stack.Screen
         name="Phone"
         component={Phone}

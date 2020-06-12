@@ -51,7 +51,6 @@ export default function Shipping({ navigation }) {
       try {
         setLoading(true);
         const { data } = await api.get('addresses');
-        console.tron.log(data.meta.message);
         if (data.meta.message !== 'Você ainda não tem endereços cadastrados.') {
           setAddresses(data.data);
           setNoAddresses(false);
@@ -59,13 +58,9 @@ export default function Shipping({ navigation }) {
           setNoAddresses(true);
         }
 
-        console.tron.log('sucesso');
-        console.tron.log(addresses);
         setLoading(false);
       } catch (err) {
         setLoading(false);
-
-        console.tron.log('fail');
       }
     }
 

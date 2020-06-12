@@ -25,6 +25,12 @@ export function completingRegistering(token, user) {
   };
 }
 
+export function registerComplete() {
+  return {
+    type: '@auth/REGISTER_COMPLETE',
+  };
+}
+
 export function signUpRequest(name, email, password) {
   return {
     type: '@auth/SIGN_UP_REQUEST',

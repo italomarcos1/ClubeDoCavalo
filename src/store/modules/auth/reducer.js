@@ -20,6 +20,11 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         draft.newUser = true;
         break;
       }
+      case '@auth/REGISTER_COMPLETE': {
+        draft.newUser = false;
+        draft.signed = true;
+        break;
+      }
       case '@auth/SIGN_IN_SUCCESS': {
         draft.token = payload.token;
         draft.signed = true;

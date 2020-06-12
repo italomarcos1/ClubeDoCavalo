@@ -1,9 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { AccessToken } from 'react-native-fbsdk';
+import { AccessToken, LoginButton } from 'react-native-fbsdk';
+import Toast from 'react-native-tiny-toast';
 
-import { signInRequest } from '~/store/modules/auth/actions';
+import PropTypes from 'prop-types';
+
+import { api } from '~/services/api';
+
+import { signInRequest, signInSuccess } from '~/store/modules/auth/actions';
 
 import Background from '~/components/Background';
 
@@ -20,8 +25,6 @@ import {
   RecoveryButton,
   RecoveryText,
   FacebookButton,
-  FacebookButtonText,
-  FacebookButtonIcon,
 } from './styles';
 
 export default function SignIn({ navigation }) {
@@ -82,28 +85,51 @@ export default function SignIn({ navigation }) {
               <SubmitButtonText>Entrar ou Cadastrar</SubmitButtonText>
             )}
           </SubmitButton>
-          <FacebookButton
+          <LoginButton
             style={{
+              height: 30,
+              marginTop: 10,
               borderRadius: 20,
-              alignItems: 'center',
-              justifyContent: 'center',
+              borderWidth: 5,
+              borderColor: '#333',
             }}
             onLoginFinished={(error, result) => {
               if (error) {
-                console.tron.log(`login has error: ${result.error}`);
+                Toast.show('Ocorreu um erro no login. Verifique sua conexão.');
               } else if (result.isCancelled) {
-                console.tron.log('login is cancelled.');
+                Toast.show('Você pode se cadastrar/logar acima.');
               } else {
                 AccessToken.getCurrentAccessToken().then(data => {
-                  console.tron.log(data);
+                  const { accessToken, userID } = data;
+
+                  api
+                    .post('auth/facebook', {
+                      token: accessToken,
+                      userID,
+                    })
+                    .then(response => {
+                      const { token, user } = response.data.data;
+                      api.defaults.headers.Authorization = `Bearer ${token}`;
+                      dispatch(signInSuccess(token, user));
+                    })
+                    .catch(() => {
+                      Toast.show(
+                        'Erro ao logar com Facebook. Logue com seu e-mail. '
+                      );
+                    });
                 });
               }
-              console.tron.log(result.grantedPermissions[0]);
             }}
-            onLogoutFinished={data => console.tron.log('logout')}
+            onLogoutFinished={() => console.tron.log('logout')}
           />
         </Form>
       </Container>
     </Background>
   );
 }
+
+SignIn.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

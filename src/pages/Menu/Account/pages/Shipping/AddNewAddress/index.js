@@ -39,6 +39,7 @@ export default function AddNewAddress({ navigation }) {
   const handleAddAddress = useCallback(async () => {
     try {
       setLoading(true);
+
       const { data } = await api.post('addresses', {
         name,
         zipcode,
@@ -52,7 +53,7 @@ export default function AddNewAddress({ navigation }) {
 
       setLoading(false);
 
-      Toast.show(`${data.meta.message}`);
+      Toast.showSuccess(`${data.meta.message}`);
       navigation.goBack();
     } catch (err) {
       setLoading(false);

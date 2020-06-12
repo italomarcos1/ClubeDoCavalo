@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { View, Modal, Text } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import ImagePicker from 'react-native-image-picker';
 import Toast from 'react-native-tiny-toast';
@@ -13,7 +13,6 @@ import {
   Content,
   ImageContainer,
   Item,
-  NameInput,
   VerifiedField,
   VerifiedFieldContainer,
   Field,
@@ -22,15 +21,13 @@ import {
 
 export default function Account({ navigation }) {
   const user = useSelector(state => state.user.profile);
-  const [name, setName] = useState(user.name);
-  const [lastName, setLastName] = useState(user.last_name);
-
-  const [nameModal, setNameModalVisible] = useState(false);
 
   // campo address e gender no usuário
 
   const [profilePhoto, setProfilePhoto] = useState(
-    'https://api.adorable.io/avatars/90/abott@adorable.png'
+    user.avatar
+      ? user.avatar
+      : 'https://api.adorable.io/avatars/90/abott@adorable.png'
   );
 
   const handleChoosePhoto = useCallback(() => {
@@ -58,10 +55,7 @@ export default function Account({ navigation }) {
           <Avatar
             style={{ width: 90, height: 90 }}
             source={{
-              uri:
-                profilePhoto !== ''
-                  ? profilePhoto
-                  : 'https://api.adorable.io/avatars/50/profile@adorable.png',
+              uri: profilePhoto,
             }}
           />
         </AvatarContainer>
@@ -72,16 +66,11 @@ export default function Account({ navigation }) {
       </ImageContainer>
       <View style={{ flex: 1, paddingBottom: 15 }}>
         <Content>
-          <Item onPress={() => setNameModalVisible(true)}>
+          <Item onPress={() => navigation.navigate('EditName')}>
             <Field>Nome</Field>
-            <Value>{user.name}</Value>
-          </Item>
-        </Content>
-
-        <Content>
-          <Item onPress={() => {}}>
-            <Field>Sobrenome</Field>
-            <Value>{user.last_name}</Value>
+            <Value>
+              {user.name} {user.last_name}
+            </Value>
           </Item>
         </Content>
 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Modal, FlatList, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
@@ -17,6 +17,11 @@ import {
   FinishButtonText,
   Detail,
   FareDetails,
+  PickAddress,
+  Address,
+  AddressInfo,
+  AddressName,
+  AddressList,
   IconContainer,
   NoProductsContainer,
   NoProductsText,
@@ -25,15 +30,31 @@ import {
 
 import ShirtItem from './components/ShirtItem';
 
+import { api } from '~/services/api';
+
 // transformar o detail item em um compon
 
 Icon.loadFont();
 
 export default function ShoppingBag({ navigation }) {
   const products = useSelector(state => state.shoppingbag.products);
+
   // verificar para ser apenas caso tenha algum produto
   const dispatch = useDispatch();
   const [position, setPosition] = useState(0);
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState({});
+  const [selectAddressModal, setSelectAddressVisible] = useState(false);
+
+  useEffect(() => {
+    async function loadAddresses() {
+      const response = await api.get('addresses');
+
+      setAddresses(response.data.data);
+    }
+
+    loadAddresses();
+  }, []);
 
   return (
     <>
@@ -44,6 +65,36 @@ export default function ShoppingBag({ navigation }) {
           justifyContent: 'space-between',
         }}
       >
+        <Modal
+          visible={selectAddressModal}
+          onRequestClose={() => setSelectAddressVisible(false)}
+          transparent
+        >
+          <PickAddress>
+            <Text style={{ color: '#fff', fontSize: 20, marginBottom: 10 }}>
+              Selecione o endereço para entrega:
+            </Text>
+            <View style={{ height: 150, width: 300 }}>
+              <AddressList
+                data={addresses}
+                keyExtractor={address => address.id}
+                renderItem={({ item }) => (
+                  <Address
+                    onPress={() => {
+                      setSelectedAddress(item);
+                      setSelectAddressVisible(false);
+                    }}
+                  >
+                    <AddressName>{item.name}</AddressName>
+                    <AddressInfo>
+                      {item.address} - {item.number}
+                    </AddressInfo>
+                  </Address>
+                )}
+              />
+            </View>
+          </PickAddress>
+        </Modal>
         {products.length === 0 ? (
           <NoProductsContainer>
             <Icon name="shopping-bag" color="#333" size={80} />
@@ -79,14 +130,18 @@ export default function ShoppingBag({ navigation }) {
           <View />
         ) : (
           <>
-            <Detail>
+            <Detail onPress={() => setSelectAddressVisible(true)}>
               <IconContainer>
                 <Icon name="truck" size={25} color="#333" />
               </IconContainer>
               <FareDetails>
                 <View>
                   <Text style={{ fontSize: 14 }}>Frete</Text>
-                  <Text style={{ fontSize: 16 }}>95880-000</Text>
+                  <Text style={{ fontSize: 16 }}>
+                    {selectedAddress !== {}
+                      ? selectedAddress.zipcode
+                      : '71880-662'}
+                  </Text>
                 </View>
               </FareDetails>
 

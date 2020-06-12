@@ -15,16 +15,7 @@ export const InputContainer = styled.View`
 `;
 
 export const InputName = styled.Text`
-  font-size: 12px;
+  font-size: 14px;
   color: #76797e;
   margin-bottom: 5px;
-`;
-
-export const CustomView = styled.View`
-  flex-direction: row;
-  height: 51px;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
 `;
