@@ -57,23 +57,23 @@ export const SubmitButtonText = styled.Text`
   font-size: 16px;
 `;
 
-export const FacebookButton = styled(LoginButton)`
-  height: 35px;
-  background: #4267b2;
-  margin: 0 auto;
+export const FacebookButton = styled.TouchableOpacity`
+  height: 45px;
   max-width: 280px;
   width: 100%;
-`;
-
-export const FacebookButtonIcon = styled(Icon)`
-  font-size: 16px;
-  color: #fff;
-  margin-right: 15px;
+  border-radius: 30px;
+  background-color: #4267b2;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
 `;
 
 export const FacebookButtonText = styled.Text`
   color: #fff;
-  font-size: 16px;
+  font-family: 'Roboto';
+  font-size: 18px;
+  padding: 10px;
 `;
 
 export const RecoveryButton = styled.TouchableOpacity`
