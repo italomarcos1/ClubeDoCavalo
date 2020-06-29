@@ -308,6 +308,7 @@ export default function Design({ navigation }) {
       setUploadingModalVisible(false); // fecha modal de 'enviando imagem'
     } catch (err) {
       setUploadingModalVisible(false); // fecha modal de 'enviando imagem'
+      setCanScreenshot(false);
 
       Toast.show('Houve um erro no envio da imagem.'); // toast pra erro no envio
     }
@@ -350,6 +351,8 @@ export default function Design({ navigation }) {
       await captureShirt(id); // tira print da camiseta
     } catch (err) {
       console.tron.log(err);
+      setCanScreenshot(false);
+
       Toast.show('Erro no envio da imagem'); // printe o err.status
     }
   }
@@ -371,6 +374,8 @@ export default function Design({ navigation }) {
         await uploadPrintable(uri);
       }
     } catch (err) {
+      setCanScreenshot(false);
+
       Toast.show('Verifique sua conexão à internet.');
       setUploadingModalVisible(false);
     }

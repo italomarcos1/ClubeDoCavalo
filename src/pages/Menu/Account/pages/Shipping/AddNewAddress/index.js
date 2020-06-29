@@ -106,12 +106,13 @@ export default function AddNewAddress({ navigation }) {
 
         <CustomView>
           <InputContainer style={{ flex: 1, marginRight: 20 }}>
-            <InputName>Código Postal</InputName>
+            <InputName>CEP</InputName>
             <InputMenu
               style={{ flex: 1, maxWidth: 300, maxHeight: 45 }}
               maxLength={9}
               selected={!!zipcode}
               autoCorrect={false}
+              keyboardType="phone-pad"
               placeholder="95880-000"
               clear={() => setZipcode('')}
               ref={zipcodeRef}
@@ -128,7 +129,7 @@ export default function AddNewAddress({ navigation }) {
               maxLength={5}
               selected={!!number}
               autoCorrect={false}
-              keyboardType="numeric"
+              keyboardType="phone-pad"
               ref={numberRef}
               value={number}
               onChangeText={setNumber}
@@ -202,7 +203,7 @@ export default function AddNewAddress({ navigation }) {
           </InputContainer>
 
           <InputContainer style={{ flex: 1, marginLeft: 20 }}>
-            <InputName>Localidade</InputName>
+            <InputName>Estado</InputName>
             <InputMenu
               maxLength={45}
               selected={!!state}

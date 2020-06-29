@@ -55,7 +55,7 @@ export default function Mail() {
     async function sendVerificationMail() {
       try {
         setSendingMail(true);
-        await api.post('clients/email/dispatch-code');
+        await api.post('clients/email');
         setSendingMail(false);
       } catch (err) {
         setSendingMail(false);

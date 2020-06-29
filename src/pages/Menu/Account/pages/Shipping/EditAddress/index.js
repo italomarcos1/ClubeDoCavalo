@@ -101,10 +101,11 @@ export default function EditAddress({ navigation, route }) {
 
         <CustomView>
           <InputContainer style={{ flex: 1, marginRight: 20 }}>
-            <InputName>Código Postal</InputName>
+            <InputName>CEP</InputName>
             <InputMenu
               style={{ flex: 1, maxWidth: 300, maxHeight: 45 }}
               maxLength={9}
+              keyboardType="phone-pad"
               selected={!!zipcode}
               autoCorrect={false}
               placeholder="95880-000"
@@ -123,7 +124,7 @@ export default function EditAddress({ navigation, route }) {
               maxLength={4}
               selected={!!number}
               autoCorrect={false}
-              keyboardType="numeric"
+              keyboardType="phone-pad"
               clear={() => setNumber('')}
               ref={numberRef}
               value={number}
@@ -199,13 +200,13 @@ export default function EditAddress({ navigation, route }) {
         </InputContainer>
 
         <InputContainer style={{ flex: 1 }}>
-          <InputName>Localidade</InputName>
+          <InputName>Estado</InputName>
           <InputMenu
             maxLength={45}
             selected={!!state}
             autoCorrect={false}
             autoCapitalize="characters"
-            placeholder="Localidade"
+            placeholder="Estado"
             clear={() => setState('')}
             ref={stateRef}
             value={state}
