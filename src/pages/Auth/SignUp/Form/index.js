@@ -48,7 +48,7 @@ export default function CompleteRegisterForm() {
       });
 
       console.tron.log(data.meta.message);
-      const user = { ...data.data, default_address: { id: -5 } };
+      const user = { ...data.data, default_address: { id: -5, name: 'none' } };
       console.tron.log(user);
       setLoading(false);
 

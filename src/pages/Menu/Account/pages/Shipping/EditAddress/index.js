@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-tiny-toast';
@@ -8,10 +9,11 @@ import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
 
 import { api } from '~/services/api';
-
+import { updateProfileSuccess } from '~/store/modules/user/actions';
 import { Container, InputContainer, InputName, CustomView } from './styles';
 
 export default function EditAddress({ navigation, route }) {
+  const user = useSelector(reduxState => reduxState.user.profile);
   const addressInfo = route.params.address;
   const { id } = route.params.address;
 
@@ -32,12 +34,14 @@ export default function EditAddress({ navigation, route }) {
   const districtRef = useRef();
   const complementRef = useRef();
 
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(false);
 
   const handleEditAddress = useCallback(async () => {
     try {
       setLoading(true);
-      const { data } = await api.put(`addresses/${id}`, {
+      const { data } = await api.put(`clients/addresses/${id}`, {
         name,
         zipcode,
         address,
@@ -47,7 +51,7 @@ export default function EditAddress({ navigation, route }) {
         district,
         complement,
       });
-
+      dispatch(updateProfileSuccess({ ...user, default_address: data.data }));
       setLoading(false);
 
       Toast.show(`${data.meta.message}`);

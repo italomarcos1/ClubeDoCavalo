@@ -53,6 +53,8 @@ export default function AddNewAddress({ navigation }) {
 
       setLoading(false);
 
+      await api.put(`/clients/addresses/${data.data.id}`);
+
       const updatedUser = { ...user, default_address: data.data };
       dispatch(updateProfileSuccess(updatedUser));
 
