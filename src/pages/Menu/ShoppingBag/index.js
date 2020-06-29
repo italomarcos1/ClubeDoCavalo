@@ -43,6 +43,7 @@ Icon.loadFont();
 
 export default function ShoppingBag({ navigation }) {
   const products = useSelector(state => state.shoppingbag.products);
+  const user = useSelector(state => state.user.profile);
 
   // verificar para ser apenas caso tenha algum produto
   const dispatch = useDispatch();
@@ -74,36 +75,6 @@ export default function ShoppingBag({ navigation }) {
             justifyContent: 'flex-start',
           }}
         >
-          <Modal
-            visible={selectAddressModal}
-            onRequestClose={() => setSelectAddressVisible(false)}
-            transparent
-          >
-            <PickAddress>
-              <Text style={{ color: '#fff', fontSize: 20, marginBottom: 10 }}>
-                Selecione o endereço para entrega:
-              </Text>
-              <View style={{ height: 150, width: 300 }}>
-                <AddressList
-                  data={addresses}
-                  keyExtractor={address => address.id}
-                  renderItem={({ item }) => (
-                    <Address
-                      onPress={() => {
-                        setSelectedAddress(item);
-                        setSelectAddressVisible(false);
-                      }}
-                    >
-                      <AddressName>{item.name}</AddressName>
-                      <AddressInfo>
-                        {item.address} - {item.number}
-                      </AddressInfo>
-                    </Address>
-                  )}
-                />
-              </View>
-            </PickAddress>
-          </Modal>
           {products.length === 0 ? (
             <NoProductsContainer>
               <EmptyBag height={180} width={180} />
@@ -159,8 +130,8 @@ export default function ShoppingBag({ navigation }) {
                       marginTop: 2,
                     }}
                   >
-                    {selectedAddress !== ''
-                      ? selectedAddress.zipcode
+                    {user.default_address !== []
+                      ? user.default_address.zipcode
                       : '71880-662'}
                   </Text>
                 </FareDetails>
