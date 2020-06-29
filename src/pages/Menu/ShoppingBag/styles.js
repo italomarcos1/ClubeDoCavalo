@@ -184,7 +184,7 @@ export const Options = styled.View`
   justify-content: space-evenly;
 `;
 
-export const Detail = styled.TouchableOpacity`
+export const Detail = styled.View`
   width: 100%;
   height: 70px;
   margin: 10px 0;

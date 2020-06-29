@@ -5,6 +5,13 @@ export function addToShoppingBag(product) {
   };
 }
 
+export function addAllToShoppingBag(products) {
+  return {
+    type: '@shoppingbag/ADD_ALL_TO_SHOPPING_BAG',
+    payload: { products },
+  };
+}
+
 export function removeFromShoppingBag(id) {
   return {
     type: '@shoppingbag/REMOVE_FROM_SHOPPING_BAG',

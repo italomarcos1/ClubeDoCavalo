@@ -33,11 +33,7 @@ import EmptyBag from '~/assets/bag-empty.svg';
 
 import ShirtItem from './components/ShirtItem';
 
-import { api } from '~/services/api';
-
 import { cleanCart } from '~/store/modules/shoppingbag/actions';
-
-// transformar o detail item em um componente
 
 Icon.loadFont();
 
@@ -48,19 +44,6 @@ export default function ShoppingBag({ navigation }) {
   // verificar para ser apenas caso tenha algum produto
   const dispatch = useDispatch();
   const [position, setPosition] = useState(0);
-  const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState('');
-  const [selectAddressModal, setSelectAddressVisible] = useState(false);
-
-  useEffect(() => {
-    async function loadAddresses() {
-      const response = await api.get('addresses');
-
-      setAddresses(response.data.data);
-    }
-
-    loadAddresses();
-  }, []);
 
   return (
     <>
@@ -110,7 +93,7 @@ export default function ShoppingBag({ navigation }) {
             <View />
           ) : (
             <>
-              <Detail onPress={() => setSelectAddressVisible(true)}>
+              <Detail>
                 <IconContainer>
                   <Shipping height={45} width={45} />
                 </IconContainer>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Toast from 'react-native-tiny-toast';
 import PropTypes from 'prop-types';
 
@@ -25,6 +25,8 @@ import {
 
 import { sandbox } from '~/services/api';
 
+import { addAllToShoppingBag } from '~/store/modules/shoppingbag/actions';
+
 import OrderItem from './components/OrderItem';
 import Header from '~/components/HeaderMenu';
 
@@ -32,6 +34,8 @@ export default function Details({ navigation, route }) {
   const user = useSelector(state => state.user.profile);
 
   const { id, created } = route.params;
+
+  const dispatch = useDispatch();
 
   const [transaction, setTransaction] = useState({});
   const [shippingAddress, setShippingAddress] = useState({});
@@ -176,7 +180,12 @@ export default function Details({ navigation, route }) {
       </Container>
 
       <CheckoutContainer>
-        <FinishButton onPress={() => {}}>
+        <FinishButton
+          onPress={() => {
+            dispatch(addAllToShoppingBag(products));
+            navigation.navigate('Orders');
+          }}
+        >
           <Text
             style={{
               color: '#fff',

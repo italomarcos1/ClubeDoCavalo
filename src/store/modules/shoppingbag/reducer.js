@@ -13,6 +13,13 @@ export default function shoppingbag(state = INITIAL_STATE, { type, payload }) {
         break;
       }
 
+      case '@shoppingbag/ADD_ALL_TO_SHOPPING_BAG': {
+        const { products } = payload;
+        products.map(product => draft.products.push(product));
+
+        break;
+      }
+
       case '@shoppingbag/REMOVE_FROM_SHOPPING_BAG': {
         const { id } = payload;
         const productIndex = draft.products.findIndex(prod => prod.id === id);
