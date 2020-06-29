@@ -1,7 +1,7 @@
 import { call, put, all, takeLatest } from 'redux-saga/effects';
 import Toast from 'react-native-tiny-toast';
 
-import { api } from '~/services/api';
+import { api, sandbox } from '~/services/api';
 
 import {
   signInSuccess,
@@ -16,9 +16,8 @@ export function* signIn({ payload }) {
     const response = yield call(api.post, 'auth/login', { email, password });
 
     const { token, user } = response.data.data;
-    console.tron.log(response.data.data);
-
     api.defaults.headers.Authorization = `Bearer ${token}`;
+    sandbox.defaults.headers.Authorization = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvc2FuZGJveC5hbWZydXRhcy5wdFwvYXBpLXYyXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU5MzQzOTIwMywibmJmIjoxNTkzNDM5MjAzLCJqdGkiOiJ6eWQxOW85aHhpaUtKWGFhIiwic3ViIjo0LCJwcnYiOiI0NmVkZDEwOTI5NGZjMGQ4YzAxOTJmM2MzZjE4NWM0OGIwMzZmM2E3In0.uxHroSwId7J7lP7diqQ4e0lRYCgLmfTi61n1HbIY89Y`;
 
     if (user.name === '' && user.last_name === '') {
       yield put(completingRegistering(token, user)); // completar cadastro

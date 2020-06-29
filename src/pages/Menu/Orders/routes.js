@@ -8,19 +8,10 @@ import Orders from './index';
 
 import Details from './pages/Details';
 
-import Header from '~/components/HeaderMenu';
-
-// import { Container } from './styles';
-
 Icon.loadFont();
 
-export default function Routes({ navigation }) {
+export default function Routes() {
   const Stack = createStackNavigator(); // abrir como um modal talvez, já retorna pro drawer
-
-  const exit = () => {
-    navigation.goBack();
-    navigation.openDrawer();
-  };
 
   return (
     <>
@@ -28,23 +19,10 @@ export default function Routes({ navigation }) {
       <Stack.Navigator
         resetOnBlur={true}
         initialRouteName="Orders"
-        screenOptions={({ navigation }) => ({
-          header: () => <Header title="Minhas compras" close={exit} />,
-        })}
+        headerMode="none"
       >
         <Stack.Screen name="Orders" component={Orders} />
-        <Stack.Screen
-          name="Details"
-          component={Details}
-          options={({ navigation, route }) => ({
-            header: () => (
-              <Header
-                title={`Encomenda ${route.params.encomenda.number}`}
-                close={() => navigation.goBack()}
-              />
-            ),
-          })}
-        />
+        <Stack.Screen name="Details" component={Details} />
       </Stack.Navigator>
     </>
   );

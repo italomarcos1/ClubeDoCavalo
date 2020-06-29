@@ -1,145 +1,180 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { useSelector } from 'react-redux';
+import Toast from 'react-native-tiny-toast';
+import PropTypes from 'prop-types';
+
 import {
   Container,
-  Content,
   CheckoutContainer,
   FinishButton,
+  Content,
   Detail,
+  DetailStatus,
+  DetailField,
   CustomerInfo,
   DetailsContainer,
+  ShippingDetailsContainer,
+  ShippingAddressContainer,
+  ShippingToContainer,
   Separator,
   Value,
+  Info,
+  Price,
 } from './styles';
 
-import OrderItem from './components/OrderItem';
+import { sandbox } from '~/services/api';
 
-export default function Details({ navigation }) {
-  const goBack = () => {
-    navigation.goBack();
-  };
+import OrderItem from './components/OrderItem';
+import Header from '~/components/HeaderMenu';
+
+export default function Details({ navigation, route }) {
+  const user = useSelector(state => state.user.profile);
+
+  const { id, created } = route.params;
+
+  const [transaction, setTransaction] = useState({});
+  const [shippingAddress, setShippingAddress] = useState({});
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadInfo() {
+      try {
+        const {
+          data: { data },
+        } = await sandbox.get(`clients/transactions/${id}`);
+
+        setShippingAddress(data.shipping_address);
+        delete data.shipping_address;
+
+        setProducts(data.products);
+
+        delete data.products;
+
+        setTransaction(data);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+
+        Toast.show('Houve um erro ao carregar os dados da compra.');
+      }
+    }
+    loadInfo();
+  }, []);
 
   return (
     <>
+      <Header
+        title={`Encomenda ${route.params.id}`}
+        close={() => navigation.goBack()}
+      />
+
       <Container
         contentContainerStyle={{
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
       >
-        <DetailsContainer>
-          <OrderItem close={goBack} />
-          <Separator />
-          <View>
-            <Detail>
-              <Content>Frete</Content>
-              <Value>R$ 18,20</Value>
-            </Detail>
-            <Separator />
-            <Detail>
-              <Content>Cupom</Content>
-              <Value>- - -</Value>
-            </Detail>
-            <Separator />
-            <Detail>
-              <Content>Total</Content>
-              <Value>R$ 58,10</Value>
-            </Detail>
-          </View>
-          <Separator />
+        {loading ? (
+          <ActivityIndicator color="#333" size="large" />
+        ) : (
+          <DetailsContainer>
+            <FlatList
+              style={{ flex: 1 }}
+              data={products}
+              keyExtractor={product => String(product.id)}
+              renderItem={({ item }) => <OrderItem product={item} />}
+            />
+            <Separator style={{ marginTop: 30 }} />
+            <View>
+              <Detail>
+                <Content>Frete</Content>
+                <Price>{`€ ${transaction.shipping}`}</Price>
+              </Detail>
+              <Detail>
+                <Content>Cupom</Content>
+                <Value>- - -</Value>
+              </Detail>
+              <Detail>
+                <Content>Total</Content>
+                <Price>{`€ ${transaction.total}`}</Price>
+              </Detail>
+            </View>
+            <Separator style={{ marginTop: 30 }} />
 
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'space-between',
-              paddingTop: 10,
-              paddingHorizontal: 5,
-            }}
-          >
-            <View
-              style={{
-                height: 30,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Content>Envio para:</Content>
-              <Text />
-            </View>
-            <View style={{ marginTop: 10, marginBottom: 10 }}>
-              <CustomerInfo>
-                <Content>Nome: </Content>
-                <Value>Carla Santos</Value>
-              </CustomerInfo>
-              <CustomerInfo>
-                <Content>Email: </Content>
-                <Value>csantos11873@gmail.com</Value>
-              </CustomerInfo>
-              <CustomerInfo>
-                <Content>CPF: </Content>
-                <Value>089.678.620-08</Value>
-              </CustomerInfo>
-              <CustomerInfo>
-                <Content>Celular: </Content>
-                <Value>(34) 99580-7641</Value>
-              </CustomerInfo>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                marginBottom: 20,
-                justifyContent: 'space-evenly',
-              }}
-            >
-              <Content>Casa</Content>
-              <Value>Rua São Pedro 470</Value>
-              <Value>95880-000 Estrela RS</Value>
-            </View>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              borderTopColor: '#ccc',
-              borderTopWidth: 1,
-              backgroundColor: '#fff',
-            }}
-          >
-            <View style={{ paddingVertical: 10 }}>
-              <Detail>
-                <Text style={{ fontWeight: 'bold' }}>Estado da encomenda</Text>
-                <Text style={{ color: '#F06D85', fontWeight: 'bold' }}>
-                  EM TRÂNSITO
-                </Text>
-              </Detail>
-              <Detail>
-                <Text style={{ fontWeight: 'bold' }}>Método de pagamento</Text>
-                <Text style={{ color: '#11CE19', fontWeight: 'bold' }}>
-                  Cartão de Crédito
-                </Text>
-              </Detail>
-              <Detail>
-                <Text style={{ fontWeight: 'bold' }}>Estado de pagamento</Text>
-                <Text style={{ color: '#11CE19', fontWeight: 'bold' }}>
-                  PAGO
-                </Text>
-              </Detail>
-              <Detail>
-                <Text style={{ fontWeight: 'bold' }}>Data da encomenda</Text>
-                <Text style={{ color: '#11CE19', fontWeight: 'bold' }}>
-                  15 de julho de 2020
-                </Text>
-              </Detail>
-              <Detail>
-                <Text style={{ fontWeight: 'bold' }}>Entrega estimadada</Text>
-                <Text style={{ color: '#F06D85', fontWeight: 'bold' }}>
-                  20 de julho de 2020
-                </Text>
-              </Detail>
-            </View>
-          </View>
-        </DetailsContainer>
+            <Info>
+              <ShippingToContainer>
+                <Content>Envio para:</Content>
+                <Text />
+              </ShippingToContainer>
+              <View style={{ marginTop: 10, marginBottom: 10 }}>
+                <CustomerInfo>
+                  <Content>Nome: </Content>
+                  <Value>{`${user.name} ${user.last_name}`}</Value>
+                </CustomerInfo>
+                <CustomerInfo>
+                  <Content>Email: </Content>
+                  <Value>{user.email}</Value>
+                </CustomerInfo>
+                <CustomerInfo>
+                  <Content>CPF: </Content>
+                  <Value>{user.document}</Value>
+                </CustomerInfo>
+                <CustomerInfo>
+                  <Content>Celular: </Content>
+                  <Value>{user.cellphone}</Value>
+                </CustomerInfo>
+              </View>
+              <Separator style={{ marginVertical: 10 }} />
+
+              <ShippingAddressContainer>
+                <Content>{shippingAddress.address}</Content>
+                <Value>{`${shippingAddress.address} ${shippingAddress.district}`}</Value>
+                <Value
+                  numberOfLines={2}
+                >{`${shippingAddress.zipcode} ${shippingAddress.city} - ${shippingAddress.state}`}</Value>
+              </ShippingAddressContainer>
+            </Info>
+
+            <ShippingDetailsContainer>
+              <View style={{ paddingVertical: 10 }}>
+                <Detail>
+                  <DetailField>Estado da encomenda</DetailField>
+                  <DetailStatus
+                    status={
+                      !(transaction.current_status === 'Aguardando pagamento')
+                    }
+                  >
+                    {transaction.current_status}
+                  </DetailStatus>
+                </Detail>
+                <Detail>
+                  <DetailField>Método de pagamento</DetailField>
+                  <DetailStatus status>
+                    {transaction.payment_method}
+                  </DetailStatus>
+                </Detail>
+                <Detail>
+                  <DetailField>Estado de pagamento</DetailField>
+                  <DetailStatus
+                    status={
+                      !(transaction.current_status === 'Aguardando pagamento')
+                    }
+                  >
+                    {transaction.current_status}
+                  </DetailStatus>
+                </Detail>
+                <Detail style={{ marginBottom: 30 }}>
+                  <DetailField>Data da encomenda</DetailField>
+                  <DetailStatus status>{created}</DetailStatus>
+                </Detail>
+              </View>
+            </ShippingDetailsContainer>
+          </DetailsContainer>
+        )}
       </Container>
+
       <CheckoutContainer>
         <FinishButton onPress={() => {}}>
           <Text
@@ -157,3 +192,16 @@ export default function Details({ navigation }) {
     </>
   );
 }
+
+Details.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+  }).isRequired,
+
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.number,
+      created: PropTypes.string,
+    }),
+  }).isRequired,
+};

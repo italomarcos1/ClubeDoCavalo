@@ -1,88 +1,77 @@
-import React from 'react';
-import { Text } from 'react-native';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
-  Content,
-  ContentContainer,
-  DeliveryDate,
-  DeliveryStatus,
-  Item,
-  Info,
-  Details,
-  ShippingDetails,
-  ShippingStatus,
-  Order,
-  OrderNumberContainer,
+  NoPurchases,
+  NoPurchasesContainer,
+  TransactionsList,
 } from './styles';
 
-export default function Orders({ navigation }) {
-  const encomenda = { id: 1, number: '#00127' };
+import { sandbox } from '~/services/api';
+
+import OrderInfo from './components/OrderInfo';
+
+import Header from '~/components/HeaderMenu';
+
+export default function Transactions() {
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [noTransactions, setNoTransactions] = useState(false);
+
+  const navigation = useNavigation();
+
+  const goBack = () => {
+    navigation.goBack();
+    navigation.openDrawer();
+  };
+
+  useEffect(() => {
+    async function loadTransactions() {
+      try {
+        setLoading(true);
+
+        const { data } = await sandbox.get('clients/transactions');
+
+        if (data.meta.message === 'Não há compras recentes.') {
+          setNoTransactions(true);
+        } else {
+          setTransactions(data.data);
+        }
+        setLoading(false);
+      } catch (err) {
+        setNoTransactions(true);
+        setLoading(false);
+      }
+    }
+    loadTransactions();
+  }, []);
+
   return (
     <>
-      <Container>
-        <Info>
-          <Item>
-            <OrderNumberContainer>
-              <ContentContainer>
-                <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
-                  Encomenda #00127
-                </Text>
-              </ContentContainer>
-            </OrderNumberContainer>
-
-            <Order>
-              <ContentContainer>
-                <Content>Produtos</Content>
-                <Content>R$ 39,90</Content>
-              </ContentContainer>
-
-              <ContentContainer>
-                <Content>Frete</Content>
-                <Content>R$ 18,20</Content>
-              </ContentContainer>
-
-              <ContentContainer>
-                <Content>Cupom de desconto</Content>
-                <Content>---</Content>
-              </ContentContainer>
-
-              <ContentContainer>
-                <Content>Total de encomenda</Content>
-                <Content>R$ 58,10</Content>
-              </ContentContainer>
-            </Order>
-
-            <ShippingDetails>
-              <DeliveryStatus>
-                <Content>Entrega da Encomenda</Content>
-                <ShippingStatus>EM TRÂNSITO</ShippingStatus>
-              </DeliveryStatus>
-
-              <DeliveryDate>
-                <Content style={{ textAlign: 'right' }}>
-                  Entrega Estimada
-                </Content>
-                <ShippingStatus style={{ textAlign: 'right' }}>
-                  20 de Julho de 2020
-                </ShippingStatus>
-              </DeliveryDate>
-            </ShippingDetails>
-          </Item>
-          <Details
-            onPress={() => navigation.navigate('Details', { encomenda })}
-          >
-            <Text>Detalhes</Text>
-          </Details>
-        </Info>
+      <Header title="Minhas compras" close={goBack} />
+      <Container style={{ padding: 10, paddingBottom: 40 }}>
+        {loading && (
+          <NoPurchasesContainer>
+            <ActivityIndicator size="large" color="#333" />
+          </NoPurchasesContainer>
+        )}
+        {!loading && !noTransactions && (
+          <TransactionsList
+            data={transactions}
+            keyExtractor={transaction => String(transaction.id)}
+            renderItem={({ item: transaction }) => (
+              <OrderInfo transaction={transaction} />
+            )}
+          />
+        )}
+        {!loading && noTransactions && (
+          <NoPurchasesContainer>
+            <NoPurchases>Você ainda não efetuou nenhuma compra.</NoPurchases>
+          </NoPurchasesContainer>
+        )}
       </Container>
     </>
   );
 }
-
-Orders.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
-};

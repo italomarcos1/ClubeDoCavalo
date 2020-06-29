@@ -21,7 +21,7 @@ import Header from '~/components/HeaderMenu';
 Icon.loadFont();
 
 export default function Routes({ navigation }) {
-  const Stack = createStackNavigator(); // abrir como um modal talvez, já retorna pro drawer
+  const Stack = createStackNavigator();
 
   const exit = () => {
     navigation.goBack();
