@@ -8,7 +8,7 @@ import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
 
 import { Container, InputContainer, InputName } from './styles';
 
@@ -16,7 +16,6 @@ export default function Pass({ navigation }) {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const [error, setError] = useState(false);
   const { email } = useSelector(state => state.user.profile);
 
   const newPasswordRef = useRef();
@@ -27,7 +26,6 @@ export default function Pass({ navigation }) {
 
   const handleChangePassword = useCallback(async () => {
     try {
-      setError(false);
       setLoading(true);
 
       if (newPassword !== confirmNewPassword) {
@@ -50,7 +48,6 @@ export default function Pass({ navigation }) {
       navigation.goBack();
     } catch (err) {
       setLoading(false);
-      setError(true);
       Toast.show(
         'Ocorreu um erro. Confira se as senhas conferem e tente novamente.'
       );

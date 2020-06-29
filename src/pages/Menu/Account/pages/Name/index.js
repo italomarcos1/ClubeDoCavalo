@@ -1,19 +1,19 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-tiny-toast';
-import api from '~/services/api';
+import { api } from '~/services/api';
 
 import Validation from '~/components/Validation';
 import InputMenu from '~/components/InputMenu';
 import ButtonMenu from '~/components/ButtonMenu';
-import Header from '~/components/HeaderMenu';
 
 import { Container, InputContainer, InputName } from './styles';
 
 import { updateProfileSuccess } from '~/store/modules/user/actions';
 
 export default function EditName({ navigation }) {
+  const user = useSelector(state => state.user.profile);
   const [name, setName] = useState('');
   const [last_name, setLastName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,14 +25,18 @@ export default function EditName({ navigation }) {
   const handleEditName = useCallback(async () => {
     try {
       setLoading(true);
-
-      const { data } = await api.put('clients', { name, last_name });
-      const updatedUser = data.data;
+      console.tron.log('1');
+      await api.put('clients', { name, last_name });
+      const updatedUser = { ...user, name, last_name };
+      console.tron.log('2');
 
       Toast.showSuccess('Nome atualizado com sucesso.');
       setLoading(false);
+      console.tron.log('3');
 
       dispatch(updateProfileSuccess(updatedUser));
+      console.tron.log('4');
+
       navigation.goBack();
     } catch (err) {
       setLoading(false);
@@ -43,8 +47,6 @@ export default function EditName({ navigation }) {
 
   return (
     <>
-      <Header title="Nome do perfil" close={() => navigation.goBack()} />
-
       <Validation title="Edite seu nome e sobrenome" />
       <Container>
         <InputContainer style={{ marginBottom: 0 }}>
