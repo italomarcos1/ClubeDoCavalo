@@ -55,6 +55,7 @@ import {
 } from './styles';
 
 import { api } from '~/services/api';
+import upload from '~/services/upload';
 
 Icon.loadFont();
 
@@ -331,18 +332,18 @@ export default function Design({ navigation }) {
 
   async function uploadPrintable(photouri) {
     try {
-      const upload = new FormData();
+      const printable = new FormData();
       console.tron.log(photouri);
-      upload.append('name', `${photouri}.jpeg`);
-      upload.append('image', {
+      printable.append('name', `${photouri}.jpeg`);
+      printable.append('image', {
         uri: photouri,
         type: 'image/jpeg',
         name: `${photouri}.jpeg`,
       });
 
-      const { id, url } = await api.post(
+      const { id, url } = await upload.post(
         'design-shirt/printables/sticker',
-        upload
+        printable
       ); // envia pra api
       console.tron.log(`url: ${url}`);
 

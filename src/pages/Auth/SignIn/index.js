@@ -129,6 +129,7 @@ export default function SignIn({ navigation }) {
             title="Continue with FB"
             style={{
               backgroundColor: '#4267B2',
+              alignSelf: 'center',
             }}
           >
             <Icon name="facebook-square" color="#fff" size={20} />
