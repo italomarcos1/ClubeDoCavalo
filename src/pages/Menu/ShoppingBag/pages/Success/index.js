@@ -3,6 +3,8 @@ import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 // import { Container } from './styles';
 
+import PurchaseSuccess from '~/assets/purchase-confirmation.svg';
+
 export default function Success() {
   return (
     <View
@@ -13,31 +15,46 @@ export default function Success() {
         backgroundColor: '#fff',
       }}
     >
-      <Icon name="check-circle" size={60} color="#3A3A3A" />
+      <PurchaseSuccess height={180} width={180} />
       <Text
         style={{
           fontSize: 28,
           fontWeight: 'bold',
-          marginVertical: 10,
+          marginTop: 30,
+          marginBottom: 5,
           color: '#3A3A3A',
         }}
       >
         Parabéns!
       </Text>
-      <Text
-        numberOfLines={2}
+      <View
         style={{
-          fontWeight: 'bold',
           marginTop: 10,
-          width: 260,
           height: 70,
-          fontSize: 16,
-          color: '#486473',
-          textAlign: 'center',
+          width: 300,
         }}
       >
-        Seu pedido está em processo pode verificar as atualizações por email.
-      </Text>
+        <Text
+          numberOfLines={2}
+          style={{
+            fontSize: 16,
+            color: '#486473',
+            textAlign: 'center',
+          }}
+        >
+          Seu pedido está em processo.
+        </Text>
+        <Text
+          numberOfLines={2}
+          style={{
+            fontSize: 16,
+            color: '#486473',
+            textAlign: 'center',
+          }}
+        >
+          Pode verificar as atualizações por email.
+        </Text>
+      </View>
     </View>
   );
 }

@@ -4,6 +4,8 @@ import { TouchableOpacity, Image } from 'react-native';
 export const Container = styled.View`
   background: #fff;
   flex: 1;
+  padding: 0;
+  justify-content: space-between;
 `;
 
 export const Bottom = styled.View`

@@ -25,3 +25,9 @@ export function removeAmount(id) {
     payload: { id },
   };
 }
+
+export function cleanCart() {
+  return {
+    type: '@shoppingbag/CLEAR_CART',
+  };
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
 
@@ -25,11 +25,13 @@ import {
 
 import {
   addAmount,
+  cleanCart,
   removeAmount,
   removeFromShoppingBag,
 } from '~/store/modules/shoppingbag/actions';
 
 function ShirtItem({ product }) {
+  const products = useSelector(state => state.shoppingbag.products);
   const dispatch = useDispatch();
 
   return (
@@ -37,7 +39,7 @@ function ShirtItem({ product }) {
       <Shirt>
         <Item>
           <ShirtImage source={{ uri: product.print }} />
-          <ShirtInfo style={{ height: 100 }}>
+          <ShirtInfo>
             <View
               style={{
                 flex: 1,
@@ -47,7 +49,8 @@ function ShirtItem({ product }) {
               <Text style={{ fontWeight: 'bold' }}>
                 {`T-Shirt  ${product.gender} ${product.size} ${product.color}`}
               </Text>
-              <Text>{`Estampa: ${product.name}`}</Text>
+              <Text style={{ marginTop: 4 }}>Estampa:</Text>
+              <Text style={{ marginBottom: 4 }}>"{product.name}"</Text>
               <Text>{`Quantidade: ${product.amount}`}</Text>
               <View
                 style={{
@@ -66,16 +69,19 @@ function ShirtItem({ product }) {
         </Item>
         <Separator />
         <Options>
-          <DeleteProduct>
+          <DeleteProduct
+            onPress={() => {
+              if (products.length > 1)
+                dispatch(removeFromShoppingBag(product.id));
+              else dispatch(cleanCart());
+            }}
+          >
             <Text>Excluir</Text>
-            <TouchableOpacity
-              onPress={() => dispatch(removeFromShoppingBag(product.id))}
-            >
-              <Icon name="x" size={18} color="#808080" />
-            </TouchableOpacity>
+            <Icon name="x" size={18} color="#808080" />
           </DeleteProduct>
           <UpdateAmountContainer>
             <TouchableOpacity
+              disabled={product.amount === 1}
               onPress={() => dispatch(removeAmount(product.id))}
             >
               <Icon name="minus" size={20} color="#808080" />

@@ -41,7 +41,7 @@ export default function shoppingbag(state = INITIAL_STATE, { type, payload }) {
 
         break;
       }
-      case '@shoppingbag/AFTER_PURCHASE': {
+      case '@shoppingbag/CLEAR_CART': {
         draft.products.splice(0, draft.products.length);
 
         break;

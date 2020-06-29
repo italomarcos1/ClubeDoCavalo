@@ -1,17 +1,14 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.ScrollView`
-  flex: 1;
-  padding: 10px 20px 0;
-  background-color: #fff3f4;
-`;
-
 export const Product = styled.View`
-  flex: 1;
   width: 100%;
-  height: 220px;
+  height: 250px;
+  background-color: #fafafa;
+  border-color: #ddd;
   align-items: center;
-  padding: 3px;
+  border-radius: 4px;
+  border-width: 1px;
+  padding: 5px 5px 3px;
 `;
 
 export const PickAddress = styled.View`
@@ -56,7 +53,7 @@ export const NoProductsContainer = styled.View`
   flex: 1;
   align-items: center;
   align-self: center;
-  margin-top: 100px;
+  margin-top: -30px;
   justify-content: center;
   text-align: center;
 `;
@@ -113,10 +110,9 @@ export const ShirtContainer = styled.View`
   justify-content: space-evenly;
   align-items: center;
   padding: 5px 0;
-  margin-bottom: 5px;
 `;
 
-export const DeleteProduct = styled.View`
+export const DeleteProduct = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
@@ -130,9 +126,8 @@ export const DeleteProduct = styled.View`
 export const Separator = styled.View`
   height: 1px;
   align-self: stretch;
-  border-color: #999;
+  border-color: #ddd;
   border-width: 0.5px;
-  margin: 10px 0;
 `;
 
 export const UpdateAmountContainer = styled.View`
@@ -141,7 +136,7 @@ export const UpdateAmountContainer = styled.View`
   align-items: baseline;
   border-color: #bbb;
   justify-content: space-between;
-  border-width: 1px;
+  border-width: 0.5px;
   border-radius: 2px;
   padding: 2px 4px;
   margin: 0 4px;
@@ -150,7 +145,7 @@ export const UpdateAmountContainer = styled.View`
 export const Shirt = styled.View`
   width: 100%;
   background-color: #fff;
-  flex: 1;
+  height: 210px;
   border-radius: 4px;
   padding: 5px 10px;
   flex-direction: column;
@@ -169,21 +164,21 @@ export const ShirtImage = styled.Image.attrs({
 export const ShirtInfo = styled.View`
   flex: 1;
   margin-left: 5px;
-  height: 150px;
+  height: 120px;
   justify-content: space-evenly;
 `;
 
 export const Item = styled.View`
   width: 100%;
-  height: 130px;
-  padding: 10px;
+  height: 140px;
+  padding: 10px 10px 5px;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 export const Options = styled.View`
-  width: 300px;
-  height: 40px;
+  width: 100%;
+  height: 30px;
   align-items: center;
   flex-direction: row;
   justify-content: space-evenly;
@@ -191,8 +186,8 @@ export const Options = styled.View`
 
 export const Detail = styled.TouchableOpacity`
   width: 100%;
-  height: 60px;
-  margin: 5px 0;
+  height: 70px;
+  margin: 10px 0;
   background-color: #fff;
   border-radius: 4px;
   padding-right: 20px;
@@ -204,7 +199,7 @@ export const Detail = styled.TouchableOpacity`
 export const SelectProductContainer = styled.View`
   width: 100%;
   text-align: center;
-  height: 20px;
+  height: 30px;
   flex-direction: row;
   align-items: center;
   align-self: center;
@@ -229,8 +224,8 @@ export const FareDetails = styled.View`
   flex: 1;
   max-height: 70px;
   justify-content: center;
-  align-items: center;
-  padding: 0 5px;
+  align-items: flex-start;
+  padding: 0 5px 0 1px;
 `;
 
 export const CheckoutContainer = styled.View`

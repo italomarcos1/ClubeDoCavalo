@@ -63,15 +63,7 @@ export default function ShirtDetails({
     <>
       <Header title="Detalhes da camiseta" close={close} />
 
-      <Container
-        style={{
-          flex: 1,
-          paddingLeft: 0,
-          paddingTop: 0,
-          paddingRight: 0,
-          justifyContent: 'space-between',
-        }}
-      >
+      <Container>
         <MainContainer>
           <TShirtContainer
             style={{
