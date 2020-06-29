@@ -9,23 +9,49 @@ export const ImageContainer = styled.View`
   background-color: #3b8e39;
 `;
 
+export const Container = styled.ScrollView`
+  background-color: #fff;
+`;
+
 export const AvatarContainer = styled.View`
-  position: relative;
   width: 90px;
   align-items: center;
   justify-content: center;
   height: 90px;
+  margin: 20px 0 0 0;
   border-radius: 45px;
   border-color: #fff;
   border-width: 2px;
 `;
+
 export const Avatar = styled.Image`
-  position: relative;
-  width: 90px;
-  height: 90px;
-  border-radius: 45px;
-  border-color: #fff;
-  border-width: 2px;
+  width: 86px;
+  height: 86px;
+  border-radius: 43px;
+`;
+
+export const ChangeAvatarContainer = styled.View`
+  margin: 5px 0 0;
+  width: 100px;
+  height: 50px;
+  align-items: center;
+  background-color: #399;
+  justify-content: space-evenly;
+`;
+
+export const ChangeAvatar = styled.TouchableOpacity`
+  width: 45px;
+  height: 20px;
+  border-radius: 7.5px;
+  background-color: #12b118;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ChangeAvatarText = styled.Text`
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
 `;
 
 export const Content = styled.TouchableOpacity`
@@ -36,7 +62,7 @@ export const Content = styled.TouchableOpacity`
   border-bottom-color: #d2d2d4;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 8px 4px 20px;
+  padding: 2px 8px 2px 20px;
 `;
 
 export const Item = styled.TouchableOpacity`
@@ -78,12 +104,12 @@ export const Field = styled.Text`
 `;
 
 export const VerifiedField = styled.Text`
-  color: ${props => (props.verified ? '#5bae59' : '#F5811F')}
+  color: ${props => (props.verified ? '#5bae59' : '#F5811F')};
   font-size: 13px;
   margin-left: 15px;
 `;
 
 export const Value = styled.Text`
   color: #000;
-  font-size: 17px;
+  font-size: 16px;
 `;

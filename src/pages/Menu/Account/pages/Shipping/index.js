@@ -23,7 +23,6 @@ import {
 } from './styles';
 
 import { RadioButtonBackground, Selected } from '../Gender/styles';
-import Header from '~/components/HeaderMenu';
 
 import { updateProfileSuccess } from '~/store/modules/user/actions';
 
@@ -101,11 +100,6 @@ export default function Shipping({ navigation }) {
 
   return (
     <>
-      <Header
-        custom
-        title="Endereço de entrega"
-        close={() => navigation.goBack()}
-      />
       <Container
         contentContainerStyle={{
           alignItems: 'center',

@@ -32,8 +32,6 @@ import {
   SendingMailText,
 } from './styles';
 
-import Header from '~/components/HeaderMenu';
-
 Icon.loadFont();
 
 export default function Mail() {
@@ -117,8 +115,6 @@ export default function Mail() {
 
   return (
     <>
-      <Header title="Verificar email" close={() => navigation.goBack()} />
-
       <View style={{ flex: 1 }}>
         <Validation title="Digite o número abaixo" />
         {!sendingMail ? (

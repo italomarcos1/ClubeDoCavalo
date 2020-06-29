@@ -11,7 +11,7 @@ import Mail from './pages/Mail';
 
 import Name from './pages/Name';
 import Gender from './pages/Gender';
-import Pass from './pages/Pass/ChangePassword';
+import Pass from './pages/Pass';
 import Shipping from './pages/Shipping';
 import AddNewAddress from './pages/Shipping/AddNewAddress';
 import EditAddress from './pages/Shipping/EditAddress';

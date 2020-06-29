@@ -64,8 +64,6 @@ export default function Gender({ navigation }) {
 
   return (
     <>
-      <Header title="Sexo" close={() => navigation.goBack()} />
-
       <Container>
         <OptionsContainer>
           <Option disabled={updating} onPress={() => setGender('Masculino')}>
