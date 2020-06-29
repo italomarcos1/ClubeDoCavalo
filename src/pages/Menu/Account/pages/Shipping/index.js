@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-tiny-toast';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
 
 import AddIcon from '~/assets/ico-add-address.svg';
 import EditAddressIcon from '~/assets/ico-edit-address.svg';
@@ -43,12 +43,19 @@ export default function Shipping({ navigation }) {
 
   const handleDeleteAddress = useCallback(
     async id => {
-      await api.delete(`clients/addresses/${id}`);
-      if (addresses.length === 1) {
-        setAddresses([]);
-      } else {
-        const filtered = addresses.filter(address => address.id !== id);
-        setAddresses(filtered);
+      try {
+        await api.delete(`clients/addresses/${id}`);
+        if (addresses.length === 1) {
+          setAddresses([]);
+        } else {
+          const filtered = addresses.filter(address => address.id !== id);
+          setAddresses(filtered);
+        }
+        dispatch(updateProfileSuccess({ ...user, default_address: [] }));
+
+        Toast.showSuccess('Endereço removido com sucesso.');
+      } catch (err) {
+        Toast.show('Erro ao remover o endereço.');
       }
     },
     [addresses]
@@ -71,7 +78,7 @@ export default function Shipping({ navigation }) {
     } catch (err) {
       Toast.show('Erro no update de endereço.');
     }
-  }, [selectedAddressId, user.default_address.id]);
+  }, [selectedAddressId, user.default_address.id, dispatch]);
 
   useEffect(() => {
     async function loadAdresses() {
@@ -92,7 +99,7 @@ export default function Shipping({ navigation }) {
     }
 
     loadAdresses();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     setDefaultAddress();

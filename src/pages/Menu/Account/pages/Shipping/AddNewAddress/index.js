@@ -1,14 +1,16 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Text, Keyboard } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-tiny-toast';
 import PropTypes from 'prop-types';
 
 import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
-import Header from '~/components/HeaderMenu';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
+
+import { updateProfileSuccess } from '~/store/modules/user/actions';
 
 import { Container, InputContainer, InputName, CustomView } from './styles';
 
@@ -32,6 +34,9 @@ export default function AddNewAddress({ navigation }) {
 
   const [loading, setLoading] = useState(false);
 
+  const user = useSelector(reduxState => reduxState.user.profile);
+  const dispatch = useDispatch();
+
   const handleAddAddress = useCallback(async () => {
     try {
       setLoading(true);
@@ -47,6 +52,9 @@ export default function AddNewAddress({ navigation }) {
       });
 
       setLoading(false);
+
+      const updatedUser = { ...user, default_address: data.data };
+      dispatch(updateProfileSuccess(updatedUser));
 
       Toast.showSuccess(`${data.meta.message}`);
       navigation.goBack();
@@ -69,7 +77,6 @@ export default function AddNewAddress({ navigation }) {
 
   return (
     <>
-      <Header title="Adicionar endereço" close={() => navigation.goBack()} />
       <Validation title="Digite o seu endereço" />
 
       <Container

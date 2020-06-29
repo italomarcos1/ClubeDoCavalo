@@ -6,9 +6,8 @@ import Toast from 'react-native-tiny-toast';
 import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
-import Header from '~/components/HeaderMenu';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
 
 import { Container, InputContainer, InputName, CustomView } from './styles';
 
@@ -73,8 +72,6 @@ export default function EditAddress({ navigation, route }) {
 
   return (
     <>
-      <Header title="Editar endereço" close={() => navigation.goBack()} />
-
       <Validation title="Altere os dados do seu endereço" />
 
       <Container

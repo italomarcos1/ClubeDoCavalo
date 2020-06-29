@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Keyboard, View } from 'react-native';
+import { Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Validation from '~/components/Validation';
@@ -10,7 +10,7 @@ import InputMenu from '~/components/InputMenu';
 
 import { api } from '~/services/api'; // depois com a rota 'update user'
 import { registerComplete } from '~/store/modules/auth/actions';
-import { updateData } from '~/store/modules/user/actions';
+import { updateProfileSuccess } from '~/store/modules/user/actions';
 
 import {
   Container,
@@ -36,7 +36,6 @@ export default function CompleteRegisterForm() {
   const dispatch = useDispatch();
 
   const handleFinishRegister = useCallback(async () => {
-    // aqui vai a chamada à API
     try {
       setLoading(true);
       const { data } = await api.put('clients', {
@@ -45,14 +44,15 @@ export default function CompleteRegisterForm() {
         cellphone,
         birth: '07/06/1999',
         gender,
+        default_address: { id: -5 },
       });
 
       console.tron.log(data.meta.message);
-      const user = data.data;
+      const user = { ...data.data, default_address: { id: -5 } };
       console.tron.log(user);
       setLoading(false);
 
-      dispatch(updateData(user));
+      dispatch(updateProfileSuccess(user));
       dispatch(registerComplete());
     } catch (err) {
       setLoading(false);

@@ -60,11 +60,6 @@ export default function Account() {
         return;
       }
 
-      // CameraRoll.save(uri, 'photo').then(() => {
-      //   console.tron.log('Sucesso ao salvar na galeria.');
-      // }); // então é um uri válido
-      // console.tron.log('2');
-
       const upload = new FormData(); // eslint-disable-line
 
       upload.append('avatar', {
@@ -189,7 +184,11 @@ export default function Account() {
               style={{ borderBottomColor: 'transparent', borderBottomWidth: 0 }}
             >
               <Field>Endereços de entrega</Field>
-              <Value>Casa</Value>
+              <Value>
+                {user.default_address.length !== 0
+                  ? user.default_address.name
+                  : 'Nenhum endereço cadastrado ainda.'}
+              </Value>
             </Item>
             <Icon name="chevron-right" size={15} color="#808080" />
           </Content>
