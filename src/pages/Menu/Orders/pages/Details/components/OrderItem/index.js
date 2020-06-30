@@ -1,14 +1,16 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 
 import {
   AddItemToCart,
+  AddItemToCartText,
   Item,
   Shirt,
   ItemImage,
+  Info,
   ItemInfo,
   ProductAmount,
   ProductPrice,
@@ -38,32 +40,25 @@ export default function OrderItem({ product }) {
           }}
         />
 
-        <ItemInfo>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'space-between',
-            }}
-          >
+        <Info>
+          <ItemInfo>
             <ProductTitle>
               T-shirt {product.gender} {product.size} {product.color}
             </ProductTitle>
             <ProductAmount>Estampa: {product.title}</ProductAmount>
             <ProductAmount>Quantidade: {product.quantity}</ProductAmount>
             <ProductPrice>R$ {product.unit_price}</ProductPrice>
-          </View>
+          </ItemInfo>
           <View
             style={{
               marginTop: 20,
             }}
           >
             <AddItemToCart onPress={() => handleAddToCart(product)}>
-              <Text style={{ fontSize: 14, color: '#fff' }}>
-                Adicionar ao cesto
-              </Text>
+              <AddItemToCartText>Adicionar ao cesto</AddItemToCartText>
             </AddItemToCart>
           </View>
-        </ItemInfo>
+        </Info>
       </Shirt>
     </Item>
   );

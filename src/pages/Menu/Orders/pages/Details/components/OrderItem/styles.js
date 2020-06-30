@@ -10,6 +10,11 @@ export const AddItemToCart = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+export const AddItemToCartText = styled.Text`
+  font-size: 14px;
+  color: #fff;
+`;
+
 export const Shirt = styled.View`
   width: 100%;
   height: 180px;
@@ -28,7 +33,13 @@ export const ShirtInfo = styled.View`
   margin-left: 5px;
   justify-content: space-between;
 `;
+
 export const ItemInfo = styled.View`
+  flex: 1;
+  justify-content: space-between;
+`;
+
+export const Info = styled.View`
   flex: 1;
   height: 160px;
   margin-left: 5px;

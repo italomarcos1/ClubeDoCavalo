@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Header, Title } from './styles';
 
@@ -11,3 +12,7 @@ export default function Validation({ title }) {
     </>
   );
 }
+
+Validation.propTypes = {
+  title: PropTypes.string.isRequired,
+};

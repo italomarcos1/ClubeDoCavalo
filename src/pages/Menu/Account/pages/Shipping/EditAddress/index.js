@@ -72,6 +72,8 @@ export default function EditAddress({ navigation, route }) {
     district,
     complement,
     navigation,
+    dispatch,
+    user,
   ]);
 
   return (

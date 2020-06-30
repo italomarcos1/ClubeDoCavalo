@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Toast from 'react-native-tiny-toast';
 import PropTypes from 'prop-types';
@@ -8,6 +8,7 @@ import {
   Container,
   CheckoutContainer,
   FinishButton,
+  FinishButtonText,
   Content,
   Detail,
   DetailStatus,
@@ -110,7 +111,6 @@ export default function Details({ navigation, route }) {
             <Info>
               <ShippingToContainer>
                 <Content>Envio para:</Content>
-                <Text />
               </ShippingToContainer>
               <View style={{ marginTop: 10, marginBottom: 10 }}>
                 <CustomerInfo>
@@ -186,16 +186,9 @@ export default function Details({ navigation, route }) {
             navigation.navigate('Orders');
           }}
         >
-          <Text
-            style={{
-              color: '#fff',
-              fontWeight: 'bold',
-              fontSize: 18,
-              textAlign: 'center',
-            }}
-          >
+          <FinishButtonText>
             Adicionar todos os produtos ao cesto
-          </Text>
+          </FinishButtonText>
         </FinishButton>
       </CheckoutContainer>
     </>
@@ -205,6 +198,7 @@ export default function Details({ navigation, route }) {
 Details.propTypes = {
   navigation: PropTypes.shape({
     goBack: PropTypes.func,
+    navigate: PropTypes.func,
   }).isRequired,
 
   route: PropTypes.shape({

@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
-import { Text, Linking, TouchableOpacity } from 'react-native';
+import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import PropTypes from 'prop-types';
 import Header from '~/components/Header';
 
-import { Container, PageText } from './styles';
+import { Container, ContactUsText, Button, ButtonText } from './styles';
 
 import Logo from '~/assets/seal.svg';
 import WhatsApp from '~/assets/ico-menu-whatsapp.svg';
@@ -26,75 +27,38 @@ export default function Contact({ navigation }) {
       <Header navigation={navigation} title="Ajuda" />
       <Container>
         <Logo width={200} height={200} style={{ alignSelf: 'center' }} />
-        <Text
-          style={{
-            fontSize: 28,
-            fontWeight: 'bold',
-            marginTop: 30,
-            marginBottom: 25,
-            color: '#3A3A3A',
-          }}
-        >
-          Contate-nos
-        </Text>
+        <ContactUsText>Contate-nos</ContactUsText>
 
-        <TouchableOpacity
-          onPress={sendWhatsappMessage}
-          style={{
-            width: 250,
-            height: 50,
-            backgroundColor: '#f2f3f4',
-            paddingLeft: 20,
-            paddingRight: 10,
-            paddingVertical: 10,
-            borderRadius: 30,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
+        <Button onPress={sendWhatsappMessage}>
           <WhatsApp width={30} height={30} />
-          <Text
-            numberOfLines={2}
-            style={{
-              width: 140,
-              textAlign: 'center',
-              marginLeft: 10,
-              fontSize: 15,
-            }}
-          >
+          <ButtonText numberOfLines={2}>
             Enviar mensagem por WhatsApp
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          </ButtonText>
+        </Button>
+        <Button
           onPress={() => Linking.openURL('tel:6141418989')}
           style={{
-            width: 250,
-            height: 50,
-
-            backgroundColor: '#f2f3f4',
-            paddingLeft: 20,
-            paddingRight: 10,
-            paddingVertical: 10,
-            borderRadius: 30,
             marginTop: 15,
-            flexDirection: 'row',
-            alignItems: 'center',
           }}
         >
           <Icon name="phone" size={25} color="#333" />
-          <Text
+          <ButtonText
             numberOfLines={2}
             style={{
-              width: 140,
-              textAlign: 'center',
               marginLeft: 20,
               fontSize: 16,
             }}
           >
             Ligue para nós
-          </Text>
-        </TouchableOpacity>
+          </ButtonText>
+        </Button>
       </Container>
     </>
   );
 }
+
+Contact.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

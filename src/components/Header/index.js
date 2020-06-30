@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import MenuIcon from '~/assets/ico-menu.svg';
 import SearchIcon from '~/assets/ico-search.svg';
@@ -66,3 +67,15 @@ export default function Header({ navigation, title = null }) {
     </Container>
   );
 }
+
+Header.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    openDrawer: PropTypes.func,
+  }).isRequired,
+  title: PropTypes.string,
+};
+
+Header.defaultProps = {
+  title: null,
+};

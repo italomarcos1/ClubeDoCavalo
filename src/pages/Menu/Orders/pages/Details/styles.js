@@ -122,6 +122,13 @@ export const FinishButton = styled.TouchableOpacity`
   align-items: center;
 `;
 
+export const FinishButtonText = styled.Text`
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+`;
+
 export const CheckoutContainer = styled.View`
   width: 100%;
   height: 70px;

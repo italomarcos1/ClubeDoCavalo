@@ -25,17 +25,13 @@ export default function EditName({ navigation }) {
   const handleEditName = useCallback(async () => {
     try {
       setLoading(true);
-      console.tron.log('1');
       await api.put('clients', { name, last_name });
       const updatedUser = { ...user, name, last_name };
-      console.tron.log('2');
 
       Toast.showSuccess('Nome atualizado com sucesso.');
       setLoading(false);
-      console.tron.log('3');
 
       dispatch(updateProfileSuccess(updatedUser));
-      console.tron.log('4');
 
       navigation.goBack();
     } catch (err) {

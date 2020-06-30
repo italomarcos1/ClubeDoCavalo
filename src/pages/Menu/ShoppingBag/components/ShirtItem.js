@@ -18,6 +18,7 @@ import {
   Options,
   ProductAmountContainer,
   ProductAmountText,
+  DiscountContainer,
   ProductPrice,
   ProductDiscount,
   ProductBeforeDiscount,
@@ -50,20 +51,13 @@ function ShirtItem({ product }) {
                 {`T-Shirt  ${product.gender} ${product.size} ${product.color}`}
               </Text>
               <Text style={{ marginTop: 4 }}>Estampa:</Text>
-              <Text style={{ marginBottom: 4 }}>"{product.name}"</Text>
+              <Text style={{ marginBottom: 4 }}>{`"${product.name}"`}</Text>
               <Text>{`Quantidade: ${product.amount}`}</Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: 30,
-                  alignItems: 'flex-end',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <DiscountContainer>
                 <ProductBeforeDiscount>{`R$ ${product.price}`}</ProductBeforeDiscount>
                 <ProductPrice>{`R$ ${product.price}`}</ProductPrice>
                 <ProductDiscount>-15%</ProductDiscount>
-              </View>
+              </DiscountContainer>
             </View>
           </ShirtInfo>
         </Item>

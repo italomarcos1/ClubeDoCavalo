@@ -116,4 +116,7 @@ export default function ModalColor({
 ModalColor.propTypes = {
   visible: PropTypes.bool.isRequired,
   onCancelPress: PropTypes.func.isRequired,
+  done: PropTypes.func.isRequired,
+  color: PropTypes.func.isRequired,
+  listData: PropTypes.oneOfType([PropTypes.array]).isRequired,
 };

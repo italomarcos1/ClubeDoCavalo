@@ -1,91 +1,159 @@
-import React, { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Keyboard } from 'react-native';
+import PropTypes from 'prop-types';
 
-import SealImage from '~/assets/seal.svg';
+import Validation from '~/components/Validation';
+import ButtonMenu from '~/components/ButtonMenu';
+import InputMenu from '~/components/InputMenu';
+// import DateInput from '~/components/DateInput';
 
-import Background from '~/components/Background';
-import { signUpRequest } from '~/store/modules/auth/actions';
+import { api } from '~/services/api'; // depois com a rota 'update user'
+import { registerComplete } from '~/store/modules/auth/actions';
+import { updateProfileSuccess } from '~/store/modules/user/actions';
 
 import {
   Container,
-  Form,
-  FormInput,
-  SubmitButton,
-  SignLink,
-  SignLinkText,
+  InputContainer,
+  InputName,
+  Gender,
+  GenderContainer,
+  Selected,
+  RadioButtonBackground,
+  RadioText,
 } from './styles';
 
-export default function SignUp({ navigation }) {
+export default function CompleteRegisterForm() {
+  const [name, setName] = useState('');
+  const [gender, setGender] = useState('male');
+  const [last_name, setLastName] = useState('');
+  const [cellphone, setCellphone] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const lastNameRef = useRef();
+  const cellphoneRef = useRef();
+
   const dispatch = useDispatch();
 
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const handleFinishRegister = useCallback(async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.put('clients', {
+        name,
+        last_name,
+        cellphone,
+        birth: '07/06/1999',
+        gender,
+        default_address: { id: -5 },
+      });
 
-  const loading = useSelector(state => state.auth.loading);
+      const user = { ...data.data, default_address: { id: -5, name: 'none' } };
+      setLoading(false);
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  function handleSubmit() {
-    dispatch(signUpRequest(name, email, password));
-  }
+      dispatch(updateProfileSuccess(user));
+      dispatch(registerComplete());
+    } catch (err) {
+      setLoading(false);
+    }
+  }, [dispatch, name, gender, cellphone, last_name]);
 
   return (
-    <Background>
+    <>
+      <Validation title="Ajude-nos a saber quem você é" />
+
       <Container>
-        <SealImage height={200} />
-
-        <Form>
-          <FormInput
+        <InputContainer>
+          <InputName>Nome</InputName>
+          <InputMenu
             autoFocus
-            icon="person-outline"
+            selected={!!name}
+            autoCapitalize="words"
             autoCorrect={false}
-            autoCapitalize="none"
-            placeholder="Nome completo"
-            returnKeyType="next"
-            onSubmitEditing={() => emailRef.current.focus()}
+            maxLength={25}
+            placeholder="Informe seu nome"
+            clear={() => setName('')}
             value={name}
-            onChangeText={setName}
-          />
-
-          <FormInput
-            icon="mail-outline"
-            keyboardType="email-address"
-            autoCorrect={false}
-            autoCapitalize="none"
-            placeholder="Digite seu e-mail"
-            ref={emailRef}
+            onChangeText={value => setName(value)}
             returnKeyType="next"
-            onSubmitEditing={() => passwordRef.current.focus()}
-            value={email}
-            onChangeText={setEmail}
+            onSubmitEditing={() => lastNameRef.current.focus()}
           />
-
-          <FormInput
-            icon="lock-outline"
-            secureTextEntry
-            placeholder="Sua senha secreta"
-            ref={passwordRef}
+        </InputContainer>
+        <InputContainer>
+          <InputName>Sobrenome</InputName>
+          <InputMenu
+            selected={!!last_name}
+            autoCapitalize="words"
+            autoCorrect={false}
+            maxLength={45}
+            placeholder="Informe seu sobrenome"
+            clear={() => setLastName('')}
+            ref={lastNameRef}
+            value={last_name}
+            onChangeText={value => setLastName(value)}
+            returnKeyType="next"
+            onSubmitEditing={() => cellphoneRef.current.focus()}
+          />
+        </InputContainer>
+        <InputContainer>
+          <InputName>Telefone</InputName>
+          <InputMenu
+            clear={() => setCellphone('')}
+            autoCorrect={false}
+            selected={!!cellphone}
+            keyboardType="phone-pad"
+            maxLength={11}
+            placeholder="Digite seu número"
+            ref={cellphoneRef}
+            value={cellphone}
+            onChangeText={setCellphone}
             returnKeyType="send"
-            onSubmitEditing={handleSubmit}
-            value={password}
-            onChangeText={setPassword}
+            onSubmitEditing={() => {
+              Keyboard.dismiss();
+              handleFinishRegister();
+            }}
           />
+        </InputContainer>
 
-          <SubmitButton loading={loading} onPress={() => {}}>
-            Criar Conta
-          </SubmitButton>
-        </Form>
+        <InputName>Selecione seu gênero:</InputName>
+        <GenderContainer>
+          <Gender onPress={() => setGender('male')}>
+            <RadioButtonBackground>
+              <Selected selected={gender === 'male'} />
+            </RadioButtonBackground>
+            <RadioText>Masculino</RadioText>
+          </Gender>
 
-        <SignLink
-          onPress={() => {
-            navigation.navigate('SignIn');
-          }}
+          <Gender onPress={() => setGender('female')}>
+            <RadioButtonBackground>
+              <Selected selected={gender === 'female'} />
+            </RadioButtonBackground>
+            <RadioText>Feminino</RadioText>
+          </Gender>
+
+          <Gender onPress={() => setGender('other')}>
+            <RadioButtonBackground>
+              <Selected selected={gender === 'other'} />
+            </RadioButtonBackground>
+            <RadioText>Outro</RadioText>
+          </Gender>
+        </GenderContainer>
+
+        {/* <DateInput date={birthDate} selectDate={value => setBirthDate(value)} /> */}
+        <ButtonMenu
+          loading={loading}
+          disabled={!name || !last_name || !cellphone || !gender}
+          onPress={handleFinishRegister}
+          style={{ marginTop: 20 }}
         >
-          <SignLinkText>Já tenho conta</SignLinkText>
-        </SignLink>
+          Finalizar cadastro
+        </ButtonMenu>
       </Container>
-    </Background>
+    </>
   );
 }
+
+CompleteRegisterForm.propTypes = {
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+  }).isRequired,
+};

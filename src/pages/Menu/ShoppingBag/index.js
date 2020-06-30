@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Modal, ScrollView, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
 
 import {
+  Container,
   Product,
   SelectProduct,
   SelectProductContainer,
+  FirstPurchaseContainer,
   Amount,
   CheckoutContainer,
   FinalPrice,
   Price,
   FinishButton,
+  ProductDiscount,
   FinishButtonText,
   Detail,
   FareDetails,
-  PickAddress,
-  Address,
-  AddressInfo,
-  AddressName,
-  AddressList,
+  TicketSeparator,
+  TicketSeparatorCircle,
   IconContainer,
   NoProductsContainer,
   NoProductsText,
   NoProductsSubtitle,
+  Zipcode,
 } from './styles';
 
 import Gift from '~/assets/ico-gift.svg';
@@ -41,19 +42,15 @@ export default function ShoppingBag({ navigation }) {
   const products = useSelector(state => state.shoppingbag.products);
   const user = useSelector(state => state.user.profile);
 
-  // verificar para ser apenas caso tenha algum produto
   const dispatch = useDispatch();
   const [position, setPosition] = useState(0);
 
   return (
     <>
       <View style={{ flex: 1 }}>
-        <ScrollView
+        <Container
           contentContainerStyle={{
             height: Dimensions.get('window').height - 60,
-            paddingTop: 20,
-            paddingBottom: 30,
-            paddingHorizontal: 20,
             alignItems: 'center',
             justifyContent: 'flex-start',
           }}
@@ -100,23 +97,11 @@ export default function ShoppingBag({ navigation }) {
 
                 <FareDetails>
                   <Text style={{ fontSize: 14 }}>Frete</Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: '#505050',
-                      fontWeight: 'bold',
-                      borderColor: '#ddd',
-                      borderWidth: 0.75,
-                      borderRadius: 2,
-                      paddingVertical: 1,
-                      paddingHorizontal: 7,
-                      marginTop: 2,
-                    }}
-                  >
+                  <Zipcode>
                     {user.default_address !== []
                       ? user.default_address.zipcode
                       : '71880-662'}
-                  </Text>
+                  </Zipcode>
                 </FareDetails>
 
                 <Price>R$ 18,20</Price>
@@ -131,77 +116,31 @@ export default function ShoppingBag({ navigation }) {
                   <Gift height={45} width={45} />
                 </IconContainer>
                 <FareDetails>
-                  <View
-                    style={{
-                      alignSelf: 'center',
-                      flexDirection: 'row',
-                      alignItems: 'baseline',
-                      paddingRight: 10,
-                    }}
-                  >
+                  <FirstPurchaseContainer>
                     <Text style={{ fontSize: 19, color: '#F06D85' }}>10% </Text>
-                    <Text style={{ fontSize: 13, fontWeight: '800' }}>
-                      de desconto
-                    </Text>
-                  </View>
+                    <Text style={{ fontSize: 13 }}>de desconto</Text>
+                  </FirstPurchaseContainer>
                   <Text
                     style={{
                       fontSize: 13,
                       alignSelf: 'stretch',
-                      fontWeight: '800',
                     }}
                   >
                     na primeira compra
                   </Text>
                 </FareDetails>
-                <View
-                  style={{
-                    width: 1.5,
-                    backgroundColor: '#F3F3F3',
-                    height: 85,
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 15,
-                      height: 15,
-                      borderRadius: 7.5,
-                      backgroundColor: '#F2F3F4',
-                    }}
-                  />
-                  <View
-                    style={{
-                      width: 15,
-                      height: 15,
-                      borderRadius: 7.5,
-                      backgroundColor: '#F2F3F4',
-                    }}
-                  />
-                </View>
+                <TicketSeparator>
+                  <TicketSeparatorCircle />
+                  <TicketSeparatorCircle />
+                </TicketSeparator>
                 <IconContainer>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      color: '#F06D85',
-                    }}
-                  >
-                    ENVIE UM
-                  </Text>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      color: '#F06D85',
-                    }}
-                  >
-                    PRESENTE
-                  </Text>
+                  <ProductDiscount>ENVIE UM</ProductDiscount>
+                  <ProductDiscount>PRESENTE</ProductDiscount>
                 </IconContainer>
               </Detail>
             </>
           )}
-        </ScrollView>
+        </Container>
         {products.length === 0 ? (
           <View />
         ) : (

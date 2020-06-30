@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, TouchableOpacity, Keyboard, Platform } from 'react-native';
-import Toast from 'react-native-tiny-toast';
+import { TouchableOpacity, Keyboard, Platform } from 'react-native';
+import PropTypes from 'prop-types';
 
 import Validation from '~/components/Validation';
 
@@ -12,11 +12,12 @@ import {
   ValidationContainer,
   ValidationCodeInput,
   ResendCodeText,
+  VerificationMailText,
 } from './styles';
 
 import Button from '~/components/Button';
 
-export default function Verify({ navigation }) {
+export default function Verify(/* { navigation } */) {
   const [code1, setCode1] = useState('');
   const [code2, setCode2] = useState('');
   const [code3, setCode3] = useState('');
@@ -39,16 +40,7 @@ export default function Verify({ navigation }) {
         enabled
       >
         <EmailVerificationImage height={180} />
-        <Text
-          style={{
-            fontSize: 26,
-            fontWeight: 'bold',
-            color: '#3A3A3A',
-            alignSelf: 'center',
-          }}
-        >
-          Verificação por email
-        </Text>
+        <VerificationMailText>Verificação por email</VerificationMailText>
 
         <CodeSentText numberOfLines={2}>
           Um código foi enviado para o email informado. Informe o código abaixo.
@@ -56,32 +48,20 @@ export default function Verify({ navigation }) {
         <ValidationContainer>
           <ValidationCodeInput
             autoFocus
-            maxLength={1}
-            keyboardType="numeric"
-            placeholder="0"
             value={code1}
             onChangeText={setCode1}
           />
           <ValidationCodeInput
-            maxLength={1}
-            keyboardType="numeric"
-            placeholder="0"
             ref={inputRef2}
             value={code2}
             onChangeText={setCode2}
           />
           <ValidationCodeInput
-            maxLength={1}
-            keyboardType="numeric"
-            placeholder="0"
             ref={inputRef3}
             value={code3}
             onChangeText={setCode3}
           />
           <ValidationCodeInput
-            maxLength={1}
-            keyboardType="numeric"
-            placeholder="0"
             ref={inputRef4}
             value={code4}
             onChangeText={setCode4}
@@ -96,3 +76,9 @@ export default function Verify({ navigation }) {
     </>
   );
 }
+
+Verify.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

@@ -1,5 +1,9 @@
 import styled from 'styled-components/native';
 
+export const Container = styled.ScrollView`
+  padding: 20px 20px 30px;
+`;
+
 export const Product = styled.View`
   width: 100%;
   height: 250px;
@@ -9,44 +13,6 @@ export const Product = styled.View`
   border-radius: 4px;
   border-width: 1px;
   padding: 5px 5px 3px;
-`;
-
-export const PickAddress = styled.View`
-  flex: 1;
-  background-color: rgba(0, 0, 0, 0.5);
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-`;
-
-export const AddressList = styled.FlatList`
-  background-color: #fff;
-  border-width: 3px;
-  border-radius: 4px;
-  padding: 5px 0;
-`;
-
-export const Address = styled.TouchableOpacity`
-  flex: 1;
-  margin-bottom: 5px;
-  height: 40px;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 5px;
-  background-color: #f2f3f4;
-`;
-
-export const AddressName = styled.Text`
-  color: #333;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 20px;
-`;
-
-export const AddressInfo = styled.Text`
-  color: #777;
-  font-size: 14px;
 `;
 
 export const NoProductsContainer = styled.View`
@@ -78,6 +44,21 @@ export const ProductBeforeDiscount = styled.Text`
   text-decoration-line: line-through;
 `;
 
+export const TicketSeparator = styled.View`
+  width: 1.5px;
+  background-color: #f3f3f3;
+  height: 85px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const TicketSeparatorCircle = styled.View`
+  width: 15px;
+  height: 15px;
+  border-radius: 7.5px;
+  background-color: #f2f3f4;
+`;
+
 export const ProductDiscount = styled.Text`
   color: #f06d85;
   font-weight: bold;
@@ -88,6 +69,13 @@ export const PriceContainer = styled.View`
   flex-direction: row;
   align-items: center;
   padding: 0 10px;
+`;
+
+export const FirstPurchaseContainer = styled.View`
+  flex-direction: row;
+  align-items: baseline;
+  align-self: center;
+  padding-right: 10px;
 `;
 
 export const NoProductsText = styled.Text`
@@ -152,6 +140,13 @@ export const Shirt = styled.View`
   align-items: center;
   justify-content: space-evenly;
   margin-bottom: 5px;
+`;
+
+export const DiscountContainer = styled.View`
+  flex-direction: row;
+  height: 30px;
+  align-items: flex-end;
+  justify-content: space-between;
 `;
 
 export const ShirtImage = styled.Image.attrs({
@@ -226,6 +221,17 @@ export const FareDetails = styled.View`
   justify-content: center;
   align-items: flex-start;
   padding: 0 5px 0 1px;
+`;
+
+export const Zipcode = styled.Text`
+  font-size: 14px;
+  color: #505050;
+  font-weight: bold;
+  border-color: #ddd;
+  border-width: 0.75px;
+  border-radius: 2px;
+  padding: 1px 7px;
+  margin-top: 2px;
 `;
 
 export const CheckoutContainer = styled.View`

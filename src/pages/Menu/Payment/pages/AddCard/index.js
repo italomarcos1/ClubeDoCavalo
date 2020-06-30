@@ -36,8 +36,6 @@ export default function AddCard({ navigation }) {
     }
   }, [cvv]);
 
-  console.tron.log(!!cardNumber && !!expireDate && !!cvv && !!name);
-
   return (
     <>
       <Validation title="Digite o seu cartão" />

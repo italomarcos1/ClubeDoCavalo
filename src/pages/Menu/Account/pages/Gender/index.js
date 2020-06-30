@@ -12,8 +12,6 @@ import {
   RadioText,
 } from './styles';
 
-import Header from '~/components/HeaderMenu';
-
 import { updateProfileSuccess } from '~/store/modules/user/actions';
 
 import api from '~/services/api';
@@ -51,6 +49,7 @@ export default function Gender({ navigation }) {
       } = await api.put('clients', { gender: updatedGender });
       dispatch(updateProfileSuccess(data));
       Toast.showSuccess('Gênero atualizado com sucesso.');
+      navigation.goBack();
       setUpdating(false);
     } catch (err) {
       setUpdating(false);

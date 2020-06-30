@@ -1,5 +1,7 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { View, ScrollView } from 'react-native';
 import Toast from 'react-native-tiny-toast';
+import PropTypes from 'prop-types';
 
 import PasswordVerification from '~/assets/password-verification.svg';
 
@@ -9,14 +11,7 @@ import Header from '~/components/HeaderMenu';
 
 import Validation from '~/components/Validation';
 
-import {
-  Container,
-  Form,
-  FormInput,
-  SubmitButton,
-  SignLink,
-  SignLinkText,
-} from '../../../SignUp/styles';
+import { Form } from '../../../SignUp/styles';
 
 import { api } from '~/services/api';
 
@@ -27,9 +22,7 @@ export default function ForgotPassword({ navigation }) {
   const handleSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      console.tron.log(`email: ${email}`);
-      const response = await api.post('auth/reset-password', { email });
-      console.tron.log(`message: ${response.data.meta.message}`);
+      await api.post('auth/reset-password', { email });
 
       setLoading(false);
       navigation.navigate('Verify');
@@ -40,11 +33,19 @@ export default function ForgotPassword({ navigation }) {
   }, [email, navigation]);
 
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <Header title="Recuperar senha" close={() => navigation.goBack()} />
       <Validation title="Digite seu e-mail abaixo" />
-      <Container>
-        <PasswordVerification style={{ marginBottom: -20 }} height={200} />
+      <ScrollView
+        contentContainerStyle={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingVertical: 10,
+          paddingHorizontal: 30,
+        }}
+      >
+        <PasswordVerification style={{ marginBottom: -20 }} height={160} />
         <Form>
           <InputMenu
             autoFocus
@@ -52,12 +53,12 @@ export default function ForgotPassword({ navigation }) {
             autoCorrect={false}
             selected={!!email}
             keyboardType="email-address"
-            maxLength={11}
+            maxLength={45}
             autoCapitalize="none"
             placeholder="Digite seu e-mail"
             value={email}
             onChangeText={setEmail}
-            style={{ marginTop: 10, marginBottom: 20 }}
+            style={{ marginBottom: 20 }}
             returnKeyType="send"
             onSubmitEditing={handleSubmit}
           />
@@ -70,7 +71,14 @@ export default function ForgotPassword({ navigation }) {
             Recuperar senha
           </ButtonMenu>
         </Form>
-      </Container>
-    </>
+      </ScrollView>
+    </View>
   );
 }
+
+ForgotPassword.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    goBack: PropTypes.func,
+  }).isRequired,
+};

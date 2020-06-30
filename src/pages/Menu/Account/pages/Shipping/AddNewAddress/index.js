@@ -75,6 +75,8 @@ export default function AddNewAddress({ navigation }) {
     complement,
     zipcode,
     navigation,
+    dispatch,
+    user,
   ]);
 
   return (

@@ -18,14 +18,33 @@ export const Item = styled.TouchableOpacity`
   justify-content: space-between;
 `;
 
-export const Option = styled.Text`
+export const CardNumber = styled.Text`
   flex: 1;
   font-size: 18px;
   font-weight: bold;
   align-self: flex-start;
 `;
 
+export const CardNumberContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+`;
+
 export const OptionText = styled.Text`
   color: #000;
+  font-size: 16px;
+`;
+
+export const AddCard = styled.View`
+  flex: 1;
+  align-items: flex-start;
+  padding-right: 10px;
+  padding-left: 10px;
+`;
+
+export const AddCardText = styled.Text`
+  color: #12b118;
   font-size: 16px;
 `;

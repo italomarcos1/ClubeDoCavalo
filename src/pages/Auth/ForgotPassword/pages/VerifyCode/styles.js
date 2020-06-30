@@ -8,7 +8,11 @@ export const Container = styled.KeyboardAvoidingView`
   justify-content: space-evenly;
 `;
 
-export const ValidationCodeInput = styled.TextInput`
+export const ValidationCodeInput = styled.TextInput.attrs({
+  maxLength: 1,
+  keyboardType: 'numeric',
+  placeholder: '0',
+})`
   width: 50px;
   height: 50px;
   border-radius: 4px;
@@ -45,5 +49,12 @@ export const ResendCodeText = styled.Text`
   margin-bottom: 5px;
   font-size: 16px;
   color: #d93150;
+  align-self: center;
+`;
+
+export const VerificationMailText = styled.Text`
+  font-size: 26px;
+  font-weight: bold;
+  color: #3a3a3a;
   align-self: center;
 `;
