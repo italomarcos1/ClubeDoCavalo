@@ -3,6 +3,7 @@ import { View, Text, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
+import Toast from 'react-native-tiny-toast';
 
 import {
   Container,
@@ -41,6 +42,7 @@ Icon.loadFont();
 export default function ShoppingBag({ navigation }) {
   const products = useSelector(state => state.shoppingbag.products);
   const user = useSelector(state => state.user.profile);
+  const newUser = useSelector(state => state.auth.newUser);
 
   const dispatch = useDispatch();
   const [position, setPosition] = useState(0);
@@ -155,8 +157,15 @@ export default function ShoppingBag({ navigation }) {
             </Amount>
             <FinishButton
               onPress={() => {
-                navigation.navigate('Success');
-                dispatch(cleanCart());
+                if (newUser) {
+                  Toast.show(
+                    'Você deve finalizar o cadastro antes de finalizar a compra'
+                  );
+                  navigation.navigate('Register');
+                } else {
+                  navigation.navigate('Success');
+                  dispatch(cleanCart());
+                }
               }}
             >
               <FinishButtonText>Finalizar a compra</FinishButtonText>

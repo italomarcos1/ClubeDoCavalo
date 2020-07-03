@@ -5,6 +5,7 @@ import Header from '~/components/HeaderMenu';
 
 import ShoppingBag from './index';
 import Success from './pages/Success';
+import Form from './pages/Form';
 
 export default function Routes({ navigation }) {
   const Stack = createStackNavigator();
@@ -37,6 +38,19 @@ export default function Routes({ navigation }) {
         options={() => ({
           header: () => (
             <Header custom title="Voltar para página inicial" close={success} />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Form}
+        options={() => ({
+          header: () => (
+            <Header
+              custom
+              title="Voltar para Cesto de compras"
+              close={() => navigation.goBack()}
+            />
           ),
         })}
       />

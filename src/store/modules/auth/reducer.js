@@ -18,6 +18,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         draft.token = payload.token;
         draft.loading = false;
         draft.newUser = true;
+        draft.signed = true;
         break;
       }
       case '@auth/REGISTER_COMPLETE': {

@@ -11,6 +11,7 @@ import ButtonMenu from '~/components/ButtonMenu';
 import { Container, InputContainer, InputName } from './styles';
 
 import { updateProfileSuccess } from '~/store/modules/user/actions';
+import { registerComplete } from '~/store/modules/auth/actions';
 
 export default function EditName({ navigation }) {
   const user = useSelector(state => state.user.profile);
@@ -32,7 +33,7 @@ export default function EditName({ navigation }) {
       setLoading(false);
 
       dispatch(updateProfileSuccess(updatedUser));
-
+      dispatch(registerComplete());
       navigation.goBack();
     } catch (err) {
       setLoading(false);
