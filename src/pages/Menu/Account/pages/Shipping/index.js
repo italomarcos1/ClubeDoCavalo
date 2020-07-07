@@ -75,8 +75,6 @@ export default function Shipping({ navigation }) {
     )
       return;
     try {
-      console.tron.log('nao era pra cair aqui');
-
       const {
         data: { data },
       } = await api.put(`/clients/addresses/${selectedAddressId}`);
@@ -84,7 +82,6 @@ export default function Shipping({ navigation }) {
       dispatch(updateProfileSuccess({ ...user, default_address: data }));
 
       Toast.showSuccess('Endereço atualizado com sucesso.');
-      console.tron.log('uai');
     } catch (err) {
       Toast.show('Erro no update de endereço.');
     }

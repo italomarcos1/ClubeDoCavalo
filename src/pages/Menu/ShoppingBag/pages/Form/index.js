@@ -53,7 +53,6 @@ export default function CompleteRegisterForm() {
   const handleFinishRegister = useCallback(async () => {
     try {
       const birth = `${day}/${month}/${year}`;
-      console.tron.log(birth);
 
       setLoading(true);
       await api.put('clients', {
