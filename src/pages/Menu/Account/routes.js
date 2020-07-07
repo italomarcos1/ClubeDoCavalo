@@ -1,6 +1,6 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
 import Account from './index';
@@ -23,7 +23,6 @@ Icon.loadFont();
 
 export default function Routes({ navigation }) {
   const Stack = createStackNavigator();
-  const user = useSelector(state => state.user.profile);
 
   const exit = () => {
     navigation.goBack();
@@ -31,95 +30,108 @@ export default function Routes({ navigation }) {
   };
 
   return (
-    <Stack.Navigator
-      initialRouteName="Account"
-      screenOptions={({ navigation }) => ({
-        header: () => <Header title="Editar conta" close={exit} />,
-      })}
-    >
-      <Stack.Screen name="Account" component={Account} />
-      <Stack.Screen
-        name="EditName"
-        component={Name}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header title="Nome do perfil" close={() => navigation.goBack()} />
-          ),
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#5BAE59" />
+
+      <Stack.Navigator
+        initialRouteName="Account"
+        screenOptions={({ navigation }) => ({
+          header: () => <Header title="Editar conta" close={exit} />,
         })}
-      />
-      <Stack.Screen
-        name="Phone"
-        component={Phone}
-        title="Celular"
-        options={({ navigation }) => ({
-          header: () => (
-            <Header title="Celular" close={() => navigation.goBack()} />
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="VerifyPhone"
-        component={VerifyPhone}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header
-              title="Verificar Celular"
-              close={() => navigation.goBack()}
-            />
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="Mail"
-        component={Mail}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header title="Verificar email" close={() => navigation.goBack()} />
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="Gender"
-        component={Gender}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header title="Gênero" close={() => navigation.goBack()} />
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="Pass"
-        component={Pass}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header title="Alterar senha" close={() => navigation.goBack()} />
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="Shipping"
-        component={Shipping}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header
-              custom
-              title="Endereço de entrega"
-              close={() => navigation.goBack()}
-            />
-          ),
-        })}
-      />
-      <Stack.Screen name="AddNewAddress" component={AddNewAddress} />
-      <Stack.Screen
-        name="EditAddress"
-        component={EditAddress}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header title="Editar endereço" close={() => navigation.goBack()} />
-          ),
-        })}
-      />
-    </Stack.Navigator>
+      >
+        <Stack.Screen name="Account" component={Account} />
+        <Stack.Screen
+          name="EditName"
+          component={Name}
+          options={({ navigation }) => ({
+            header: () => (
+              <Header
+                title="Nome do perfil"
+                close={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Phone"
+          component={Phone}
+          title="Celular"
+          options={({ navigation }) => ({
+            header: () => (
+              <Header title="Celular" close={() => navigation.goBack()} />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="VerifyPhone"
+          component={VerifyPhone}
+          options={({ navigation }) => ({
+            header: () => (
+              <Header
+                title="Verificar Celular"
+                close={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Mail"
+          component={Mail}
+          options={({ navigation }) => ({
+            header: () => (
+              <Header
+                title="Verificar email"
+                close={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Gender"
+          component={Gender}
+          options={({ navigation }) => ({
+            header: () => (
+              <Header title="Gênero" close={() => navigation.goBack()} />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Pass"
+          component={Pass}
+          options={({ navigation }) => ({
+            header: () => (
+              <Header title="Alterar senha" close={() => navigation.goBack()} />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Shipping"
+          component={Shipping}
+          options={({ navigation }) => ({
+            header: () => (
+              <Header
+                custom
+                title="Endereço de entrega"
+                close={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen name="AddNewAddress" component={AddNewAddress} />
+        <Stack.Screen
+          name="EditAddress"
+          component={EditAddress}
+          options={({ navigation }) => ({
+            header: () => (
+              <Header
+                title="Editar endereço"
+                close={() => navigation.goBack()}
+              />
+            ),
+          })}
+        />
+      </Stack.Navigator>
+    </>
   );
 }
 

@@ -1,18 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import { captureRef } from 'react-native-view-shot';
-import ImagePicker from 'react-native-image-picker';
-import Toast from 'react-native-tiny-toast';
-
 import {
+  StatusBar,
   Modal as RNModal,
   Text,
   ActivityIndicator,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import { useSelector } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import { captureRef } from 'react-native-view-shot';
+import ImagePicker from 'react-native-image-picker';
+import Toast from 'react-native-tiny-toast';
 
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource'; // pega imagem e cria uma URI (caminho local da imagem)
 
@@ -63,12 +63,8 @@ export default function Design({ navigation }) {
   const redirectToShoppingBag = () => navigation.navigate('Bag');
 
   const customT = useSelector(state => state.shirts.tshirt); // puxa camisetas do redux
-  const customB = useSelector(state => state.shirts.bshirt); // puxa camisetas babylook do redux
-  const customH = useSelector(state => state.shirts.hoodie);
 
   const tFronts = useSelector(state => state.shirts.tFronts); // puxa array de camisetas do redux
-  const bFronts = useSelector(state => state.shirts.bFronts);
-  const hFronts = useSelector(state => state.shirts.hFronts);
 
   const captureViewRef = useRef(); // ref para capturar a view (container) e a imagem
   const imgRef = useRef(); // ref repassada ao draggable com 'forwardRef'
@@ -108,8 +104,6 @@ export default function Design({ navigation }) {
   const [shirtType, setShirtType] = useState('tshirt');
 
   const [tFront, setTFront] = useState(customT.front); // caḿpo para salvar a camiseta t-hirt
-  const [bFront, setBFront] = useState(customB.front); // campo para salvar a camiseta babylook
-  const [hFront, setHFront] = useState(customH.front); // campo para salvar o moletom
 
   const [tShirtImage, setTShirtImage] = useState(tFront); // imagem da camisa que aparece, começa mostrando a tshirt na tela
   const [image, setImage] = useState(baseImg.uri); // imagem transparente para botar no lugar da imagem, pra 'apagar' a imagem
@@ -172,14 +166,6 @@ export default function Design({ navigation }) {
     setTFront(customT.front);
   }, [customT]);
 
-  useEffect(() => {
-    setBFront(customB.front);
-  }, [customB]);
-
-  useEffect(() => {
-    setHFront(customH.front);
-  }, [customH]);
-
   // modais
   const [visibleModalPrintable, setVisibleModalPrintable] = useState(false);
   const [visibleModalText, setVisibleModalText] = useState(false);
@@ -218,27 +204,6 @@ export default function Design({ navigation }) {
         });
         break;
 
-      case 'babylook':
-        setTShirtImage(bFront);
-        setModels(bFronts);
-        setPosition({
-          minX: distanceX + internalX,
-          maxX: distanceX + paddingX + internalX + width,
-          minY: /* distanceY + */ 10 /* + internalY */,
-          maxY: /* distanceY + */ paddingY + internalY + height,
-        });
-        break;
-
-      case 'hoodie':
-        setTShirtImage(hFront);
-        setModels(hFronts);
-        setPosition({
-          minX: distanceX + internalX,
-          maxX: distanceX + paddingX + internalX + width,
-          minY: /* distanceY + */ 10 /* + internalY */,
-          maxY: /* distanceY + */ paddingY + internalY + height,
-        });
-        break;
       default:
     }
     if (image === baseImg.uri && sticker === baseImg.uri) {
@@ -291,13 +256,7 @@ export default function Design({ navigation }) {
       upload.append('front_printable_image_id', id);
       upload.append('back_printable_image_id', id);
 
-      const { front_printscreen, back_printscreen } = await api.post(
-        'design-shirt/purchase',
-        upload
-      ); // envia pra api
-
-      console.tron.log(`front: ${front_printscreen}`);
-      console.tron.log(`back: ${back_printscreen}`);
+      await api.post('design-shirt/purchase', upload); // envia pra api
 
       setImage(baseImg.uri); // apaga a imagem - coloca imagem transparente
       setSticker(baseImg.uri); // apaga o sticker - coloca imagem transparente
@@ -323,7 +282,6 @@ export default function Design({ navigation }) {
       });
 
       setShirtPreview(uri);
-      console.tron.log(`uri preview: ${uri}`);
 
       await uploadShirt(id, uri);
     } catch (err) {
@@ -333,8 +291,7 @@ export default function Design({ navigation }) {
 
   async function uploadPrintable(photouri) {
     try {
-      const printable = new FormData();
-      console.tron.log(photouri);
+      const printable = new FormData(); // eslint-disable-line
       printable.append('name', `${photouri}.jpeg`);
       printable.append('image', {
         uri: photouri,
@@ -342,15 +299,13 @@ export default function Design({ navigation }) {
         name: `${photouri}.jpeg`,
       });
 
-      const { id, url } = await upload.post(
+      const { id } = await upload.post(
         'design-shirt/printables/sticker',
         printable
       ); // envia pra api
-      console.tron.log(`url: ${url}`);
 
       await captureShirt(id); // tira print da camiseta
     } catch (err) {
-      console.tron.log(err);
       setCanScreenshot(false);
 
       Toast.show('Erro no envio da imagem'); // printe o err.status
@@ -368,8 +323,6 @@ export default function Design({ navigation }) {
           format: 'png',
           quality: 1,
         });
-
-        console.tron.log('must print');
 
         await uploadPrintable(uri);
       }
@@ -447,7 +400,6 @@ export default function Design({ navigation }) {
 
   useEffect(() => {
     if (shirtPreview && shirtPreview !== baseImg.uri) {
-      console.tron.log(`uri: ${shirtPreview}`);
       setVisibleShirtDetails(true);
     }
   }, [shirtPreview]);
@@ -462,6 +414,8 @@ export default function Design({ navigation }) {
 
   return (
     <>
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+
       <Header navigation={navigation} title="Design" />
 
       <Container
@@ -502,7 +456,6 @@ export default function Design({ navigation }) {
         <TShirtContainer
           onLayout={({ nativeEvent: { layout } }) => {
             setPaddingX(layout.x);
-            console.tron.log(`hmmm: ${layout.height}`);
             setPaddingY(layout.y);
           }}
         >
@@ -510,7 +463,6 @@ export default function Design({ navigation }) {
             onLayout={({ nativeEvent: { layout } }) => {
               setInternalX(layout.x);
               setInternalY(layout.y);
-              console.tron.log(`imagem: ${layout.height}`);
 
               setWidth(layout.width);
               setHeight(layout.height);

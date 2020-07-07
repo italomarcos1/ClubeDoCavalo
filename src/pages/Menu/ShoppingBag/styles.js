@@ -6,7 +6,7 @@ export const Container = styled.ScrollView`
 
 export const Product = styled.View`
   width: 100%;
-  height: 250px;
+  height: 290px;
   background-color: #fafafa;
   border-color: #ddd;
   align-items: center;
@@ -97,7 +97,7 @@ export const ShirtContainer = styled.View`
   flex: 1;
   justify-content: space-evenly;
   align-items: center;
-  padding: 5px 0;
+  margin-top: 5px;
 `;
 
 export const DeleteProduct = styled.TouchableOpacity`

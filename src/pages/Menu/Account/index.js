@@ -145,9 +145,13 @@ export default function Account() {
             <Item onPress={() => navigation.navigate('Phone')}>
               <VerifiedFieldContainer>
                 <Field>Número de celular</Field>
-                <VerifiedField verified>Verificado</VerifiedField>
+                <VerifiedField verified={user.cellphone}>
+                  {user.cellphone ? 'Verificado' : 'Não-verificado'}
+                </VerifiedField>
               </VerifiedFieldContainer>
-              <Value>{user.cellphone}</Value>
+              <Value>
+                {user.cellphone ? user.cellphone : 'Nenhum número cadastrado.'}
+              </Value>
             </Item>
             <Icon name="chevron-right" size={15} color="#808080" />
           </Content>
@@ -201,7 +205,7 @@ export default function Account() {
               <Value>
                 {user.default_address.length !== 0
                   ? user.default_address.name
-                  : 'Nenhum endereço cadastrado ainda.'}
+                  : 'Nenhum endereço cadastrado.'}
               </Value>
             </Item>
             <Icon name="chevron-right" size={15} color="#808080" />

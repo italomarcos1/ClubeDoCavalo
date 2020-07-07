@@ -64,13 +64,19 @@ export default function Shipping({ navigation }) {
         Toast.show('Erro ao remover o endereço.');
       }
     },
-    [addresses, user]
+    [addresses, user, dispatch]
   );
 
   const setDefaultAddress = useCallback(async () => {
-    if (selectedAddressId === -5 || selectedAddressId === default_address.id)
+    if (
+      selectedAddressId === default_address.id ||
+      default_address.length === 0 ||
+      default_address.length === undefined
+    )
       return;
     try {
+      console.tron.log('nao era pra cair aqui');
+
       const {
         data: { data },
       } = await api.put(`/clients/addresses/${selectedAddressId}`);
@@ -78,10 +84,11 @@ export default function Shipping({ navigation }) {
       dispatch(updateProfileSuccess({ ...user, default_address: data }));
 
       Toast.showSuccess('Endereço atualizado com sucesso.');
+      console.tron.log('uai');
     } catch (err) {
       Toast.show('Erro no update de endereço.');
     }
-  }, [selectedAddressId, user, dispatch]);
+  }, [selectedAddressId, user, dispatch, default_address]);
 
   useEffect(() => {
     async function loadAdresses() {
@@ -106,7 +113,7 @@ export default function Shipping({ navigation }) {
 
   useEffect(() => {
     setDefaultAddress();
-  }, [selectedAddressId, setDefaultAddress]);
+  }, [selectedAddressId]);
 
   return (
     <>

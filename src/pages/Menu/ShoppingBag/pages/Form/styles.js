@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const Container = styled.ScrollView`
   flex: 1;
   background-color: #fff;
-  padding: 10px 20px;
+  padding: 10px 20px 40px;
 `;
 export const InputContainer = styled.View`
   flex-direction: column;

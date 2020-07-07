@@ -1,20 +1,9 @@
-export function uploadShirts(
-  tshirt,
-  bshirt,
-  hoodie,
-  tFronts,
-  bFronts,
-  hFronts
-) {
+export function uploadShirts(tshirt, tFronts) {
   return {
     type: '@shirts/UPLOAD_SHIRTS',
     payload: {
       tshirt,
-      bshirt,
-      hoodie,
       tFronts,
-      bFronts,
-      hFronts,
     },
   };
 }

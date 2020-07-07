@@ -37,12 +37,11 @@ export default function Pass({ navigation }) {
         password: oldPassword,
       });
 
-      setLoading(false);
-
       await api.put('clients/password', {
         password: newPassword,
         password_confirmation: confirmNewPassword,
       });
+      setLoading(false);
 
       Toast.showSuccess('Senha atualizada com sucesso.');
       navigation.goBack();

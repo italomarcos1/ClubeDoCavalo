@@ -1,12 +1,15 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Keyboard } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
+import Toast from 'react-native-tiny-toast';
 import PropTypes from 'prop-types';
 
 import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
+import Header from '~/components/HeaderMenu';
 
 import { api } from '~/services/api';
 import { registerComplete } from '~/store/modules/auth/actions';
@@ -30,6 +33,8 @@ export default function CompleteRegisterForm() {
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
 
+  const user = useSelector(state => state.user.profile);
+
   const [gender, setGender] = useState('male');
   const [last_name, setLastName] = useState('');
   const [cellphone, setCellphone] = useState('');
@@ -43,23 +48,37 @@ export default function CompleteRegisterForm() {
   const yearRef = useRef();
 
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const handleFinishRegister = useCallback(async () => {
     try {
+      const birth = `${day}/${month}/${year}`;
+      console.tron.log(birth);
+
       setLoading(true);
-      const { data } = await api.put('clients', {
+      await api.put('clients', {
         name,
         last_name,
         cellphone,
-        birth: `${day}/${month}/${year}`,
+        birth,
         gender,
       });
 
-      const user = { ...data.data };
+      const updatedUser = {
+        ...user,
+        name,
+        last_name,
+        cellphone,
+        birth,
+        gender,
+      };
       setLoading(false);
 
-      dispatch(updateProfileSuccess(user));
+      dispatch(updateProfileSuccess(updatedUser));
       dispatch(registerComplete());
+
+      Toast.showSuccess('Dados cadastrados com sucesso!');
+      navigation.goBack();
     } catch (err) {
       setLoading(false);
     }
@@ -67,6 +86,7 @@ export default function CompleteRegisterForm() {
 
   return (
     <>
+      <Header title="Cadastro de usuário" close={() => navigation.goBack()} />
       <Validation title="Ajude-nos a saber quem você é" />
       <Container>
         <InputContainer>
@@ -167,8 +187,7 @@ export default function CompleteRegisterForm() {
             />
           </InputContainer>
         </CustomView>
-
-        <InputName>Selecione seu gênero:</InputName>
+        <InputName style={{ marginTop: 30 }}>Selecione seu gênero:</InputName>
         <GenderContainer>
           <Gender onPress={() => setGender('male')}>
             <RadioButtonBackground>
@@ -192,7 +211,6 @@ export default function CompleteRegisterForm() {
           </Gender>
         </GenderContainer>
 
-        {/* <DateInput date={birthDate} selectDate={value => setBirthDate(value)} /> */}
         <ButtonMenu
           loading={loading}
           disabled={
@@ -205,7 +223,6 @@ export default function CompleteRegisterForm() {
             !gender
           }
           onPress={handleFinishRegister}
-          style={{ marginTop: 20 }}
         >
           Finalizar cadastro
         </ButtonMenu>

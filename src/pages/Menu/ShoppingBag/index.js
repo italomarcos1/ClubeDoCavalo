@@ -1,5 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, Dimensions, Modal, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  Modal,
+  ActivityIndicator,
+  StatusBar,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
@@ -30,6 +37,8 @@ import {
   NoProductsSubtitle,
   Zipcode,
 } from './styles';
+
+import Header from '~/components/HeaderMenu';
 
 import Gift from '~/assets/ico-gift.svg';
 import Shipping from '~/assets/ico-shipping.svg';
@@ -103,29 +112,32 @@ export default function ShoppingBag({ navigation }) {
     if (newUser) {
       Toast.show('Você deve finalizar o cadastro antes de finalizar a compra');
       navigation.navigate('Register');
-    } else if (user.email === null) {
-      Toast.show(
-        'Você deve cadastrar um endereço de email antes de finalizar a compra.'
-      );
-      navigation.navigate('Account');
     } else if (user.default_address && user.default_address.length === 0) {
-      Toast.show('Você deve cadastrar um endereço antes de efetuar a compra.');
       setAddressVisible(true);
+      Toast.show('Você deve cadastrar um endereço antes de efetuar a compra.');
     } else if (signed && user.email !== null) {
-      const {
-        data: { meta },
-      } = await sandbox.post('checkout', {
-        shipping_address: user.default_address,
-      });
+      // const {
+      //   data: { meta },
+      // } = await sandbox.post('checkout', {
+      //   shipping_address: user.default_address,
+      // });
 
-      Toast.showSuccess(meta.message);
+      // Toast.showSuccess(meta.message);
       navigation.navigate('Success');
       dispatch(cleanCart());
     }
   }, [dispatch, signed, navigation, user, newUser]);
 
+  const exit = () => {
+    navigation.goBack();
+    navigation.openDrawer();
+  };
+
   return (
     <>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+
+      <Header custom title="Cesto de compras" close={exit} />
       <View style={{ flex: 1 }}>
         <Container
           contentContainerStyle={{
@@ -175,9 +187,9 @@ export default function ShoppingBag({ navigation }) {
                 <FareDetails>
                   <Text style={{ fontSize: 14 }}>Frete</Text>
                   <Zipcode>
-                    {user.default_address !== []
+                    {user.default_address.length !== 0
                       ? user.default_address.zipcode
-                      : '71880-662'}
+                      : 'Nenhum endereço cadastrado.'}
                   </Zipcode>
                 </FareDetails>
 
@@ -263,5 +275,7 @@ export default function ShoppingBag({ navigation }) {
 ShoppingBag.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    goBack: PropTypes.func,
+    openDrawer: PropTypes.func,
   }).isRequired,
 };

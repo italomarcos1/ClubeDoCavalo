@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Text, Keyboard } from 'react-native';
+import { Text, Keyboard, StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-tiny-toast';
 import PropTypes from 'prop-types';
@@ -88,10 +88,13 @@ export default function AddNewAddress({ closeModal, asModal }) {
 
   return (
     <>
-      <Header
-        title="Adicionar endereço"
-        close={() => (asModal ? closeModal() : navigation.goBack())}
-      />
+      <StatusBar barStyle="light-content" backgroundColor="#5BAE59" />
+      {asModal && (
+        <Header
+          title="Adicionar endereço"
+          close={() => (asModal ? closeModal() : navigation.goBack())}
+        />
+      )}
       <Validation title="Digite o seu endereço" />
 
       <Container
