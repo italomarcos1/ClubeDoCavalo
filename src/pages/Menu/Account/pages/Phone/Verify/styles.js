@@ -26,3 +26,23 @@ export const ValidationContainer = styled.View`
   flex-direction: row;
   justify-content: space-evenly;
 `;
+
+export const CodeSentText = styled.Text`
+  margin-top: 20px;
+  flex: 1;
+  max-height: 100px;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 20px;
+  color: #596473;
+  align-self: center;
+  text-align: center;
+`;
+
+export const ResendCodeText = styled.Text`
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #d93150;
+  align-self: center;
+`;

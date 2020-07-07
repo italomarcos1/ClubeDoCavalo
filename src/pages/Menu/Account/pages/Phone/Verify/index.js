@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Text, TouchableOpacity, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-tiny-toast';
@@ -7,8 +7,13 @@ import Validation from '~/components/Validation';
 
 import SMSVerificationImage from '~/assets/sms-verification.svg';
 
-import { Container, ValidationContainer, ValidationCodeInput } from './styles';
-import { CodeSentText, ResendCodeText } from '../../Mail/styles';
+import {
+  Container,
+  ValidationContainer,
+  ValidationCodeInput,
+  CodeSentText,
+  ResendCodeText,
+} from './styles';
 
 export default function VerifyPhone({ route }) {
   const [code1, setCode1] = useState('');

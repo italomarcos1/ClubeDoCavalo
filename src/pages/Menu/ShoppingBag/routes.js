@@ -48,7 +48,7 @@ export default function Routes({ navigation }) {
           header: () => (
             <Header
               custom
-              title="Voltar para Cesto de compras"
+              title="Cadastro de usuário"
               close={() => navigation.goBack()}
             />
           ),

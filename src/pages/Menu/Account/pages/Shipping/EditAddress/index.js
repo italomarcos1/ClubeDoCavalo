@@ -8,7 +8,7 @@ import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
 
-import { api } from '~/services/api';
+import api from '~/services/api';
 import { updateProfileSuccess } from '~/store/modules/user/actions';
 import { Container, InputContainer, InputName, CustomView } from './styles';
 
@@ -110,7 +110,6 @@ export default function EditAddress({ navigation, route }) {
               keyboardType="phone-pad"
               selected={!!zipcode}
               autoCorrect={false}
-              placeholder="95880-000"
               clear={() => setZipcode('')}
               ref={zipcodeRef}
               value={zipcode}
@@ -138,7 +137,7 @@ export default function EditAddress({ navigation, route }) {
         </CustomView>
 
         <InputContainer style={{ marginBottom: 0 }}>
-          <InputName>Morada</InputName>
+          <InputName>Endereço</InputName>
           <InputMenu
             autoCapitalize="characters"
             autoCorrect={false}

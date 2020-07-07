@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
 import Account from './index';
@@ -22,6 +23,7 @@ Icon.loadFont();
 
 export default function Routes({ navigation }) {
   const Stack = createStackNavigator();
+  const user = useSelector(state => state.user.profile);
 
   const exit = () => {
     navigation.goBack();
@@ -81,7 +83,7 @@ export default function Routes({ navigation }) {
         component={Gender}
         options={({ navigation }) => ({
           header: () => (
-            <Header title="Sexo" close={() => navigation.goBack()} />
+            <Header title="Gênero" close={() => navigation.goBack()} />
           ),
         })}
       />
@@ -107,18 +109,7 @@ export default function Routes({ navigation }) {
           ),
         })}
       />
-      <Stack.Screen
-        name="AddNewAddress"
-        component={AddNewAddress}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header
-              title="Adicionar endereço"
-              close={() => navigation.goBack()}
-            />
-          ),
-        })}
-      />
+      <Stack.Screen name="AddNewAddress" component={AddNewAddress} />
       <Stack.Screen
         name="EditAddress"
         component={EditAddress}

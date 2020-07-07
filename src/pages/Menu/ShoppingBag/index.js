@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, Dimensions, Modal, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-tiny-toast';
+
+import { sandbox } from '~/services/api';
 
 import {
   Container,
@@ -37,15 +39,90 @@ import ShirtItem from './components/ShirtItem';
 
 import { cleanCart } from '~/store/modules/shoppingbag/actions';
 
+import AddNewAddress from '../Account/pages/Shipping/AddNewAddress';
+
 Icon.loadFont();
 
 export default function ShoppingBag({ navigation }) {
   const products = useSelector(state => state.shoppingbag.products);
   const user = useSelector(state => state.user.profile);
+  const totalOfShirts = useSelector(state => state.shoppingbag.total);
+
+  const signed = useSelector(state => state.auth.signed);
   const newUser = useSelector(state => state.auth.newUser);
 
   const dispatch = useDispatch();
-  const [position, setPosition] = useState(0);
+  const [shirt, setShirt] = useState(0);
+  const [cost, setCost] = useState(0);
+
+  const [finalPrice, setFinalPrice] = useState(0);
+  const [updatingPrice, setUpdatingPrice] = useState(true);
+  const [updatingCost, setUpdatingCost] = useState(true);
+
+  const [addressVisible, setAddressVisible] = useState(false);
+
+  const calculateTotalPrice = useCallback(() => {
+    setUpdatingPrice(true);
+
+    const total = products.reduce((totalSum, product) => {
+      const { price, amount } = product;
+
+      const itemPrice = parseInt(price, 10) * amount;
+
+      return totalSum + itemPrice + amount * 0.9;
+    }, 0);
+
+    const formattedPrice = Number(total).toFixed(2);
+
+    setFinalPrice(Number(formattedPrice));
+    setUpdatingPrice(false);
+    setUpdatingCost(false);
+  }, [products]);
+
+  const loadCost = useCallback(async () => {
+    setUpdatingCost(true);
+    const { data } = await sandbox.get('checkout/shipping-cost');
+
+    setCost(data.data);
+    calculateTotalPrice();
+  }, [calculateTotalPrice]);
+
+  useEffect(() => {
+    loadCost();
+  }, []);
+
+  useEffect(() => {
+    loadCost();
+  }, [signed, products, loadCost]);
+
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [totalOfShirts]);
+
+  const handleFinish = useCallback(async () => {
+    if (newUser) {
+      Toast.show('Você deve finalizar o cadastro antes de finalizar a compra');
+      navigation.navigate('Register');
+    } else if (user.email === null) {
+      Toast.show(
+        'Você deve cadastrar um endereço de email antes de finalizar a compra.'
+      );
+      navigation.navigate('Account');
+    } else if (user.default_address && user.default_address.length === 0) {
+      Toast.show('Você deve cadastrar um endereço antes de efetuar a compra.');
+      setAddressVisible(true);
+    } else if (signed && user.email !== null) {
+      const {
+        data: { meta },
+      } = await sandbox.post('checkout', {
+        shipping_address: user.default_address,
+      });
+
+      Toast.showSuccess(meta.message);
+      navigation.navigate('Success');
+      dispatch(cleanCart());
+    }
+  }, [dispatch, signed, navigation, user, newUser]);
 
   return (
     <>
@@ -67,20 +144,18 @@ export default function ShoppingBag({ navigation }) {
             </NoProductsContainer>
           ) : (
             <Product>
-              {products.length !== 0 && (
-                <ShirtItem product={products[position]} />
-              )}
+              {products.length !== 0 && <ShirtItem product={products[shirt]} />}
               <SelectProductContainer>
                 <SelectProduct
-                  disabled={position === 0}
-                  onPress={() => setPosition(position - 1)}
+                  disabled={shirt === 0}
+                  onPress={() => setShirt(shirt - 1)}
                 >
                   <Icon name="chevron-left" size={30} color="#222" />
                 </SelectProduct>
-                <Text>{`${position + 1} de ${products.length}`}</Text>
+                <Text>{`${shirt + 1} de ${products.length}`}</Text>
                 <SelectProduct
-                  disabled={position === products.length - 1}
-                  onPress={() => setPosition(position + 1)}
+                  disabled={shirt === products.length - 1}
+                  onPress={() => setShirt(shirt + 1)}
                 >
                   <Icon name="chevron-right" size={30} color="#222" />
                 </SelectProduct>
@@ -106,7 +181,11 @@ export default function ShoppingBag({ navigation }) {
                   </Zipcode>
                 </FareDetails>
 
-                <Price>R$ 18,20</Price>
+                {updatingCost ? (
+                  <ActivityIndicator size="small" color="#333" />
+                ) : (
+                  <Price>{`R$ ${cost}`}</Price>
+                )}
               </Detail>
 
               <Detail
@@ -142,6 +221,16 @@ export default function ShoppingBag({ navigation }) {
               </Detail>
             </>
           )}
+
+          <Modal
+            visible={addressVisible}
+            closeModal={() => setAddressVisible(false)}
+          >
+            <AddNewAddress
+              closeModal={() => setAddressVisible(false)}
+              asModal
+            />
+          </Modal>
         </Container>
         {products.length === 0 ? (
           <View />
@@ -152,22 +241,16 @@ export default function ShoppingBag({ navigation }) {
                 Total
               </Text>
               <FinalPrice>
-                <Text style={{ color: '#fff', fontSize: 20 }}>R$ 58.10</Text>
+                {updatingPrice ? (
+                  <ActivityIndicator size="small" color="#333" />
+                ) : (
+                  <Text style={{ color: '#fff', fontSize: 20 }}>
+                    {`R$ ${Number(finalPrice) + cost}`}
+                  </Text>
+                )}
               </FinalPrice>
             </Amount>
-            <FinishButton
-              onPress={() => {
-                if (newUser) {
-                  Toast.show(
-                    'Você deve finalizar o cadastro antes de finalizar a compra'
-                  );
-                  navigation.navigate('Register');
-                } else {
-                  navigation.navigate('Success');
-                  dispatch(cleanCart());
-                }
-              }}
-            >
+            <FinishButton onPress={handleFinish}>
               <FinishButtonText>Finalizar a compra</FinishButtonText>
             </FinishButton>
           </CheckoutContainer>

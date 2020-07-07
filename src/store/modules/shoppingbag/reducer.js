@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   products: [],
+  total: 0,
 };
 
 export default function shoppingbag(state = INITIAL_STATE, { type, payload }) {
@@ -24,6 +25,8 @@ export default function shoppingbag(state = INITIAL_STATE, { type, payload }) {
         const { id } = payload;
         const productIndex = draft.products.findIndex(prod => prod.id === id);
 
+        draft.total -= draft.products[productIndex].amount;
+
         draft.products.splice(productIndex, 1);
 
         break;
@@ -34,6 +37,7 @@ export default function shoppingbag(state = INITIAL_STATE, { type, payload }) {
         const productIndex = draft.products.findIndex(prod => prod.id === id);
 
         draft.products[productIndex].amount++;
+        draft.total++;
         break;
       }
 
@@ -42,9 +46,7 @@ export default function shoppingbag(state = INITIAL_STATE, { type, payload }) {
         const productIndex = draft.products.findIndex(prod => prod.id === id);
 
         draft.products[productIndex].amount--;
-
-        if (draft.products[productIndex].amount)
-          draft.products.splice(productIndex, 1);
+        draft.total--;
 
         break;
       }

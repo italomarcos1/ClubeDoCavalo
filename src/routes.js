@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import CustomDrawerContent from '~/components/CustomDrawerContent';
 
 import SignIn from '~/pages/Auth/SignIn';
-import SignUp from '~/pages/Auth/SignUp';
 import SignOut from '~/pages/Auth/SignOut';
 import SendMail from '~/pages/Auth/ForgotPassword/pages/SendMail';
 import VerifyCode from '~/pages/Auth/ForgotPassword/pages/VerifyCode';
@@ -40,7 +39,6 @@ export default function createRouter(isSigned = false) {
       <StatusBar barStyle="light-content" backgroundColor="#5BAE59" />
       <Stack.Navigator headerMode="none">
         <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="ForgotPassword" component={SendMail} />
         <Stack.Screen name="Verify" component={VerifyCode} />
       </Stack.Navigator>

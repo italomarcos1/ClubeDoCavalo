@@ -11,7 +11,7 @@ import Header from '~/components/HeaderMenu';
 
 import Validation from '~/components/Validation';
 
-import { Form } from '../../../SignUp/styles';
+import { Form } from './styles';
 
 import { api } from '~/services/api';
 

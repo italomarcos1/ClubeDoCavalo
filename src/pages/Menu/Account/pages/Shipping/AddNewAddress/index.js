@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-tiny-toast';
 import PropTypes from 'prop-types';
 
+import { useNavigation } from '@react-navigation/native';
 import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
+import Header from '~/components/HeaderMenu';
 import InputMenu from '~/components/InputMenu';
 
 import { api } from '~/services/api';
@@ -14,7 +16,7 @@ import { updateProfileSuccess } from '~/store/modules/user/actions';
 
 import { Container, InputContainer, InputName, CustomView } from './styles';
 
-export default function AddNewAddress({ navigation }) {
+export default function AddNewAddress({ closeModal, asModal }) {
   const [name, setName] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [address, setAddress] = useState('');
@@ -36,6 +38,7 @@ export default function AddNewAddress({ navigation }) {
 
   const user = useSelector(reduxState => reduxState.user.profile);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const handleAddAddress = useCallback(async () => {
     try {
@@ -59,7 +62,11 @@ export default function AddNewAddress({ navigation }) {
       dispatch(updateProfileSuccess(updatedUser));
 
       Toast.showSuccess(`${data.meta.message}`);
-      navigation.goBack();
+      if (asModal) {
+        closeModal();
+      } else {
+        navigation.goBack();
+      }
     } catch (err) {
       setLoading(false);
 
@@ -81,6 +88,10 @@ export default function AddNewAddress({ navigation }) {
 
   return (
     <>
+      <Header
+        title="Adicionar endereço"
+        close={() => (asModal ? closeModal() : navigation.goBack())}
+      />
       <Validation title="Digite o seu endereço" />
 
       <Container
@@ -115,7 +126,6 @@ export default function AddNewAddress({ navigation }) {
               selected={!!zipcode}
               autoCorrect={false}
               keyboardType="phone-pad"
-              placeholder="95880-000"
               clear={() => setZipcode('')}
               ref={zipcodeRef}
               value={zipcode}
@@ -142,7 +152,7 @@ export default function AddNewAddress({ navigation }) {
         </CustomView>
 
         <InputContainer style={{ marginBottom: 0 }}>
-          <InputName>Morada</InputName>
+          <InputName>Endereço</InputName>
           <InputMenu
             autoCapitalize="characters"
             autoCorrect={false}
@@ -211,7 +221,7 @@ export default function AddNewAddress({ navigation }) {
               selected={!!state}
               autoCorrect={false}
               autoCapitalize="characters"
-              placeholder="GO, SP, RN..."
+              placeholder="Estado"
               clear={() => setState('')}
               ref={stateRef}
               value={state}
@@ -245,7 +255,11 @@ export default function AddNewAddress({ navigation }) {
 }
 
 AddNewAddress.propTypes = {
-  navigation: PropTypes.shape({
-    goBack: PropTypes.func,
-  }).isRequired,
+  closeModal: PropTypes.func,
+  asModal: PropTypes.bool,
+};
+
+AddNewAddress.defaultProps = {
+  closeModal: () => {},
+  asModal: false,
 };

@@ -28,14 +28,15 @@ import { updateProfileSuccess } from '~/store/modules/user/actions';
 
 export default function Shipping({ navigation }) {
   const user = useSelector(state => state.user.profile);
+  const { default_address } = user;
 
   const dispatch = useDispatch();
 
   const [selectedAddress, setSelectedAddress] = useState(
-    user.default_address.name
+    default_address.length !== 0 ? default_address.name : 'none'
   );
   const [selectedAddressId, setSelectedAddressId] = useState(
-    user.default_address.id
+    default_address.length !== 0 ? default_address.id : -5
   );
 
   const [loading, setLoading] = useState(false);
@@ -47,27 +48,27 @@ export default function Shipping({ navigation }) {
     async id => {
       try {
         await api.delete(`clients/addresses/${id}`);
+
+        if (user.default_address.id === id)
+          dispatch(updateProfileSuccess({ ...user, default_address: [] }));
+
         if (addresses.length === 1) {
           setAddresses([]);
         } else {
           const filtered = addresses.filter(address => address.id !== id);
           setAddresses(filtered);
         }
-        dispatch(updateProfileSuccess({ ...user, default_address: [] }));
 
         Toast.showSuccess('Endereço removido com sucesso.');
       } catch (err) {
         Toast.show('Erro ao remover o endereço.');
       }
     },
-    [addresses]
+    [addresses, user]
   );
 
   const setDefaultAddress = useCallback(async () => {
-    if (
-      selectedAddressId === -5 ||
-      selectedAddressId === user.default_address.id
-    )
+    if (selectedAddressId === -5 || selectedAddressId === default_address.id)
       return;
     try {
       const {
@@ -80,7 +81,7 @@ export default function Shipping({ navigation }) {
     } catch (err) {
       Toast.show('Erro no update de endereço.');
     }
-  }, [selectedAddressId, user.default_address.id, dispatch]);
+  }, [selectedAddressId, user, dispatch]);
 
   useEffect(() => {
     async function loadAdresses() {
@@ -105,7 +106,7 @@ export default function Shipping({ navigation }) {
 
   useEffect(() => {
     setDefaultAddress();
-  }, [selectedAddressId]);
+  }, [selectedAddressId, setDefaultAddress]);
 
   return (
     <>

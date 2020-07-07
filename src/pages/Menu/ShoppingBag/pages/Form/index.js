@@ -1,19 +1,20 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Keyboard } from 'react-native';
+
 import PropTypes from 'prop-types';
 
 import Validation from '~/components/Validation';
 import ButtonMenu from '~/components/ButtonMenu';
 import InputMenu from '~/components/InputMenu';
-// import DateInput from '~/components/DateInput';
 
-import { api } from '~/services/api'; // depois com a rota 'update user'
+import { api } from '~/services/api';
 import { registerComplete } from '~/store/modules/auth/actions';
 import { updateProfileSuccess } from '~/store/modules/user/actions';
 
 import {
   Container,
+  CustomView,
   InputContainer,
   InputName,
   Gender,
@@ -25,6 +26,10 @@ import {
 
 export default function CompleteRegisterForm() {
   const [name, setName] = useState('');
+  const [day, setDay] = useState('');
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+
   const [gender, setGender] = useState('male');
   const [last_name, setLastName] = useState('');
   const [cellphone, setCellphone] = useState('');
@@ -32,6 +37,10 @@ export default function CompleteRegisterForm() {
 
   const lastNameRef = useRef();
   const cellphoneRef = useRef();
+
+  const dayRef = useRef();
+  const monthRef = useRef();
+  const yearRef = useRef();
 
   const dispatch = useDispatch();
 
@@ -42,12 +51,11 @@ export default function CompleteRegisterForm() {
         name,
         last_name,
         cellphone,
-        birth: '07/06/1999',
+        birth: `${day}/${month}/${year}`,
         gender,
-        default_address: { id: -5 },
       });
 
-      const user = { ...data.data, default_address: { id: -5, name: 'none' } };
+      const user = { ...data.data };
       setLoading(false);
 
       dispatch(updateProfileSuccess(user));
@@ -60,7 +68,6 @@ export default function CompleteRegisterForm() {
   return (
     <>
       <Validation title="Ajude-nos a saber quem você é" />
-
       <Container>
         <InputContainer>
           <InputName>Nome</InputName>
@@ -107,12 +114,59 @@ export default function CompleteRegisterForm() {
             value={cellphone}
             onChangeText={setCellphone}
             returnKeyType="send"
-            onSubmitEditing={() => {
-              Keyboard.dismiss();
-              handleFinishRegister();
-            }}
+            onSubmitEditing={() => dayRef.current.focus()}
           />
         </InputContainer>
+
+        <CustomView>
+          <InputContainer style={{ flex: 1, marginRight: 20 }}>
+            <InputName>Dia</InputName>
+            <InputMenu
+              style={{ flex: 1, maxHeight: 45 }}
+              maxLength={2}
+              selected={!!day}
+              autoCorrect={false}
+              keyboardType="phone-pad"
+              clear={() => setDay('')}
+              ref={dayRef}
+              value={day}
+              onChangeText={setDay}
+              returnKeyType="next"
+              onSubmitEditing={() => monthRef.current.focus()}
+            />
+          </InputContainer>
+
+          <InputContainer style={{ flex: 1, marginLeft: 20 }}>
+            <InputName>Mês</InputName>
+            <InputMenu
+              maxLength={2}
+              selected={!!month}
+              autoCorrect={false}
+              keyboardType="phone-pad"
+              clear={() => setMonth('')}
+              ref={monthRef}
+              value={month}
+              onChangeText={setMonth}
+              returnKeyType="next"
+              onSubmitEditing={() => yearRef.current.focus()}
+            />
+          </InputContainer>
+          <InputContainer style={{ flex: 1, marginLeft: 20 }}>
+            <InputName>Ano</InputName>
+            <InputMenu
+              maxLength={4}
+              selected={!!year}
+              autoCorrect={false}
+              keyboardType="phone-pad"
+              clear={() => setYear('')}
+              ref={yearRef}
+              value={year}
+              onChangeText={setYear}
+              returnKeyType="next"
+              onSubmitEditing={() => Keyboard.dismiss()}
+            />
+          </InputContainer>
+        </CustomView>
 
         <InputName>Selecione seu gênero:</InputName>
         <GenderContainer>
@@ -141,7 +195,15 @@ export default function CompleteRegisterForm() {
         {/* <DateInput date={birthDate} selectDate={value => setBirthDate(value)} /> */}
         <ButtonMenu
           loading={loading}
-          disabled={!name || !last_name || !cellphone || !gender}
+          disabled={
+            !name ||
+            !last_name ||
+            !cellphone ||
+            !day ||
+            !month ||
+            !year ||
+            !gender
+          }
           onPress={handleFinishRegister}
           style={{ marginTop: 20 }}
         >

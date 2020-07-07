@@ -126,7 +126,14 @@ export default function Account() {
 
         <View style={{ flex: 1, paddingBottom: 15 }}>
           <Content>
-            <Item onPress={() => navigation.navigate('EditName')}>
+            <Item
+              onPress={() =>
+                navigation.navigate('EditName', {
+                  currentName: user.name,
+                  currentLastName: user.last_name,
+                })
+              }
+            >
               <Field>Nome</Field>
               <Value>
                 {user.name} {user.last_name}
@@ -146,8 +153,12 @@ export default function Account() {
           </Content>
 
           <Content>
-            <Item onPress={() => navigation.navigate('Gender')}>
-              <Field>Sexo</Field>
+            <Item
+              onPress={() =>
+                navigation.navigate('Gender', { currentGender: user.gender })
+              }
+            >
+              <Field>Gênero</Field>
               <Value>Masculino</Value>
             </Item>
             <Icon name="chevron-right" size={15} color="#808080" />
@@ -164,8 +175,11 @@ export default function Account() {
                   {user.email_verified ? 'Verificado' : 'Não-verificado'}
                 </VerifiedField>
               </VerifiedFieldContainer>
-
-              <Value>{user.email}</Value>
+              <Value>
+                {user.email === null
+                  ? 'Nenhum endereço de e-mail foi cadastrado'
+                  : user.email}
+              </Value>
             </Item>
             <Icon name="chevron-right" size={15} color="#808080" />
           </Content>

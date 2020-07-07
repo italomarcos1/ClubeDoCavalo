@@ -116,6 +116,7 @@ export const Separator = styled.View`
   align-self: stretch;
   border-color: #ddd;
   border-width: 0.5px;
+  margin-top: 10px;
 `;
 
 export const UpdateAmountContainer = styled.View`
@@ -133,7 +134,7 @@ export const UpdateAmountContainer = styled.View`
 export const Shirt = styled.View`
   width: 100%;
   background-color: #fff;
-  height: 210px;
+  height: 240px;
   border-radius: 4px;
   padding: 5px 10px;
   flex-direction: column;
@@ -165,7 +166,7 @@ export const ShirtInfo = styled.View`
 
 export const Item = styled.View`
   width: 100%;
-  height: 140px;
+  height: 165px;
   padding: 10px 10px 5px;
   flex-direction: row;
   justify-content: space-around;

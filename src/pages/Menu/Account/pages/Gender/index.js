@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-tiny-toast';
@@ -12,54 +12,41 @@ import {
   RadioText,
 } from './styles';
 
+import Button from '~/components/Button';
+
 import { updateProfileSuccess } from '~/store/modules/user/actions';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
 
-export default function Gender({ navigation }) {
+export default function Gender({ navigation, route }) {
   const user = useSelector(state => state.user.profile);
-  const [gender, setGender] = useState(user.gender);
-  const [updatedGender, setUpdatedGender] = useState('none');
+  const { currentGender } = route.params;
+
+  const [gender, setGender] = useState(currentGender);
 
   const dispatch = useDispatch();
 
   const [updating, setUpdating] = useState(false);
 
-  const updateGender = useCallback(async () => {
+  const handleUpdateGender = useCallback(async () => {
     try {
       setUpdating(true);
-      switch (updatedGender) {
-        case 'Masculino': {
-          setUpdatedGender('male');
-          break;
-        }
-        case 'Feminino': {
-          setUpdatedGender('female');
-          break;
-        }
-        case 'Outro': {
-          setUpdatedGender('other');
-          break;
-        }
-        default:
-      }
 
-      const {
-        data: { data },
-      } = await api.put('clients', { gender: updatedGender });
-      dispatch(updateProfileSuccess(data));
+      await api.put('clients', { gender });
+      const updatedUser = { ...user, gender };
+
       Toast.showSuccess('Gênero atualizado com sucesso.');
-      navigation.goBack();
       setUpdating(false);
+
+      dispatch(updateProfileSuccess(updatedUser));
+
+      navigation.goBack();
     } catch (err) {
       setUpdating(false);
+
       Toast.show('Erro na atualização do gênero');
     }
-  }, [updatedGender, dispatch]);
-
-  useEffect(() => {
-    updateGender();
-  }, [gender]);
+  }, [gender, dispatch, navigation]);
 
   return (
     <>
@@ -86,6 +73,20 @@ export default function Gender({ navigation }) {
             <RadioText>Outro</RadioText>
           </Option>
         </OptionsContainer>
+
+        <Button
+          loading={updating}
+          textSize={18}
+          onPress={handleUpdateGender}
+          style={{
+            backgroundColor: '#3b8e39',
+            borderRadius: 4,
+            width: '100%',
+            marginTop: 15,
+          }}
+        >
+          Salvar
+        </Button>
       </Container>
     </>
   );
@@ -94,5 +95,10 @@ export default function Gender({ navigation }) {
 Gender.propTypes = {
   navigation: PropTypes.shape({
     goBack: PropTypes.func,
+  }).isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      currentGender: PropTypes.string,
+    }),
   }).isRequired,
 };
